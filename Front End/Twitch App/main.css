@@ -1,0 +1,74 @@
+body {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	color: #6441A4;
+	font-family: 'Oswald', sans-serif;
+	font-size: 1.5em;
+	min-width: 1000px;
+	background-color: #262626 !important;
+}
+
+#topHeader {
+	color: #fff !important;
+}
+
+#siteHeading {
+	font-size: 2.65em;
+	background-color: #356;
+	color: #fff;
+}
+
+#twitchIMG {
+	max-width: 100%;
+	max-height: 50px;
+	padding-bottom: 7.5px;
+}
+
+ul {
+	padding-left: 0px;
+}
+
+#streamerList li {
+	list-style-type: none;
+	background: #73D0FF;
+	background: -webkit-linear-gradient(left, #73D0FF, #335566);
+	border-color: #262626;
+	border-style: solid;
+	padding-top: 12.5px;
+	padding-bottom: 12.5px;
+	padding-left: 10px;
+	border-width: 2px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+.inactive {
+	background: #73D0FF;
+	background: -webkit-linear-gradient(left, #73D0FF, #335566);
+}
+
+.active {
+	background: #3B2409 !important;
+	background: -webkit-linear-gradient(right, #3B2409, #E38D22) !important;
+	color: #fff !important;
+}
+
+a {
+	color: inherit;
+}
+
+a:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+.padTop10 {
+	padding-top: 15px;
+}
+
+.logoFrame {
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
