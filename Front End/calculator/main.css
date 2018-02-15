@@ -1,0 +1,45 @@
+.smallBtn {
+    width: 60px;
+    height: 40px;
+    background-color: #999;
+    border-radius: 5px;
+    border-bottom: 3px inset #555;
+    cursor: pointer;
+}
+
+.smallBtn:active {
+    border-bottom: 0px;
+    padding-top: 3px;
+    margin-top: 3px;
+    height: 37px;
+}
+
+.largeBtnVertical {
+    height: 90px;
+    width: 60px;
+    background-color: #999;
+    border-radius: 5px;
+}
+
+.largeBtnHorizontal {
+    width: 125px;
+    height: 40px;
+    background-color: #999;
+    border-radius: 5px;
+    border-bottom: 3px inset #555;
+    cursor: pointer;
+}
+
+.largeBtnHorizontal:active {
+    border-bottom: 0px;
+    padding-top: 3px;
+    margin-top: 3px;
+    height: 37px;
+}
+
+#calculator {
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px #888888;
+    box-shadow: inset 0px 0px 10px #000000;
+    border: 1px solid #888;
+}
