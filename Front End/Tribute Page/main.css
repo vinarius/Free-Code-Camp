@@ -1,0 +1,60 @@
+body {
+    background-color: #000;
+  }
+  
+  .hero-div {
+    background-color: #EEEEEE;
+    margin-top: 2.5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+  }
+  
+  #the-quote {
+    margin-right: 20%;
+    margin-left: 20%;
+    font-size: 20px;
+  }
+  
+  .hero-title {
+    color: #333333;
+  }
+  
+  #unordered-list {
+    margin-right: 20%;
+    margin-left: 20%;
+  }
+  
+  h4 {
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 23px;
+  }
+  
+  h1 {
+    font-size: 60px;
+  }
+  
+  #hero-img {
+    border-style: solid;
+    border-color: white;
+    border-width: 5px;
+  }
+  
+  #the-div {
+    margin-left: 5%;
+    margin-right: 5%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+    text-align: center;
+  }
+  
+  #quote {
+    color: #9C7E7E;
+    margin-left: 20%;
+  }
