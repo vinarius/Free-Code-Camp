@@ -1,0 +1,19 @@
+body {
+    background: #5CA2AD;
+    background: -webkit-linear-gradient(right, #5CA2AD, #162629);
+    color: white;
+    font-family: 'Aldrich', Times New Roman;
+  }
+  
+  .center-Content {
+    display: flex;
+    justify-content: center;
+  }
+  
+  a:link, a:visited, a:active, a:hover {
+    color: #DD725F;
+  }
+  
+  ul {
+    list-style: none;
+  }
