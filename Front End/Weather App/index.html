@@ -1,0 +1,60 @@
+
+<!-- 
+The free API used from openweathermap.org
+does not function using https.
+Please use http to view this site. Thank you.
+-->
+
+<head>
+    <title>Local Weather</title>
+    <meta charset="UTF-8">
+  
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="javascript.js"></script>
+    <link rel="icon" type="image/png" href="https://dl.dropbox.com/s/5r01s9ie2g9re1c/MKDesign_Final_v1_BLACK.png?dl=0"/>
+  </head>
+  
+  <body>
+    <br>
+    <!-- nav  -->
+    <div class="main-container">
+      <div class="fixer-container">
+        <a href="http://www.krausdesign.net" target="_blank"><button id="portfolioButton" class="btn-primary">Portfolio</button></a>
+        <a href="https://www.linkedin.com/in/mark-kraus-b19858105" target="_blank"><button id="linkedInButton" class="btn-primary">LinkedIn</button></a>
+        <a href="https://twitter.com/vinar1us" target="_blank"><button id="twitterButton" class="btn-primary">Twitter</button></a>
+      </div>
+    </div>
+    <!-- nav end -->
+  
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="largeText text-center" id="heroTitle">Weather App</p>
+      </div>
+    </div>
+    <div class="text-center">
+      <p id="weatherAPI">Weather Data</p>
+      <form action="/select-metric">
+        <input type="radio" name="farenheit-celsius" id="c">Celsius
+        <input type="radio" name="farenheit-celsius" id="f" checked="checked">Fahrenheit
+      </form>
+    </div>
+    <br>
+    <div>
+      <p class=text-center>You are logged in from:</p>
+      <p id="locationData" class="text-center"></p>
+      <p id="weatherData1" class="text-center"></p>
+      <p id="humidity" class="text-center"></p>
+      <p id="windSpeed" class="text-center"></p>
+      <p id="sunrise" class="text-center"></p>
+      <p id="sunset" class="text-center"></p>
+      <p id="otherData" class="text-center"></p>
+    </div>
+    <img id="mkDesign" src="https://dl.dropbox.com/s/jjicek28xaf6zlm/MKDesign_Final_v1_WHITE.png?dl=0">
+  
+  </body>

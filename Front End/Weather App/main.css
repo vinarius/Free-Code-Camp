@@ -1,0 +1,85 @@
+body {
+    background-color: #333 !important;
+    font-size: 16px !important;
+    color: #CCCCCC !important;
+  }
+  
+  .center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #heroTitle {
+    font-size: 500%;
+    color: #fff;
+  }
+  
+  #linkedInButton {
+    height: 50px;
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background-color: #1D1F20;
+  }
+  
+      .main-container {
+        float: left;
+        position: relative;
+        left: 50%;
+      }
+      .fixer-container {
+        float: left;
+        position: relative;
+        left: -50%;
+      }
+  
+  #mkDesign {
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .largeText {
+    font-size: 18px;
+  }
+  
+  #otherData img {
+    height: 5em;
+    width: 5em;
+  }
+  
+  p {
+    margin: 0 !important;
+  }
+  
+  #portfolioButton {
+    height: 50px;
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background-color: #1D1F20;
+  }
+  
+  .smallText {
+    font-size: 14px;
+  }
+  
+  #theData {
+    margin-top: 5%;
+  }
+  
+  #twitterButton {
+    height: 50px;
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background-color: #1D1F20;
+  }
+  
+  .yellowBkgrd {
+    background-color: #FFEE1D;
+  }
