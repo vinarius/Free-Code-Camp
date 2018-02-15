@@ -1,0 +1,25 @@
+{
+  "name": "Request_Header_Parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinarius/Request_Header_Parser.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinarius/Request_Header_Parser/issues"
+  },
+  "homepage": "https://github.com/vinarius/Request_Header_Parser#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "express-useragent": "^1.0.7",
+    "proxy-addr": "^1.1.4"
+  }
+}

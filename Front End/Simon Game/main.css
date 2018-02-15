@@ -1,0 +1,198 @@
+.active {
+	background-color: red;
+	height: 42.5px;
+	width: 100%;
+	border-radius: 50%;
+}
+
+#blueButton {
+	background-color: blue;
+}
+
+#boardContainer {
+	border-radius: 50%;
+	border: 5px solid #000;
+	transition: transform 1.5s;
+	z-index: 3;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	font-family: 'VT323', monospace;
+}
+
+.buttonContainers {
+	height: 130px;
+	width: 85%;
+}
+
+.buttonLight {
+	box-shadow: 0px 0px 25px #fff;
+}
+
+.gameButton {
+	height: 85px;
+	width: 85px;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 2em;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.gameButton:active {
+	transform: translateY(2px);
+	box-shadow: 0 0 #555;
+}
+
+#greenButton {
+	background-color: green;
+}
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+.inactive {
+	background-color: #000;
+	height: 42.5px;
+	width: 100%;
+}
+
+.instructionActive {
+	background-color: #fff !important;
+}
+
+#powerButton {
+	height: 85px;
+	width: 85px;
+	background-color: #000;
+}
+
+#powerButtonContainer {
+	cursor: pointer;
+}
+
+#redButton {
+	background-color: red;
+}
+
+#score {
+	height: 42.5px;
+	width: 85px;
+	color: red;
+	background-color: #000;
+}
+
+.scoreContainer {
+	height: 42.5px;
+}
+
+#startButton {
+	border-radius: 50%;
+	border: 2px solid #000;
+	background-color: orange;
+	height: 30px;
+	width: 30px;
+	margin-top: -25px;
+	cursor: pointer;
+}
+
+#startButton:active {
+	transform: translateY(1.5px);
+}
+
+#startDescription {
+	margin-top: -35px;
+	padding-bottom: 10px;
+}
+
+#strictModeDescription {
+	margin-bottom: -20px;
+}
+
+#strictModeButton {
+	border-radius: 50%;
+	border: 2px solid #000;
+	background-color: orange;
+	height: 30px;
+	width: 30px;
+	margin-bottom: -55px;
+	cursor: pointer;
+	z-index: 4;
+}
+
+#strictModeButton:active {
+	transform: translateY(1.5px);
+}
+
+#testDiv {
+	background-color: #999;
+	display: inline;
+	cursor: pointer;
+}
+
+.verticalSpace {
+	height: 50px;
+	width: 1px;
+}
+
+#victoryDiv {
+	position: absolute;
+	margin-top: 180px;
+	opacity: 0;
+	cursor: default;
+
+	-webkit-transition: opacity 2s ease-in;
+	-moz-transition: opacity 2s ease-in;
+	-ms-transition: opacity 2s ease-in;
+	-o-transition: opacity 2s ease-in;
+	transition: opacity 2s ease-in;
+}
+
+#heckYeah {
+	position: absolute;
+	margin-top: 230px;
+	opacity: 0;
+
+	-webkit-transition: opacity 2s ease-in;
+	-moz-transition: opacity 2s ease-in;
+	-ms-transition: opacity 2s ease-in;
+	-o-transition: opacity 2s ease-in;
+	transition: opacity 2s ease-in;
+}
+
+#nopeBacon {
+	position: absolute;
+	margin-top: 260px;
+	opacity: 0;
+
+	-webkit-transition: opacity 2s ease-in;
+	-moz-transition: opacity 2s ease-in;
+	-ms-transition: opacity 2s ease-in;
+	-o-transition: opacity 2s ease-in;
+	transition: opacity 2s ease-in;
+}
+
+.victoryPositionDown {
+	transform: translateY(250px);
+}
+
+#wrapper {
+	height: 100%;
+	width: 100%;
+}
+
+#yellowButton {
+	background-color: yellow;
+	color: #000;
+}
+
+/*work on victory fade in animations*/

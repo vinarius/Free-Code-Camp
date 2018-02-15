@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+	
+	<title></title>
+
+	<!-- jQuery link -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- font link -->
+	<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+
+	<!-- 	bootstrap link -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+	<!-- reset css template -->
+	<link rel="stylesheet" type="text/css" href="reset.css" />
+
+	<!-- 	main.css link -->
+	<link rel="stylesheet" type="text/css" href="main.css" />
+
+	<!-- 	javascript.js link -->
+	<script type="text/javascript" src="javascript.js"></script>
+
+</head>
+
+<body>
+
+	<div class="d-flex justify-content-center">
+		<div id="victoryDiv">
+			You won!!<br>
+			Keep going?
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-center">
+		<button class="victoryOption1" id="heckYeah" disabled>You better believe it</button>
+		<button class="victoryOption2" id="nopeBacon" disabled>Nah the bacon's done cooking</button>
+	</div>
+
+	<div class="d-flex justify-content-center align-items-center flex-column" id="wrapper">
+
+		<div style="background-color: #999; width: 450px; height: 450px;" class="d-flex justify-content-around align-items-center flex-column" id="boardContainer">
+			
+			<div class="buttonContainers d-flex justify-content-around align-items-center flex-column">
+				<!-- RED BUTTON -->
+				<div class="gameButton d-flex justify-content-center align-items-center" id="redButton"></div>
+				<!-- Strict Mode Button -->
+				<div id="strictModeDescription">Strict Mode</div>
+				<div id="strictModeButton"></div>
+			</div>
+
+			<div class="buttonContainers d-flex justify-content-between align-items-center">	
+				<!-- BLUE BUTTON -->
+				<div class="gameButton d-flex justify-content-center align-items-center" id="blueButton"></div>
+
+
+
+				<div class="d-flex justify-content-around align-items-center flex-column">
+					<div class="d-flex justify-content-center align-items-center scoreContainer">Count</div>
+					<div class="d-flex justify-content-center align-items-center" id="score"></div>
+				</div>
+
+
+
+				<div class="d-flex flex-column" id="powerButton">
+					<div class="d-flex justify-content-center align-items-center" style="height: 42.5px; background-color: #999;">
+						On/Off
+					</div>
+					<div class="d-flex flex-row" id="powerButtonContainer">	
+						<div class="inactive" style="border-radius: 50%;" id="powerSlot"></div>
+						<div class="active" id="noPowerSlot"></div>
+					</div>
+				</div>
+				<!-- YELLOW BUTTON -->
+				<div class="gameButton d-flex justify-content-center align-items-center" id="yellowButton"></div>
+			</div>
+
+			<div class="buttonContainers d-flex justify-content-around align-items-center flex-column">
+				<!-- START BUTTON -->
+				<div id="startDescription">Start</div>
+				<div id="startButton"></div>
+				<!-- GREEN BUTTON -->
+				<div class="gameButton d-flex justify-content-center align-items-center flex-column" id="greenButton"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div id="testDiv">test button</div> -->
+
+</body>
+
+</html>
+
+
+
+	<!-- strict mode -->

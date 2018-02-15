@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Timestamp Api - Vinarius</title>
+
+    <script src="https://use.fontawesome.com/9d6d1d49a5.js"></script>
+    <!-- embeded code allowing use of font awesome icons -->
+</head>
+
+<body>
+
+    <div height=50px></div>
+
+    <div>
+        <img src="meImg.jpg" height=170px width=170px /> <br> Built by Mark "vin" Kraus <br>
+        <div>
+            <a href="https://www.linkedin.com/in/mark-kraus-b19858105/" target="blank"><i class="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
+            <!-- LinkedIn -->
+            <a href="https://twitter.com/vinar1us" target="blank"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+            <!-- twitter -->
+            <a href="https://github.com/vinarius" target="blank"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
+            <!-- github -->
+            <a href="https://www.twitch.tv/vorade" target="blank"><i class="fa fa-twitch fa-2x" aria-hidden="true"></i></a>
+            <!-- twitch -->
+        </div>
+    </div>
+
+    <br>
+
+    <p></p><strong>Objective: </strong> Build a fullstack javascript app that returns json formatted timestamp data based on what is entered in the URL.</p>
+    <br>
+
+    <ul style="padding: 0px;">
+        <ol><strong>User Story: </strong>I can pass a string as a parameter, and it will check to see whether that string contains either a unix timestamp or a natural language date (example: January 1, 2016).</ol>
+        <ol><strong>User Story: </strong> If it does, it returns both the Unix timestamp and the natural language form of that date.</ol>
+        <ol><strong>User Story: </strong>If it does not contain a date or Unix timestamp, it returns null for those properties.</ol>
+    </ul>
+    
+    <br>
+    
+    <p>Example unix input: https://timestamp-api-vinarius.herokuapp.com/1502323200</p>
+    <p>Will return the following JSON data: {"unix":1502323200,"natural":"August 10, 2017"}</p>
+    
+    <br>
+    
+    <p>Conversely, entering a natural language date: https://timestamp-api-vinarius.herokuapp.com/August 10, 2017</p>
+    <p>I get: {"unix":1502323200,"natural":"August 10, 2017"}</p>
+    
+    <br>
+    
+    <p>Erroneous input: https://timestamp-api-vinarius.herokuapp.com/bacon</p>
+    <p>I get: {"unix":null,"natural":null}</p>
+
+</body>
+
+</html>
