@@ -1,0 +1,103 @@
+html,
+body {
+	height: 100%;
+	width: 100%;
+	font-size: 2em;
+	font-weight: bold;
+	font-family: Arial;
+}
+
+.verticalSpace {
+	height: 50px;
+}
+
+.bgGrey {
+	background-color: #777;
+	height: 100px;
+	width: 100px;
+	color: #fff;
+}
+
+.bgGrey:hover {
+	cursor: pointer;
+}
+
+#logo {
+	height: 100px;
+	width: 125px;
+}
+
+#gameBoard {
+	box-shadow: 10px 10px 25px #000;
+}
+
+.one {
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+
+.two {
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-left: 1px solid #fff;
+}
+
+.three {
+	border-bottom: 1px solid #fff;
+	border-left: 1px solid #fff;
+}
+
+.four {
+	border-top: 1px solid #fff;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+
+.five {
+	border-top: 1px solid #fff;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-left: 1px solid #fff;
+}
+
+.six {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-left: 1px solid #fff;
+}
+
+.seven {
+	border-top: 1px solid #fff;
+	border-right: 1px solid #fff;
+}
+
+.eight {
+	border-top: 1px solid #fff;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #fff;
+}
+
+.nine {
+	border-top: 1px solid #fff;
+	border-left: 1px solid #fff;
+}
+
+#menu {}
+
+#menu a {
+	cursor: pointer;
+	background-color: inherit;
+}
+
+#menu a:hover {
+	background-color: #fff;
+	transition: 0.2s ease-in;
+}
+
+#announcer {
+	font-size: 0.5em;
+}
+
+#scoreDiv {
+	font-size: 0.5em;
+}

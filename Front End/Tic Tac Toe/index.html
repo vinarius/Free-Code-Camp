@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<title>MK Design</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+
+	<!-- jQuery link -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- 	bootstrap link -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+	    crossorigin="anonymous">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+	    crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+	    crossorigin="anonymous"></script>
+
+	<script src="https://use.fontawesome.com/9d6d1d49a5.js"></script>
+	<!-- embeded code allowing use of font awesome icons -->
+
+	<!-- reset css template -->
+	<link rel="stylesheet" type="text/css" href="reset.css" />
+
+	<!-- 	main.css link -->
+	<link rel="stylesheet" type="text/css" href="main.css" />
+
+	<!-- 	javascript.js link -->
+	<script type="text/javascript" src="javascript.js"></script>
+
+</head>
+
+<body>
+
+
+
+	<div style="background-color:#888; height: 100%; width: 100%;" class="d-flex justify-content-center align-items-center flex-column">
+
+		Tic Tac Toe
+
+		<div class="verticalSpace"></div>
+
+		<div style="height: 32px;">
+			<div id="announcer">What side will you play?</div>
+		</div>
+
+		<div class="verticalSpace"></div>
+
+		<!-- Menu selection -->
+		<!-- choose between x and o -->
+		<div style="height: 64px; width: 300px;">
+			<center>
+				<div id="menu">
+					<a id="chooseX">X</a> or
+					<a id="chooseO">O</a>
+				</div>
+			</center>
+			<center>
+				<div id="scoreDiv" style="display: none;">Player: 0
+					<br>Computer: 0</div>
+			</center>
+		</div>
+
+		<div class="verticalSpace"></div>
+
+		<!-- container for manipulating gameBoard and initiateGame -->
+		<div style="height: 300px; width: 300px;">
+
+			<!-- the game board -->
+			<div class="d-flex justify-content-around flex-column" id="gameBoard" style="display: none !important;">
+				<div class="d-flex justify-content-around align-items-center flex-row">
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="0" class="one" style="border-right: 1px solid #fff; border-bottom: 1px solid #fff;"></div>
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="1" class="two" style="border-right: 1px solid #fff; border-bottom: 1px solid #fff; border-left: 1px solid #fff;"></div>
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="2" class="three" style="border-bottom: 1px solid #fff; border-left: 1px solid #fff;"></div>
+				</div>
+
+				<div class="d-flex justify-content-around align-items-center flex-row">
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="3" class="four" style="border-top: 1px solid #fff; border-right: 1px solid #fff; border-bottom: 1px solid #fff;"></div>
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="4" class="five" style="border-top: 1px solid #fff; border-right: 1px solid #fff; border-bottom: 1px solid #fff; border-left: 1px solid #fff;"></div>
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="5" class="six" style="border-top: 1px solid #fff; border-bottom: 1px solid #fff; border-left: 1px solid #fff;"></div>
+				</div>
+
+				<div class="d-flex justify-content-around align-items-center flex-row">
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="6" class="seven" style="border-top: 1px solid #fff; border-right: 1px solid #fff;"></div>
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="7" class="eight" style="border-top: 1px solid #fff; border-right: 1px solid #fff; border-left: 1px solid #fff;"></div>
+					<div class="bgGrey d-flex justify-content-around align-items-center" id="8" class="nine" style="border-top: 1px solid #fff; border-left: 1px solid #fff;"></div>
+				</div>
+			</div>
+			<!-- gameBoard end -->
+
+		</div>
+		<!-- container end -->
+
+		<div class="verticalSpace"></div>
+
+		<button id="resetButton" style="font-size: 0.5em;">Reset Button</button>
+
+		<div class="verticalSpace"></div>
+
+		<!-- linkedIN twitter and logo -->
+		<div class="d-flex flex-row justify-content-center align-items-center" style="height: 90px;">
+			<a href="https://www.linkedin.com/in/mark-kraus-b19858105/" target="blank">
+				<i class="fa fa-linkedin-square fa-1x" aria-hidden="true"></i>
+			</a>
+			<!-- LinkedIn -->
+			<a href="https://twitter.com/vinar1us" target="blank">
+				<i class="fa fa-twitter-square fa-21" aria-hidden="true"></i>
+			</a>
+			<!-- twitter -->
+		</div>
+
+		<a href="http://www.krausdesign.net" target="_blank">
+			<img id="logo" src="https://dl.dropbox.com/s/5r01s9ie2g9re1c/MKDesign_Final_v1_BLACK.png?dl=0" />
+		</a>
+
+	</div>
+
+</body>
+
+</html>
+
+<!-- Add reset score button -->
