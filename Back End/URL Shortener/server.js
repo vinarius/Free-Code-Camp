@@ -53,7 +53,7 @@ function incrementUrlTotal(id, callback){
 }
   
 function validateUrlInput(str){
-  var re = /^(http|https)(?:^:\/\/$)*(?:^\.$)*(?:^\.$)*/;
+  var re = /^(http|https):\/\/[\w\.]+\.\S+/;
   return re.test(str);
 }
 
@@ -67,6 +67,9 @@ app.route('/_api/package.json')
       res.type('txt').send(data.toString());
     });
   });
+  
+// var myShortenedUrls = vinBacon.collection('urls').find({});
+//  console.log(myShortenedUrls);
   
 app.route('/')
     .get(function(req, res) {
@@ -90,7 +93,7 @@ app.route('/urlshorten/:originalurl(*)')
             console.log("Inserting URL.");
             var shortenedURL;
             get_By_Id(urlTotalId, (doc) => {
-              shortenedURL = "/vin" + (doc.urlTotal + 1).toString();
+              shortenedURL = appUrl + "vin" + (doc.urlTotal + 1).toString();
               console.log('shortenedURL:',shortenedURL);
               vinBacon.collection('urls').insertOne({url: myUrlObject.originalUrl, shortenedUrl: shortenedURL}, (err, newDoc) => {
               if(err) {console.error(err);}
@@ -121,7 +124,8 @@ app.route('/urlshorten/:originalurl(*)')
   
   app.route('/*')
     .get((req, res) => {
-    vinBacon.collection('urls').findOne({shortenedUrl: req.url}, (err, doc)=>{
+    const appUrl2 = 'https://url-shortener-vinarius.glitch.me';
+    vinBacon.collection('urls').findOne({shortenedUrl: appUrl2 + req.url}, (err, doc)=>{
       if(err) {console.error(err);}
       if(doc == null){
         res.status(404);
@@ -147,7 +151,7 @@ app.use(function(err, req, res, next) {
   }  
 })
   
-  app.listen(process.env.PORT || 5000, function () {
+  app.listen(process.env.PORT, function () {
     console.log('Node.js listening ...');
     get_By_Id(urlTotalId, (doc) => {
       console.log("Url total in database:", doc.urlTotal);
