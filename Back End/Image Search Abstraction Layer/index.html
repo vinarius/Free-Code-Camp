@@ -1,0 +1,82 @@
+<!-- External query api uses a trial Microsoft Azure key registered 3/18/18 and expires -->
+<!-- 30 days after registration after which requires payment. App will no longer function -->
+<!-- after 4/17/18. -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Image Search Abstraction Layer Microservice</title>
+    <link rel="icon" type="image/png" href="https://dl.dropbox.com/s/5r01s9ie2g9re1c/MKDesign_Final_v1_BLACK.png?dl=0" />
+    <!-- title icon -->
+    <meta name="description" content="Vinarius - building the internet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div>
+        <img src="https://cdn.glitch.com/a93c96e2-ba1a-47c8-a4e0-21c7d52610b7%2FmeImg.jpg?1511813998271" height="170px" width="170px"
+        />
+        <br> Built by Mark "vin" Kraus
+        <br>
+        <div>
+            <a href="https://www.linkedin.com/in/mark-kraus-b19858105/" target="blank">
+                <i class="fa fa-linkedin-square fa-2x" aria-hidden="true"></i>
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://twitter.com/vinar1us" target="blank">
+                <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+            </a>
+            <!-- twitter -->
+            <a href="https://github.com/vinarius" target="blank">
+                <i class="fa fa-github-square fa-2x" aria-hidden="true"></i>
+            </a>
+            <!-- github -->
+            <a href="https://www.twitch.tv/vorade" target="blank">
+                <i class="fa fa-twitch fa-2x" aria-hidden="true"></i>
+            </a>
+            <!-- twitch -->
+        </div>
+    </div>
+
+    <br>
+
+    <h1>
+        FreeCodeCamp API Basejump: URL Shortener Microservice
+    </h1>
+
+    <ul style="padding: 0px;">
+        <ol>
+            <strong>User Story: </strong> I can get the image URLs, alt text and page urls for a set of images relating to a given
+            search string.</ol>
+        <ol>
+            <strong>User Story: </strong> I can paginate through the responses by adding a ?offset=2 parameter to the URL.</ol>
+        <ol>
+            <strong>User Story: </strong> I can get a list of the most recently submitted search strings.</ol>
+    </ul>
+
+    <br>
+
+    <main>
+        <p>Search for an image to receive data:</p>
+        <form method="POST" action="/">
+            <input type="text" maxlength="100" placeholder="Image I want to search for">
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+        crossorigin="anonymous"></script>
+    <script src="/client.js"></script>
+
+    <script src="https://use.fontawesome.com/9d6d1d49a5.js"></script>
+    <!-- embeded code allowing use of font awesome icons -->
+
+</body>
+
+</html>
