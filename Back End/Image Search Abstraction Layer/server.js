@@ -1,13 +1,14 @@
+// External query api uses a trial Microsoft Azure key registered 3/18/18 and expires -->
+// 30 days after registration after which requires payment. App will no longer function
+// after 4/17/18.
+
 const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
-const apiKey = process.env.APISUBKEY;
-const path = process.cwd();
 const routes = require('./app/routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const searchTerm = require('./app/searchTermSchema');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
