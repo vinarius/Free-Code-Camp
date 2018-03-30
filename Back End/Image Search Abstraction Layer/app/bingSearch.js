@@ -1,13 +1,29 @@
 'use strict';
 let https = require('https');
 
-let body = '';
-
 module.exports = (term, res) => {
 
     function myCallbackFunction(res, input) {
+
+        function dataValue(altText, thumbnailUrl, contentUrl){
+            this.altText = altText;
+            this.thumbnailUrl = thumbnailUrl;
+            this.contentUrl = contentUrl;
+        }
+
         var responseData = JSON.parse(input);
-        res.send(responseData);
+        var output = [];
+        for(let i = 0; i < responseData.value.length; i++){
+            output.push(responseData.value[i]);
+        }
+
+        var desiredResult = [];
+        for(let i = 0; i<output.length; i++){
+            let dataObject = new dataValue(output[i].insightsMetadata.bestRepresentativeQuery.text, output[i].thumbnailUrl, output[i].hostPageUrl);
+            desiredResult.push(dataObject);
+        }
+
+        res.send(desiredResult);
     }
 
     let subscriptionKey = process.env.APISUBKEY;
@@ -15,6 +31,7 @@ module.exports = (term, res) => {
     let path = '/bing/v7.0/images/search';
 
     let response_handler = function (response) {
+        let body = '';
         response.on('data', function (d) {
             body += d;
         });
