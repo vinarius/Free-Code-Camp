@@ -41,19 +41,19 @@ module.exports = (app, db) => {
                             }
                             console.log('New searchTerm saved to database.');
                             //hit bing api and search
-                            bingSearch(req.params.searchTerm, res);
+                            bingSearch(req.params.searchTerm, res, req.query.offset);
                         });
                     } else {
                         // res.json(results);
                         console.log('searchTerm found in database.');
                         //hit bing api and search
-                        bingSearch(req.params.searchTerm, res);
+                        bingSearch(req.params.searchTerm, res, req.query.offset);
                     }
                 });
 
         });
 
-    app.route('/remove')
+    app.route('/api/remove')
         .get((req, res) => {
             searchTerm.remove(function (err, product) {
                 if (err) res.send(err);

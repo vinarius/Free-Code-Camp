@@ -1,11 +1,11 @@
 'use strict';
 let https = require('https');
 
-module.exports = (term, res) => {
+module.exports = (term, res, offset) => {
 
-    function myCallbackFunction(res, input) {
+    function myCallbackFunction(res, input, offset) {
 
-        function dataValue(altText, thumbnailUrl, contentUrl){
+        function dataValue(altText, thumbnailUrl, contentUrl) {
             this.altText = altText;
             this.thumbnailUrl = thumbnailUrl;
             this.contentUrl = contentUrl;
@@ -13,17 +13,25 @@ module.exports = (term, res) => {
 
         var responseData = JSON.parse(input);
         var output = [];
-        for(let i = 0; i < responseData.value.length; i++){
+        for (let i = 0; i < responseData.value.length; i++) {
             output.push(responseData.value[i]);
         }
 
         var desiredResult = [];
-        for(let i = 0; i<output.length; i++){
-            let dataObject = new dataValue(output[i].insightsMetadata.bestRepresentativeQuery.text, output[i].thumbnailUrl, output[i].hostPageUrl);
-            desiredResult.push(dataObject);
-        }
 
-        res.send(desiredResult);
+        if (offset) {
+            for (let i = Number(offset); i < output.length; i++) {
+                let dataObject = new dataValue(output[i].insightsMetadata.bestRepresentativeQuery.text, output[i].thumbnailUrl, output[i].hostPageUrl);
+                desiredResult.push(dataObject);
+            }
+            res.send(desiredResult);
+        } else {
+            for (let i = 0; i < output.length; i++) {
+                let dataObject = new dataValue(output[i].insightsMetadata.bestRepresentativeQuery.text, output[i].thumbnailUrl, output[i].hostPageUrl);
+                desiredResult.push(dataObject);
+            }
+            res.send(desiredResult);
+        }
     }
 
     let subscriptionKey = process.env.APISUBKEY;
@@ -41,7 +49,7 @@ module.exports = (term, res) => {
             //     if (header.startsWith("bingapis-") || header.startsWith("x-msedge-"))
             //         console.log(header + ": " + response.headers[header]);
             // console.log('\nJSON Response:\n');
-            myCallbackFunction(res, body);
+            myCallbackFunction(res, body, offset);
         });
         response.on('error', function (e) {
             console.log('Error: ' + e.message);
