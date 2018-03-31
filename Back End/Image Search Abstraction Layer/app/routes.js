@@ -25,41 +25,48 @@ module.exports = (app, db) => {
 
     app.route('/api/imagesearch/:searchTerm*')
         .get((req, res) => {
+
+            if (req.query.offset != undefined) {
+                var myData = new searchTerm({
+                    searchValue: req.params.searchTerm,
+                    offset: req.query.offset.toString()
+                });
+            } else {
+                var myData = new searchTerm({
+                    searchValue: req.params.searchTerm,
+                    offset: 'undefined'
+                });
+            }
+
             searchTerm.find({
                     "searchValue": req.params.searchTerm
                 })
                 .exec(function (err, results) {
                     if (err) res.send(err);
-                    if (results[0] == undefined) {
-                        var myData = new searchTerm({
-                            searchValue: req.params.searchTerm,
-                            offset: req.query.offset
-                        });
-                        myData.save(function (err) {
-                            if (err) {
-                                res.send(err);
-                            }
-                            console.log('New searchTerm saved to database.');
-                            //hit bing api and search
-                            bingSearch(req.params.searchTerm, res, req.query.offset);
-                        });
-                    } else {
-                        // res.json(results);
-                        console.log('searchTerm found in database.');
-                        //hit bing api and search
+                    myData.save(function (err) {
+                        if (err) {
+                            res.send(err);
+                        }
+                        console.log('New searchTerm saved to database.');
                         bingSearch(req.params.searchTerm, res, req.query.offset);
-                    }
+                    });
                 });
-
         });
 
-    app.route('/api/remove')
+    app.route('/api/latestimagesearch')
         .get((req, res) => {
-            searchTerm.remove(function (err, product) {
-                if (err) res.send(err);
-                res.send(product);
-            });
+            searchTerm.find({}, {}, { sort: { 'createdAt' : -1 }, limit: 10 }, function(err, post) {
+                res.send(post);
+              });
         });
+
+    // app.route('/api/remove')
+    //     .get((req, res) => {
+    //         searchTerm.remove(function (err, product) {
+    //             if (err) res.send(err);
+    //             res.type('txt').send("Searchterms collection cleared.");
+    //         });
+    //     });
 
     app.use((req, res, next) => {
         res.status(404);

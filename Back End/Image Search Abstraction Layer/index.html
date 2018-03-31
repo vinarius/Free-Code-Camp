@@ -62,11 +62,15 @@
     <br>
 
     <main>
-        <p>Search for an image to receive data:</p>
-        <form method="POST" action="/">
-            <input type="text" maxlength="100" placeholder="Image I want to search for">
-            <button type="submit">Submit</button>
-        </form>
+        <p>Search for an image to receive data. There are different routes you can use.</p>
+        <ul>
+            <li>'/' : returns the home page you're viewing now.</li>
+            <li>'/api/imagesearchall' : returns all searches stored in the database.</li>
+            <li>'/api/imagesearch/:searchterm*' : returns json data containing alt text, a thumbnail url, and the website hosting this content.</li>
+            <li>'/api/latestimagesearch' : returns the 10 most recent searches.</li>
+            <li>Every other route returns a 404 status.</li>
+        </ul>
+
     </main>
 
     <!-- Your web-app is https, so your scripts need to be too -->
