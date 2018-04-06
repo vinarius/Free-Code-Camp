@@ -5,14 +5,17 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1")
         link(rel="icon", type="image/png", href="https://dl.dropbox.com/s/jjicek28xaf6zlm/MKDesign_Final_v1_WHITE.png?dl=0")
         block styles
-            //- Bootstrap css
-            link(rel="stylesheet", href="https:///maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css", integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M", crossorigin="anonymous")
             //- Reset css
             link(rel="stylesheet", href="../../styles/reset.css", type="text/css")
+            //- Bootstrap css
+            link(rel="stylesheet", href="https:///maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css", integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M", crossorigin="anonymous")
             //- Main css
             link(rel="stylesheet", href="../../styles/main.css", type="text/css")
     body
-        block content
+        include navbar.pug
+        Main
+            div(style="height: 60px;")
+            block content
         include footer.pug
         block scripts
             script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")

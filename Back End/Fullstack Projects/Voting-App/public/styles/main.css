@@ -1,0 +1,26 @@
+a, a:hover, a:active, a:visited {
+    text-decoration: none;
+}
+
+#facebookLoginBtn {
+    background-color: #888;
+    color: #eee;
+    transition: 0.5s;
+    height: 35px;
+    width: 75px;
+    border-radius: 5px;
+}
+
+#facebookLoginBtn:hover {
+    background-color: #eee;
+    color: #555;
+}
+
+footer {
+    min-height: 50px;
+    background-color: #eee;
+}
+
+.row {
+    margin: 0px;
+}

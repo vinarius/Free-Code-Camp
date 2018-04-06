@@ -4,7 +4,10 @@ const mongo = require('mongodb');
 const path = process.cwd();
 const port = process.env.PORT || 8080;
 const routes = require('./app/routes');
+const authRoutes = require('./app/authRoutes');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const passportSetup = require('./app/passport-setup');
 
 const app = express();
 
@@ -16,6 +19,7 @@ app.use(bodyParser.urlencoded({
 app.set('view engine', 'pug');
 app.set('views', './public/views');
 
+app.use('/auth', authRoutes);
 routes(app);
 
 app.listen(port, (err) => {
