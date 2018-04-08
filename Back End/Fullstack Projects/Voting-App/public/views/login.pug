@@ -1,8 +1,8 @@
 extends components/layout
 
 block content
-    a(href="/auth/facebook", style="margin: 50px; height: 35px; width: 75px;")
-        #facebookLoginBtn.d-flex.align-items-center.justify-content-center Facebook
-    br
-    br
-    p need to figure out positioning bs
+    .d-flex.flex-row.justify-content-center
+        a(href="/auth/facebook")
+            #facebookLoginBtn.d-flex.align-items-center.justify-content-center Facebook
+        a(href="/auth/google")
+            #googleLoginBtn.d-flex.align-items-center.justify-content-center Google

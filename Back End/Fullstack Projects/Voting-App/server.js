@@ -6,8 +6,9 @@ const port = process.env.PORT || 8080;
 const routes = require('./app/routes');
 const authRoutes = require('./app/authRoutes');
 const bodyParser = require('body-parser');
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 const passportSetup = require('./app/passport-setup');
+const passport = require('passport');
 
 const app = express();
 
@@ -18,9 +19,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.set('view engine', 'pug');
 app.set('views', './public/views');
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIEKEY]
+}));
 
 app.use('/auth', authRoutes);
 routes(app);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.listen(port, (err) => {
     if (err) {
