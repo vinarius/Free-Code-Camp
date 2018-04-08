@@ -8,6 +8,7 @@ router.get('/login', (req, res) =>{
 
 router.get('/logout', (req, res) => {
     //handle with passport
+    req.logout();
     res.render('logout');
 });
 //------------
@@ -27,6 +28,7 @@ router.get('/google', passport.authenticate('google', {
     scope: ['profile']
 }));
 
+//callback for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     res.render('success');
 });

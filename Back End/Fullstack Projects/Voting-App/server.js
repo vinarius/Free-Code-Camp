@@ -1,6 +1,6 @@
 const dotenv = require('dotenv').config();
 const express = require('express');
-const mongo = require('mongodb');
+const mongoose = require('mongoose');
 const path = process.cwd();
 const port = process.env.PORT || 8080;
 const routes = require('./app/routes');
@@ -30,9 +30,17 @@ routes(app);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.listen(port, (err) => {
+mongoose.connect(process.env.DBURI, (err) => {
     if (err) {
-        console.error('Error starting node app:', err);
+        console.error(err);
+    } else {
+        console.log('Mongoose connected to database.');
+        app.listen(port, (err) => {
+            if (err) {
+                console.error('Error starting node app:', err);
+            } else {
+                console.log("Node app listening on port:", port);
+            }
+        });
     }
-    console.log("Node app listening on port:", port);
 });

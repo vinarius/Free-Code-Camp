@@ -2,6 +2,7 @@ const dotenv = require('dotenv').config();
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook');
 const GoogleStrategy = require('passport-google-oauth20');
+const User = require('../models/user-model');
 
 passport.use(
     new FacebookStrategy({
@@ -9,7 +10,7 @@ passport.use(
         clientID: process.env.FACEBOOKCLIENTID,
         clientSecret: process.env.FACEBOOKCLIENTSECRET,
         callbackURL: '/auth/facebook/redirect'
-    }, (accessToken, refreshToken, profile, done) =>{
+    }, (accessToken, refreshToken, profile, done) => {
         //passport callback function
         console.log('passport facebook callback function fired');
     })
@@ -21,8 +22,24 @@ passport.use(
         clientSecret: process.env.GOOGLECLIENTSECRET,
         callbackURL: '/auth/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
-        //passport callback function
-        // console.log('passport google callback function fired');
-        console.log(profile);
+        //check if user already exists in database
+        User.findOne({
+            googleId: profile.id
+        }).then((currentUser) => {
+            if (currentUser) {
+                //found a user in database, do something
+                console.log("User found: \n", currentUser);
+            } else {
+                //new user, create new record in database
+                new User({
+                    username: profile.displayName,
+                    googleId: profile.id
+                }).save().then((newUser) => {
+                    console.log("New user created: \n", newUser);
+                });
+            }
+        })
     })
 );
+
+//currently on 14
