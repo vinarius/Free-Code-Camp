@@ -2,6 +2,14 @@ a, a:hover, a:active, a:visited {
     text-decoration: none;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.common-font-weight {
+    font-weight: 400;
+}
+
 #facebookLoginBtn {
     background-color: #888;
     color: #eee;
@@ -17,8 +25,20 @@ a, a:hover, a:active, a:visited {
 }
 
 footer {
-    min-height: 50px;
     background-color: #eee;
+}
+
+.footer-icon {
+    color: #343A40;
+    margin: 5px 5px;
+    /* margin-bottom: 5px; */
+    transition: margin-left 0.5s, margin-right 0.5s;
+}
+
+.footer-icon:hover {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #666;
 }
 
 #googleLoginBtn {
