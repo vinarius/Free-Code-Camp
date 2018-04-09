@@ -3,8 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = process.cwd();
 const port = process.env.PORT || 8080;
-const routes = require('./app/routes');
-const authRoutes = require('./app/authRoutes');
+const routes = require('./app/routes/routes');
+const authRoutes = require('./app/routes/authRoutes');
+const profileRoutes = require('./app/routes/profile-routes');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const passportSetup = require('./app/passport-setup');
@@ -27,6 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRoutes);
+app.use('/user', profileRoutes);
 routes(app);
 
 mongoose.connect(process.env.DBURI, (err) => {

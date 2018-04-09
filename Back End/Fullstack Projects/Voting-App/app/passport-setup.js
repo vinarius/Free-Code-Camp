@@ -38,7 +38,7 @@ passport.use(
         }).then((currentUser) => {
             if (currentUser) {
                 //found a user in database, do something
-                console.log("User found: \n");
+                console.log("User found: " + profile.displayName + "\n");
                 done(null, currentUser);
             } else {
                 //new user, create new record in database
@@ -46,12 +46,10 @@ passport.use(
                     username: profile.displayName,
                     googleId: profile.id
                 }).save().then((newUser) => {
-                    console.log("New user created: \n");
+                    console.log("New user created: " + profile.displayName + "\n");
                     done(null, newUser);
                 });
             }
         })
     })
 );
-
-//currently on 14

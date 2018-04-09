@@ -19,7 +19,7 @@ router.get('/facebook', passport.authenticate('facebook',{
 }));
 
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
-    res.render('success');
+    res.redirect('/user/dashboard');
 });
 //------------
 
@@ -30,9 +30,7 @@ router.get('/google', passport.authenticate('google', {
 
 //callback for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.render('success', {
-        username: req.user.username
-    });
+    res.redirect('/user/dashboard');
 });
 //------------
 
