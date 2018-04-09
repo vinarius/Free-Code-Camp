@@ -23,12 +23,11 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIEKEY]
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/auth', authRoutes);
 routes(app);
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 mongoose.connect(process.env.DBURI, (err) => {
     if (err) {

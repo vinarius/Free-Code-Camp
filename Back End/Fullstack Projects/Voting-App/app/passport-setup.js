@@ -4,6 +4,16 @@ const FacebookStrategy = require('passport-facebook');
 const GoogleStrategy = require('passport-google-oauth20');
 const User = require('../models/user-model');
 
+passport.serializeUser((user, done)=>{
+    done(null, user.id);
+});
+
+passport.deserializeUser((id, done)=>{
+    User.findById(id).then((user)=>{
+        done(null, user);
+    });
+});
+
 passport.use(
     new FacebookStrategy({
         //options for the facebook strategy
@@ -28,14 +38,16 @@ passport.use(
         }).then((currentUser) => {
             if (currentUser) {
                 //found a user in database, do something
-                console.log("User found: \n", currentUser);
+                console.log("User found: \n");
+                done(null, currentUser);
             } else {
                 //new user, create new record in database
                 new User({
                     username: profile.displayName,
                     googleId: profile.id
                 }).save().then((newUser) => {
-                    console.log("New user created: \n", newUser);
+                    console.log("New user created: \n");
+                    done(null, newUser);
                 });
             }
         })
