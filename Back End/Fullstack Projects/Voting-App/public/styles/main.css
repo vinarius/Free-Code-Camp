@@ -26,6 +26,7 @@ a, a:hover, a:active, a:visited {
 
 footer {
     background-color: #eee;
+    height: 42px;
 }
 
 .footer-icon {
