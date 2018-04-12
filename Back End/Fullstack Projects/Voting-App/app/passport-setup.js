@@ -29,8 +29,8 @@ passport.use(
 passport.use(
     new GoogleStrategy({
         clientID: process.env.GOOGLECLIENTID,
-        clientSecret: process.env.GOOGLECLIENTSECRET,
-        callbackURL: '/auth/google/redirect'
+        clientSecret: process.env.GOOGLECLIENTSECRET
+        // callbackURL: '/auth/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
         //check if user already exists in database
         User.findOne({

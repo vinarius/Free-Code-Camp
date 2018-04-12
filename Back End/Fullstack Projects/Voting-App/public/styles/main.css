@@ -32,13 +32,9 @@ footer {
 .footer-icon {
     color: #343A40;
     margin: 5px 5px;
-    /* margin-bottom: 5px; */
-    transition: margin-left 0.5s, margin-right 0.5s;
 }
 
 .footer-icon:hover {
-    margin-left: 10px;
-    margin-right: 10px;
     color: #666;
 }
 
@@ -54,6 +50,10 @@ footer {
 #googleLoginBtn:hover {
     background-color: #eee;
     color: #555;
+}
+
+.margin-side-10 {
+    margin: 0 10px;
 }
 
 .row {
