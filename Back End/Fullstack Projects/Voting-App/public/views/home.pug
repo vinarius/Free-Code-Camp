@@ -29,3 +29,19 @@ block content
             li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
             li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see the results of polls in chart form.
             li <span class="bold">User Story:</span> As an authenticated user, if I don't like the options on a poll, I can create a new option.
+    br
+    br
+    .d-flex.justify-content-center
+        form#myForm.d-inline-flex.flex-column(style="background-color: #ddd;")
+            p.d-flex.justify-content-center My Form
+            br
+            input(type="text", name="firstName", placeholder="First Name" required)
+            input(type="text", name="lastName", placeholder="Last Name" required)
+            br
+            .d-flex.justify-content-around.align-items-center
+                input(type="radio", name="gender", value="male" checked)
+                div Male
+                input(type="radio", name="gender", value="female")
+                div Female
+            br
+            button#myFormSubmit Submit

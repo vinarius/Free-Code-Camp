@@ -7,6 +7,9 @@ module.exports = (app) => {
         .get((req, res) => {
             res.render('home', {title: "Vin Votes | Home"});
         });
+        // .post((req, res)=>{
+        //     console.log(req);
+        // });
 
     app.route('/polls')
         .get((req, res)=>{

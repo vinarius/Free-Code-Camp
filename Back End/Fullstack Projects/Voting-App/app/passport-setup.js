@@ -18,8 +18,8 @@ passport.use(
     new FacebookStrategy({
         //options for the facebook strategy
         clientID: process.env.FACEBOOKCLIENTID,
-        clientSecret: process.env.FACEBOOKCLIENTSECRET,
-        callbackURL: '/auth/facebook/redirect'
+        clientSecret: process.env.FACEBOOKCLIENTSECRET
+        // callbackURL: '/auth/facebook/redirect'
     }, (accessToken, refreshToken, profile, done) => {
         //passport callback function
         console.log('passport facebook callback function fired');
@@ -29,8 +29,8 @@ passport.use(
 passport.use(
     new GoogleStrategy({
         clientID: process.env.GOOGLECLIENTID,
-        clientSecret: process.env.GOOGLECLIENTSECRET
-        // callbackURL: '/auth/google/redirect'
+        clientSecret: process.env.GOOGLECLIENTSECRET,
+        callbackURL: '/auth/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
         //check if user already exists in database
         User.findOne({
