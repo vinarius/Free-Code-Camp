@@ -1,4 +1,5 @@
 const path = process.cwd();
+const mongoose = require('mongoose');
 
 module.exports = (app) => {
 
@@ -6,6 +7,12 @@ module.exports = (app) => {
         .get((req, res) => {
             res.render('home', {title: "Vin Votes | Home"});
         });
+
+    app.route('/polls')
+        .get((req, res)=>{
+            
+            res.render('polls', {title: "Vin Votes | Polls"});
+        })
 
     app.use((req, res, next)=>{
         res.status(404);
