@@ -1,4 +1,12 @@
-a, a:hover, a:active, a:visited {
+* {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.25em;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
     text-decoration: none;
 }
 
@@ -26,7 +34,8 @@ a, a:hover, a:active, a:visited {
 
 footer {
     background-color: #eee;
-    height: 42px;
+    height: 45px;
+    font-family: 'Gaegu', cursive;
 }
 
 .footer-icon {
@@ -54,6 +63,11 @@ footer {
 
 .margin-side-10 {
     margin: 0 10px;
+}
+
+#myForm {
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .row {

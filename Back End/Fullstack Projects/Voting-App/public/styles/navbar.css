@@ -1,0 +1,34 @@
+nav {
+    height: 45px;
+    font-family: 'Gaegu', cursive;
+}
+
+nav a {
+    height: 100%;
+    padding: 0px;
+}
+
+.nav-button {
+    color: #fff;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.nav-button:hover {
+    color: #555 !important;
+    background-color: #eee;
+}
+
+.navbar {
+    padding: 0px;
+}
+
+#navbarNav,
+#navbarNav ul,
+#navbarNav ul a,
+#navbarNav ul a li {
+    height: 100%;
+}
+
+.nav-link {
+    padding: 0px;
+}
