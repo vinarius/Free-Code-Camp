@@ -6,17 +6,33 @@ $(document).ready(()=>{
         }
     }
 
-    $("#myFormSubmit").click((event)=>{
+    let myForm = document.getElementById("myForm");
+    let request = new XMLHttpRequest();
+
+    myForm.addEventListener('submit', (event)=>{
         event.preventDefault();
-        let myDocLoadRequest = new XMLHttpRequest();
-        myDocLoadRequest.open('GET', '/api/querydb');
-        myDocLoadRequest.onload = () => {
-            let text = JSON.parse(myDocLoadRequest.responseText);
-            renderHTML(text);
-            // console.log(JSON.parse(myDocLoadRequest.responseText));
-        };
-        myDocLoadRequest.send();
+        let formData = new FormData(myForm);
+        request.open('POST', '/api/querydb');
+        request.send(formData);
+        request.onload = (data) => {
+            console.log(JSON.parse(request.responseText));
+        }
     });
+
+    // $("#myFormSubmit").click((event)=>{
+    //     event.preventDefault();
+    //     let myFormObj = new FormData();
+    //     myFormObj.append()
+    //     let myDocLoadRequest = new XMLHttpRequest();
+    //     myDocLoadRequest.open('POST', '/api/querydb');
+    //     myDocLoadRequest.onload = () => {
+    //         // let text = JSON.parse(myDocLoadRequest.responseText);
+    //         // renderHTML(text);
+    //         // console.log(JSON.parse(myDocLoadRequest.responseText));
+
+    //     };
+    //     myDocLoadRequest.send("foo=bar&lorem=ipsum");
+    // });
 
 
     // $.ajax({

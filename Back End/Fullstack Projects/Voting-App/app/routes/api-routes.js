@@ -12,4 +12,9 @@ router.get('/querydb', (req, res) => {
     })
 });
 
+router.post('/querydb', (req, res) => {
+    console.log('post received, querydb');
+    res.send(req);
+});
+
 module.exports = router;
