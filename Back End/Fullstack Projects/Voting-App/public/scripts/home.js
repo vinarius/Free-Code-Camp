@@ -1,44 +1,30 @@
 $(document).ready(()=>{
 
-    function renderHTML(paragraph){
-        for(let i=0; i<paragraph.length; i++){
-            $("#testDiv" + i).html(paragraph[i].username);
-        }
-    }
-
-    let myForm = document.getElementById("myForm");
-    let request = new XMLHttpRequest();
-
-    myForm.addEventListener('submit', (event)=>{
-        event.preventDefault();
-        let formData = new FormData(myForm);
-        request.open('POST', '/api/querydb');
-        request.send(formData);
-        request.onload = (data) => {
-            console.log(JSON.parse(request.responseText));
-        }
+    let myForm = document.querySelector('form');
+    myForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        let firstName = $("#firstName");
+        let lastName = $("#lastName");
+        let checkedBtn = $(".formBtn:checked").val();
+        let myObj = {
+            firstName: firstName.val(),
+            lastName: lastName.val(),
+            gender: checkedBtn
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/api/querydb',
+            data: myObj,
+            success: function(res){
+                console.log(res);
+            },
+            error: function(){
+                alert('error occured in ajax');
+            }
+        });
     });
 
-    // $("#myFormSubmit").click((event)=>{
-    //     event.preventDefault();
-    //     let myFormObj = new FormData();
-    //     myFormObj.append()
-    //     let myDocLoadRequest = new XMLHttpRequest();
-    //     myDocLoadRequest.open('POST', '/api/querydb');
-    //     myDocLoadRequest.onload = () => {
-    //         // let text = JSON.parse(myDocLoadRequest.responseText);
-    //         // renderHTML(text);
-    //         // console.log(JSON.parse(myDocLoadRequest.responseText));
-
-    //     };
-    //     myDocLoadRequest.send("foo=bar&lorem=ipsum");
-    // });
-
-
-    // $.ajax({
-    //     method: "GET",
-    //     url: "/",
-    //     data:
-    // })
-
 }); //end of doc ready
+
+//instead of logging the response to the client console,
+//work with the data and append it as html to the front end

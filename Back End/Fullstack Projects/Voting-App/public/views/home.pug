@@ -32,16 +32,16 @@ block content
     br
     br
     .d-flex.justify-content-center
-        form#myForm.d-inline-flex.flex-column(style="background-color: #ddd;")
+        form#myForm.d-inline-flex.flex-column(style="background-color: #ddd;", action="/api/querydb", method="POST")
             p.d-flex.justify-content-center My Form
             br
-            input(type="text", name="firstName", placeholder="First Name" required)
-            input(type="text", name="lastName", placeholder="Last Name" required)
+            input#firstName(type="text", name="firstName", placeholder="First Name" required)
+            input#lastName(type="text", name="lastName", placeholder="Last Name" required)
             br
             .d-flex.justify-content-around.align-items-center
-                input(type="radio", name="gender", value="male" checked)
+                input.formBtn(type="radio", name="gender", value="male" required)
                 div Male
-                input(type="radio", name="gender", value="female")
+                input.formBtn(type="radio", name="gender", value="female")
                 div Female
             br
             button#myFormSubmit Submit
