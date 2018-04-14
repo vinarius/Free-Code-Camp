@@ -5,8 +5,11 @@ block append styles
     link(rel="stylesheet", type="text/css", href="../../styles/dashboard.css")
 
 block content
+    //- - var userData = user
     .d-flex.justify-content-center
         h1= welcome
     br
-    #dashboardHero.d-flex.justify-content-center
-        p My Polls
+    #dashboardHero.d-flex.flex-column.align-items-center
+        .d-flex.justify-content-center.polls-button View Polls
+        .d-flex.justify-content-center
+            p= user

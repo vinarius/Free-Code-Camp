@@ -10,9 +10,6 @@ module.exports = (app) => {
 
     app.route('/polls')
         .get((req, res) => {
-            // res.render('polls', {
-            //     title: "Vin Votes | Polls"
-            // });
             renderPage(req, res, 'Polls', req.user);
         })
 

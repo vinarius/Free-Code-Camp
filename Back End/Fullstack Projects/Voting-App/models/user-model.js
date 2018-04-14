@@ -6,7 +6,7 @@ const userSchema = new Schema({
     googleId: String,
     polls: Number,
     timesVoted: Number
-}); 
+});
 
 const User = mongoose.model('user', userSchema);
 
