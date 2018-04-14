@@ -1,7 +1,6 @@
 #googleLoginBtn {
     background-color: #888;
     color: #eee;
-    transition: 0.5s;
     height: 35px;
     width: 75px;
     border-radius: 5px;
@@ -15,8 +14,9 @@
 
 #login-popup-container {
     padding: 10px;
-    z-index: 3;
-    position: fixed;
+    position: absolute;
+    margin-left: 90vw;
+    opacity: 0;
 }
 
 nav {
@@ -31,7 +31,7 @@ nav a {
 
 .nav-button {
     color: #fff;
-    transition: color 0.3s, background-color 0.3s;
+    transition: color 0.25s, background-color 0.25s;
 }
 
 .nav-button:hover {
@@ -52,4 +52,8 @@ nav a {
 
 .nav-link {
     padding: 0px;
+}
+
+.padding10 {
+    padding: 10px;
 }

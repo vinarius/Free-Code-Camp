@@ -18,9 +18,9 @@ html(lang="en")
             link(rel="stylesheet", href="../../styles/navbar.css", type="text/css")
     body
         include navbar.pug
-        Main
+        Main.d-flex.flex-column
             #underNav(style="height: 47.81px;")
-            //- include login.pug
+            include login.pug
             block content
         include footer.pug
         block scripts

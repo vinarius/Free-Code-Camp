@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const checkAuth = require('../isAuthenticated');
 const passport = require('passport');
+const User = require('../../models/user-model');
 
 router.get('/dashboard', checkAuth, (req, res) => {
     res.render('dashboard', {title: 'Vin Votes | Dashboard'});

@@ -18,11 +18,11 @@ $(document).ready(() => {
     //login button
     $("#loginNavBtn").click(() => {
         if($("#login-popup-container").hasClass('d-none')){
-            $("#login-popup-container").removeClass('d-none').addClass('d-flex');
-            // $("#login-popup-container").fadeIn('fast');
+            $("#login-popup-container").removeClass('d-none').addClass('d-inline-flex');
+            $("#login-popup-container").animate({opacity: '1'});
         } else {
-            $("#login-popup-container").removeClass('d-flex').addClass('d-none');
-            // $("#login-popup-container").fadeOut('fast');
+            $("#login-popup-container").removeClass('d-inline-flex').addClass('d-none');
+            $("#login-popup-container").animate({opacity: '0'});
         }
     });
 
