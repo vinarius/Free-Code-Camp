@@ -4,6 +4,6 @@ module.exports = (req, res, next) => {
         next();
     } else {
         //user is not logged in, redirect to login screen
-        res.redirect('/auth/login');
+        res.redirect('/');
     }
 }

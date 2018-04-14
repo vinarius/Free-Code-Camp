@@ -47,20 +47,6 @@ footer {
     color: #666;
 }
 
-#googleLoginBtn {
-    background-color: #888;
-    color: #eee;
-    transition: 0.5s;
-    height: 35px;
-    width: 75px;
-    border-radius: 5px;
-}
-
-#googleLoginBtn:hover {
-    background-color: #eee;
-    color: #555;
-}
-
 .margin-side-10 {
     margin: 0 10px;
 }

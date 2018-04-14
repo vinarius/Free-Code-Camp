@@ -15,4 +15,15 @@ $(document).ready(() => {
         });
     }
 
+    //login button
+    $("#loginNavBtn").click(() => {
+        if($("#login-popup-container").hasClass('d-none')){
+            $("#login-popup-container").removeClass('d-none').addClass('d-flex');
+            // $("#login-popup-container").fadeIn('fast');
+        } else {
+            $("#login-popup-container").removeClass('d-flex').addClass('d-none');
+            // $("#login-popup-container").fadeOut('fast');
+        }
+    });
+
 }); //end of document.ready

@@ -1,3 +1,24 @@
+#googleLoginBtn {
+    background-color: #888;
+    color: #eee;
+    transition: 0.5s;
+    height: 35px;
+    width: 75px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#googleLoginBtn:hover {
+    background-color: #eee;
+    color: #555;
+}
+
+#login-popup-container {
+    padding: 10px;
+    z-index: 3;
+    position: fixed;
+}
+
 nav {
     height: 45px;
     font-family: 'Gaegu', cursive;
