@@ -32,6 +32,11 @@ block content
     br
     br
     .d-flex.justify-content-center
+        button#queryButton Query All Test Data
+    br
+    ul#queryUl.d-flex.flex-column.align-items-center
+    br
+    .d-flex.justify-content-center
         form#myForm.d-inline-flex.flex-column(style="background-color: #ddd;", action="/api/querydb", method="POST")
             p.d-flex.justify-content-center My Form
             br
@@ -46,8 +51,5 @@ block content
             br
             button#myFormSubmit Submit
     br
-    #testDiv.d-flex.flex-column.align-items-center
-        #testDiv0
-        #testDiv1
-        #testDiv2
+    ul#testDiv.d-flex.flex-column.align-items-center
     br

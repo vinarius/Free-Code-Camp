@@ -4,8 +4,8 @@ const Test = require('../../models/test-model');
 
 router.get('/querydb', (req, res) => {
     console.log("Request received.");
-    User.find({}).then((result)=>{
-        if(result){
+    User.find({}).then((result) => {
+        if (result) {
             res.send(result);
         } else {
             res.send("No results found");
@@ -14,7 +14,7 @@ router.get('/querydb', (req, res) => {
 });
 
 router.post('/querydb', (req, res) => {
-    console.log('post received: /querydb');
+    console.log('post received: /api/querydb');
     let user = {
         firstName: '',
         lastName: '',
@@ -24,8 +24,8 @@ router.post('/querydb', (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         gender: req.body.gender
-    }).then((currentUser)=>{
-        if(currentUser){
+    }).then((currentUser) => {
+        if (currentUser) {
             console.log('User found: ' + currentUser.firstName + " " + currentUser.lastName);
             user.firstName = currentUser.firstName;
             user.lastName = currentUser.lastName;
@@ -36,7 +36,7 @@ router.post('/querydb', (req, res) => {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 gender: req.body.gender
-            }).save().then((newUser)=>{
+            }).save().then((newUser) => {
                 console.log("New user saved to database. " + req.body.firstName + " " + req.body.lastName);
                 user.firstName = newUser.firstName;
                 user.lastName = newUser.lastName;
@@ -45,6 +45,13 @@ router.post('/querydb', (req, res) => {
             })
         }
     })
+});
+
+router.get('/queryall', (req, res) => {
+    console.log("Get request received: /api/queryall");
+    Test.find({}).then((result) => {
+        res.send(result);
+    });
 });
 
 module.exports = router;

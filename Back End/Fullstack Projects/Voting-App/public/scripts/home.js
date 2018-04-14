@@ -1,7 +1,9 @@
-$(document).ready(()=>{
+$(document).ready(() => {
+
+    let isTestDataPresent = false;
 
     let myForm = document.querySelector('form');
-    myForm.addEventListener('submit', (e)=>{
+    myForm.addEventListener('submit', (e) => {
         e.preventDefault();
         let firstName = $("#firstName");
         let lastName = $("#lastName");
@@ -15,16 +17,37 @@ $(document).ready(()=>{
             type: 'POST',
             url: '/api/querydb',
             data: myObj,
-            success: function(res){
+            success: function (res) {
                 console.log(res);
+                for (let prop in res) {
+                    console.log(res[prop]);
+                    $("#testDiv").append("<li>" + res[prop] + "</li>")
+                }
             },
-            error: function(){
+            error: function () {
                 alert('error occured in ajax');
             }
         });
     });
 
-}); //end of doc ready
+    $("#queryButton").click(() => {
+        console.log('before:', isTestDataPresent);
+        if (!isTestDataPresent) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/queryAll',
+                success: function (res) {
+                    isTestDataPresent = !isTestDataPresent;
+                    console.log('After:', isTestDataPresent);
+                    for (let prop in res) {
+                        $("#queryUl").append("<li>" + res[prop].firstName + ", " + res[prop].lastName + ", " + res[prop].gender + "</li>");
+                    }
+                },
+                error: function () {
+                    alert("error querying db");
+                }
+            });
+        }
+    });
 
-//instead of logging the response to the client console,
-//work with the data and append it as html to the front end
+}); //end of doc ready
