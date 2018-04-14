@@ -3,6 +3,10 @@
     font-size: 1.25em;
 }
 
+html, body {
+    min-width: 320px;
+}
+
 a,
 a:hover,
 a:active,

@@ -20,7 +20,7 @@
 }
 
 nav {
-    height: 45px;
+    /* height: 45px; */
     font-family: 'Gaegu', cursive;
 }
 
@@ -43,12 +43,12 @@ nav a {
     padding: 0px;
 }
 
-#navbarNav,
+/* #navbarNav,
 #navbarNav ul,
 #navbarNav ul a,
 #navbarNav ul a li {
     height: 100%;
-}
+} */
 
 .nav-link {
     padding: 0px;
