@@ -2,17 +2,14 @@ const router = require('express').Router();
 const checkAuth = require('../isAuthenticated');
 const passport = require('passport');
 const User = require('../../models/user-model');
+const renderPage = require('./render');
 
 router.get('/dashboard', checkAuth, (req, res) => {
-    res.render('dashboard', {title: 'Vin Votes | Dashboard'});
+    renderPage(req, res, 'Dashboard', req.user);
 });
 
 router.get('/profile', checkAuth, (req, res) => {
-    res.render('profile', {title: 'Vin Votes | Profile'});
+    renderPage(req, res, 'Profile', req.user);
 });
-
-    // res.render('success', {
-    //     username: req.user.username
-    // });
 
 module.exports = router;

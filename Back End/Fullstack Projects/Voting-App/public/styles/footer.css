@@ -1,0 +1,14 @@
+footer {
+    background-color: #eee;
+    height: 45px;
+    font-family: 'Gaegu', cursive;
+}
+
+.footer-icon {
+    color: #343A40;
+    margin: 5px 5px;
+}
+
+.footer-icon:hover {
+    color: #666;
+}

@@ -1,4 +1,12 @@
 extends components/layout
 
+block append styles
+    //- dashboard.css
+    link(rel="stylesheet", type="text/css", href="../../styles/dashboard.css")
+
 block content
-    p Dashboard content.
+    .d-flex.justify-content-center
+        h1= welcome
+    br
+    #dashboardHero.d-flex.justify-content-center
+        p My Polls

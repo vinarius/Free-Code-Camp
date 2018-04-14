@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../../models/user-model');
 const Test = require('../../models/test-model');
+const renderPage = require('./render');
 
 router.get('/querydb', (req, res) => {
     console.log("Request received.");

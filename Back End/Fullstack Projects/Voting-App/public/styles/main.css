@@ -32,21 +32,6 @@ a:visited {
     color: #555;
 }
 
-footer {
-    background-color: #eee;
-    height: 45px;
-    font-family: 'Gaegu', cursive;
-}
-
-.footer-icon {
-    color: #343A40;
-    margin: 5px 5px;
-}
-
-.footer-icon:hover {
-    color: #666;
-}
-
 .margin-side-10 {
     margin: 0 10px;
 }
