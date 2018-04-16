@@ -1,5 +1,6 @@
 #dashboardHero {
     background-color: #ddd;
     color: #555;
-    height: 35vh;
+    padding: 25px;
+    /* height: 35vh; */
 }

@@ -9,7 +9,7 @@ router.get('/dashboard', checkAuth, (req, res) => {
 });
 
 router.get('/profile', checkAuth, (req, res) => {
-    renderPage(req, res, 'Profile', req.user);
+    renderPage(req, res, 'Profile');
 });
 
 module.exports = router;

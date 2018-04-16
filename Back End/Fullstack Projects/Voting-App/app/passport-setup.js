@@ -44,7 +44,9 @@ passport.use(
                 //new user, create new record in database
                 new User({
                     username: profile.displayName,
-                    googleId: profile.id
+                    googleId: profile.id,
+                    polls: 0,
+                    timesVoted: 0
                 }).save().then((newUser) => {
                     console.log("New user created: " + profile.displayName + "\n");
                     done(null, newUser);

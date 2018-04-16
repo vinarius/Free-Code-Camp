@@ -10,6 +10,9 @@ block content
         h1= welcome
     br
     #dashboardHero.d-flex.flex-column.align-items-center
-        .d-flex.justify-content-center.polls-button View Polls
         .d-flex.justify-content-center
-            p= user
+            ul
+                li _id: #{user.id}
+                li Google ID: #{user.googleId}
+                li Polls: #{user.polls}
+                li Times Voted: #{user.timesVoted}
