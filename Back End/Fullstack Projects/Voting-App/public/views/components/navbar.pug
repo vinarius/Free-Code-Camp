@@ -1,13 +1,20 @@
-- var user = user
-nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top.d-flex
-    a.nav-button.mr-auto.navbar-brand(href="/") Vin Votes
-    button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarNav", aria-controls="navbarNav", aria-expanded="false", aria-label="Toggle navigation")
-        span.navbar-toggler-icon
-    .collapse.navbar-collapse#navbarNav
-        ul.navbar-nav.ml-auto
-            a(href="/user/dashboard")
-                li.nav-button.nav-link.nav-item.padding10= navbarGreeting
-            a(href="/auth/logout")
-                li.nav-button.nav-link.nav-item.padding10 Log Out
-            a#loginNavBtn(href="#")
-                li.nav-button.nav-link.nav-item.padding10 Log In
+nav.d-flex.flex-row.justify-content-between
+    a#vinVotesLogo.d-flex.justify-content-center.align-items-center.padding10(href="/") Vin Votes
+    if user
+        .btn-group
+            button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")= welcome
+            .dropdown-menu.dropdown-menu-right
+                a(href="/user/profile")
+                    button.dropdown-item(type="button") Profile
+                a(href="/user/dashboard")
+                    button.dropdown-item(type="button") Dashboard
+                a(href="/auth/logout")
+                    button.dropdown-item(type="button") Log Out
+    else        
+        .btn-group
+            button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Log In
+            .dropdown-menu.dropdown-menu-right
+                a(href="/auth/google")
+                    button.dropdown-item(type="button") Google
+                a(href="/auth/facebook")
+                    button.dropdown-item(type="button") Facebook (WIP)

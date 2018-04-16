@@ -5,12 +5,12 @@ module.exports = (app) => {
 
     app.route('/')
         .get((req, res) => {
-            renderPage(req, res, 'Home', req.user);
+            renderPage(req, res, 'Home');
         });
 
     app.route('/polls')
         .get((req, res) => {
-            renderPage(req, res, 'Polls', req.user);
+            renderPage(req, res, 'Polls');
         })
 
     app.use((req, res, next) => {

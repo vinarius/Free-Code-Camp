@@ -1,3 +1,16 @@
+.btn {
+    border-radius: 0;
+}
+
+.btn-group:hover button:hover, .dropdown-item:hover {
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: inherit;
+    border-color: #343A40;
+}
+
 #googleLoginBtn {
     background-color: #888;
     color: #eee;
@@ -19,9 +32,15 @@
     opacity: 0;
 }
 
+.mr-2 {
+    margin-right: 2em !important;
+}
+
 nav {
-    /* height: 45px; */
+    height: 40px;
     font-family: 'Gaegu', cursive;
+    background-color: #343A40;
+    color: #fff;
 }
 
 nav a {
@@ -43,17 +62,16 @@ nav a {
     padding: 0px;
 }
 
-/* #navbarNav,
-#navbarNav ul,
-#navbarNav ul a,
-#navbarNav ul a li {
-    height: 100%;
-} */
-
 .nav-link {
     padding: 0px;
 }
 
-.padding10 {
-    padding: 10px;
+#vinVotesLogo {
+    color: #fff;
+    transition: background-color 0.3s;
+    height: 100% !important;
+}
+
+#vinVotesLogo:hover {
+    background-color: #727B84;
 }
