@@ -1,0 +1,2 @@
+research chart.js
+npm install chart.js
