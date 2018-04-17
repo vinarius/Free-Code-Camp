@@ -30,29 +30,29 @@ block content
             li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see the results of polls in chart form.
             li <span class="bold">User Story:</span> As an authenticated user, if I don't like the options on a poll, I can create a new option.
     br
-    br
-    .d-flex.justify-content-center
-        button#queryButton Query All Test Data
-    br
-    ul#queryUl.d-flex.flex-column.align-items-center
-    br
-    .d-flex.justify-content-center
-        form#myForm.d-inline-flex.flex-column(style="background-color: #ddd;", action="/api/querydb", method="POST")
-            p.d-flex.justify-content-center My Form
-            br
-            input#firstName(type="text", name="firstName", placeholder="First Name" required)
-            input#lastName(type="text", name="lastName", placeholder="Last Name" required)
-            br
-            .d-flex.justify-content-around.align-items-center
-                input.formBtn(type="radio", name="gender", value="male" required)
-                div Male
-                input.formBtn(type="radio", name="gender", value="female")
-                div Female
-            br
-            button#myFormSubmit Submit
-    br
-    ul#testDiv.d-flex.flex-column.align-items-center
-    br
+    //- br
+    //- .d-flex.justify-content-center
+    //-     button#queryButton Query All Test Data
+    //- br
+    //- ul#queryUl.d-flex.flex-column.align-items-center
+    //- br
+    //- .d-flex.justify-content-center
+    //-     form#myForm.d-inline-flex.flex-column(style="background-color: #ddd;", action="/api/querydb", method="POST")
+    //-         p.d-flex.justify-content-center My Form
+    //-         br
+    //-         input#firstName(type="text", name="firstName", placeholder="First Name" required)
+    //-         input#lastName(type="text", name="lastName", placeholder="Last Name" required)
+    //-         br
+    //-         .d-flex.justify-content-around.align-items-center
+    //-             input.formBtn(type="radio", name="gender", value="male" required)
+    //-             div Male
+    //-             input.formBtn(type="radio", name="gender", value="female")
+    //-             div Female
+    //-         br
+    //-         button#myFormSubmit Submit
+    //- br
+    //- ul#testDiv.d-flex.flex-column.align-items-center
+    //- br
 
 block append scripts
     //- home.js

@@ -1,2 +1,1 @@
-research chart.js
-npm install chart.js
+poll object does not save correctly to db. research model / schema - saving arrays of objects

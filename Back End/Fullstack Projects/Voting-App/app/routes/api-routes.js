@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../../models/user-model');
 const Test = require('../../models/test-model');
+const Poll = require('../../models/poll-model');
 const renderPage = require('./render');
 const checkAuth = require('../isAuthenticated');
 
@@ -96,6 +97,38 @@ router.post('/updateUser', checkAuth, (req, res) => {
         default:
             res.send('Invalid request type.');
     }
+});
+
+router.get('/pollData', checkAuth, (req, res)=>{
+    console.log('Get request received: /pollData');
+    res.send('yo sup');
+});
+
+router.post('/pollData', checkAuth, (req, res)=>{
+    console.log('Post request received: /pollData');
+    Poll.find({
+        name: req.body.pollName
+    }).then((pollDoc)=>{
+        if(pollDoc[0]){
+            //poll found, do stuff with doc
+            console.log('it thinks it found one');
+            console.log(pollDoc[0]);
+            res.send(pollDoc[0]);
+        } else {
+            //poll not found, do stuff
+            console.log('poll not found, creating new poll: ' + req.body.pollName);
+            let newPoll = new Poll({
+                name: req.body.pollName,
+                dataset: [{
+                    label: 'Nothing for now',
+                    count: 0
+                }]
+            });
+            newPoll.save().then((result)=>{
+                res.send(result);
+            });
+        }
+    })
 });
 
 module.exports = router;

@@ -1,7 +1,42 @@
+canvas {
+    height: 600px;
+    width: 600px;
+}
+
+.chart-container {
+    height: 600px;
+    width: 600px;
+}
+
 .dashboard-btn {
     border-radius: 5px;
 }
 
 .dashboard-btn:hover {
     cursor: pointer;
+}
+
+#formInputSubmitBtn:hover {
+    cursor: pointer;
+}
+
+#inputNumber {
+    width: 100px;
+    margin: 5px;
+}
+
+@media only screen and (max-width: 601px){
+    canvas {
+        height: 320px;
+        width: 320px;
+    }
+    
+    .chart-container {
+        height: 320px;
+        width: 320px;
+    }
+
+    #formInputName {
+        width: 175px;
+    }
 }

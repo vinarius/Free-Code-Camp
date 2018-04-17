@@ -12,7 +12,13 @@ block content
             button#deleteAllPolls.d-flex-justify-content-center.align-items-center.btn.btn-danger.dashboard-btn(type="button") Delete All Polls
     ul.d-flex.flex-column.align-items-center
         #pollsCreated.d-flex.flex-column.align-items-center
-    canvas#pollCanvas(width="400", height="400")
+    br
+    form.d-flex.justify-content-center
+        input#formInputName(type="text")
+        button#formInputSubmitBtn.btn.btn-primary(type="submit") Submit
+    .chart-row.d-flex.justify-content-center
+        .chart-container
+            canvas#pollCanvas(width="400", height="400")
 
 block append scripts
     script(type="text/javascript", src="../../scripts/canvas.js")
