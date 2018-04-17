@@ -1,0 +1,7 @@
+.dashboard-btn {
+    border-radius: 5px;
+}
+
+.dashboard-btn:hover {
+    cursor: pointer;
+}

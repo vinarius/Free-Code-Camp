@@ -7,12 +7,12 @@ block append styles
 block content
     ul.d-flex.flex-row.justify-content-center
         li.d-flex.justify-content-center.padding10
-            button#createPoll.d-flex-justify-content-center.align-items-center Create Poll
+            button#createPoll.d-flex-justify-content-center.align-items-center.btn.btn-primary.dashboard-btn(type="button") Create Poll
         li.d-flex.justify-content-center.padding10
-            button#deleteAllPolls.d-flex-justify-content-center.align-items-center Delete All Polls
-        li.d-flex.justify-content-center.padding10
-            button.d-flex-justify-content-center.align-items-center content
-        li.d-flex.justify-content-center.padding10
-            button.d-flex-justify-content-center.align-items-center content
+            button#deleteAllPolls.d-flex-justify-content-center.align-items-center.btn.btn-danger.dashboard-btn(type="button") Delete All Polls
     ul.d-flex.flex-column.align-items-center
         #pollsCreated.d-flex.flex-column.align-items-center
+    canvas#pollCanvas(width="400", height="400")
+
+block append scripts
+    script(type="text/javascript", src="../../scripts/canvas.js")
