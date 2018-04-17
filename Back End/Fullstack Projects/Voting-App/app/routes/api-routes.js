@@ -2,9 +2,9 @@ const router = require('express').Router();
 const User = require('../../models/user-model');
 const Test = require('../../models/test-model');
 const renderPage = require('./render');
+const checkAuth = require('../isAuthenticated');
 
 router.get('/querydb', (req, res) => {
-    console.log("Request received.");
     User.find({}).then((result) => {
         if (result) {
             res.send(result);
@@ -15,7 +15,6 @@ router.get('/querydb', (req, res) => {
 });
 
 router.post('/querydb', (req, res) => {
-    console.log('post received: /api/querydb');
     let user = {
         firstName: '',
         lastName: '',
@@ -49,10 +48,54 @@ router.post('/querydb', (req, res) => {
 });
 
 router.get('/queryall', (req, res) => {
-    console.log("Get request received: /api/queryall");
     Test.find({}).then((result) => {
         res.send(result);
     });
+});
+
+router.get('/updateUser', checkAuth, (req, res) => {
+    User.find({
+        '_id': req.user.id
+    }).then((dbUser) => {
+        res.send(dbUser[0]);
+    });
+});
+
+router.post('/updateUser', checkAuth, (req, res) => {
+    switch (req.body.updateStatus) {
+        case 'createPoll':
+            User.find({
+                '_id': req.user.id
+            }).update({
+                $inc: {
+                    polls: 1
+                }
+            }).then(() => {
+                User.find({
+                    '_id': req.user.id
+                }).then((dbUser) => {
+                    res.send(dbUser[0]);
+                });
+            });
+            break;
+        case 'deleteAllPolls':
+            User.find({
+                '_id': req.user.id
+            }).update({
+                $set: {
+                    polls: 0
+                }
+            }).then(() => {
+                User.find({
+                    '_id': req.user.id
+                }).then((dbUser) => {
+                    res.send(dbUser[0]);
+                });
+            });
+            break;
+        default:
+            res.send('Invalid request type.');
+    }
 });
 
 module.exports = router;

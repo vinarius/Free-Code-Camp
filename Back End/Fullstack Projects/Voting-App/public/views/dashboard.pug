@@ -5,14 +5,14 @@ block append styles
     link(rel="stylesheet", type="text/css", href="../../styles/dashboard.css")
 
 block content
-    //- - var userData = user
-    .d-flex.justify-content-center
-        h1= welcome
-    br
-    #dashboardHero.d-flex.flex-column.align-items-center
-        .d-flex.justify-content-center
-            ul
-                li _id: #{user.id}
-                li Google ID: #{user.googleId}
-                li Polls: #{user.polls}
-                li Times Voted: #{user.timesVoted}
+    ul.d-flex.flex-row.justify-content-center
+        li.d-flex.justify-content-center.padding10
+            button#createPoll.d-flex-justify-content-center.align-items-center Create Poll
+        li.d-flex.justify-content-center.padding10
+            button#deleteAllPolls.d-flex-justify-content-center.align-items-center Delete All Polls
+        li.d-flex.justify-content-center.padding10
+            button.d-flex-justify-content-center.align-items-center content
+        li.d-flex.justify-content-center.padding10
+            button.d-flex-justify-content-center.align-items-center content
+    ul.d-flex.flex-column.align-items-center
+        #pollsCreated.d-flex.flex-column.align-items-center

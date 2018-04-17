@@ -41,6 +41,8 @@ nav {
     font-family: 'Gaegu', cursive;
     background-color: #343A40;
     color: #fff;
+    position: fixed;
+    width: 100%;
 }
 
 nav a {

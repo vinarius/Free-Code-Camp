@@ -1,4 +1,23 @@
 extends components/layout
 
+block append styles
+    //- profile.css
+    link(rel="stylesheet", type="text/css", href="../../styles/profile.css")
+
 block content
-    p Profile content.
+    //- - var userData = user
+    .d-flex.justify-content-center
+        h1= welcome
+    br
+    #profileHero.d-flex.flex-column.align-items-center
+        .d-flex.justify-content-center
+            ul
+                li _id: #{user.id}
+                li Google ID: #{user.googleId}
+                li Polls: #{user.polls}
+                li Times Voted: #{user.timesVoted}
+    br
+    if(user.polls == 0)
+        p.d-flex.justify-content-center You created any polls yet!
+    else
+        p.d-flex.justify-content-center some voting content

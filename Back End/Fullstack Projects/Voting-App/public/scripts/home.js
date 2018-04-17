@@ -2,6 +2,7 @@ $(document).ready(() => {
 
     let isTestDataPresent = false;
 
+    //will toss jquery deferred exception if not on '/'
     let myForm = document.querySelector('form');
     myForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -18,9 +19,7 @@ $(document).ready(() => {
             url: '/api/querydb',
             data: myObj,
             success: function (res) {
-                console.log(res);
                 for (let prop in res) {
-                    console.log(res[prop]);
                     $("#testDiv").append("<li>" + res[prop] + "</li>")
                 }
             },
@@ -38,13 +37,12 @@ $(document).ready(() => {
                 url: '/api/queryAll',
                 success: function (res) {
                     isTestDataPresent = !isTestDataPresent;
-                    console.log('After:', isTestDataPresent);
                     for (let prop in res) {
                         $("#queryUl").append("<li>" + res[prop].firstName + ", " + res[prop].lastName + ", " + res[prop].gender + "</li>");
                     }
                 },
-                error: function () {
-                    alert("error querying db");
+                error: function (err) {
+                    console.error(err);
                 }
             });
         }
