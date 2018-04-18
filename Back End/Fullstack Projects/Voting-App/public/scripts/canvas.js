@@ -3,6 +3,7 @@ $(document).ready(() => {
     let voteData = [];
     let pollForm = document.querySelector('#pollSearchForm');
     let addDatasetForm;
+    let voteOptions = [];
 
     function addData(chart, label, data) {
         chart.data.labels.push(label);
@@ -13,6 +14,7 @@ $(document).ready(() => {
     }
 
     function createChart(voteData) {
+        $(".chart-row").removeClass("d-none").addClass("d-flex");
         let ctx = document.getElementById("pollCanvas").getContext('2d');
         let myChart = new Chart(ctx, {
             type: 'horizontalBar',
@@ -66,7 +68,9 @@ $(document).ready(() => {
             }
             datasetName = datasetName.join(' ');
             addData(myChart, datasetName, 0);
-            $("#datasetName").attr('value', ' ');
+            document.getElementById('addDatasetForm').reset();
+            $("#voteOptionsContainer").append('<button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + label + '</button>');
+            voteOptions.push(datasetName + 'Btn');
         });
     }
 

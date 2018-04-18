@@ -25,6 +25,11 @@ canvas {
     margin: 5px;
 }
 
+.voteOption {
+    margin: 5px;
+    border-radius: 5px;
+}
+
 @media only screen and (max-width: 601px){
     canvas {
         height: 320px;
