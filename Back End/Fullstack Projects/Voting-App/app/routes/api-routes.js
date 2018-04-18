@@ -111,15 +111,14 @@ router.post('/pollData', checkAuth, (req, res)=>{
     }).then((pollDoc)=>{
         if(pollDoc[0]){
             //poll found, do stuff with doc
-            console.log('it thinks it found one');
-            console.log(pollDoc[0]);
+            console.log("Poll found.");
             res.send(pollDoc[0]);
         } else {
             //poll not found, do stuff
-            console.log('poll not found, creating new poll: ' + req.body.pollName);
+            console.log('Poll not found, creating new poll: ' + req.body.pollName);
             let newPoll = new Poll({
                 name: req.body.pollName,
-                dataset: [{
+                datasets: [{
                     label: 'Nothing for now',
                     count: 0
                 }]

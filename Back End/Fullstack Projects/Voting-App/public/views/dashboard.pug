@@ -13,12 +13,15 @@ block content
     ul.d-flex.flex-column.align-items-center
         #pollsCreated.d-flex.flex-column.align-items-center
     br
-    form.d-flex.justify-content-center
-        input#formInputName(type="text")
-        button#formInputSubmitBtn.btn.btn-primary(type="submit") Submit
-    .chart-row.d-flex.justify-content-center
-        .chart-container
+    form#pollSearchForm.d-flex.flex-column.align-items-center
+        p Search for a poll
+        .d-flex.flex-row
+            input#formInputName(type="text", placeholder="Poll Name")
+            button#formInputSubmitBtn.btn.btn-primary(type="submit") Submit
+    .chart-row.d-flex.flex-column.align-items-center
+        .chart-container.d-flex.flex-column.align-items-center
             canvas#pollCanvas(width="400", height="400")
+        #addDatasetFormContainer.d-flex.flex-row
 
 block append scripts
     script(type="text/javascript", src="../../scripts/canvas.js")

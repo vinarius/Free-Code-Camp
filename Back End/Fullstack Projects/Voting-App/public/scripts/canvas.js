@@ -1,16 +1,23 @@
 $(document).ready(() => {
 
-    let chartArr = [];
-    let voteData = [12, 19, 3, 15, 25, 33];
-    let pollForm = document.querySelector('form');
+    let voteData = [];
+    let pollForm = document.querySelector('#pollSearchForm');
+    let addDatasetForm;
+
+    function addData(chart, label, data) {
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+        chart.update();
+    }
 
     function createChart(voteData) {
         let ctx = document.getElementById("pollCanvas").getContext('2d');
-        chartArr.push(chartArr.length);
         let myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'horizontalBar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: [],
                 datasets: [{
                     label: ' # of Votes',
                     data: voteData,
@@ -47,9 +54,23 @@ $(document).ready(() => {
                 }
             }
         });
+        $("#addDatasetFormContainer").append('<form id="addDatasetForm" class="d-flex flex-row"><input type="text" id="datasetName" placeholder="Add Dataset" required><button type="submit" class="btn btn-primary">Submit</button></form>');
+        addDatasetForm = document.querySelector('#addDatasetForm');
+        addDatasetForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let datasetName = $("#datasetName").val().toLowerCase().split(' ');
+            for (let i = 0; i < datasetName.length; i++) {
+                datasetName[i] = datasetName[i].split('');
+                datasetName[i][0] = datasetName[i][0].toUpperCase();
+                datasetName[i] = datasetName[i].join('');
+            }
+            datasetName = datasetName.join(' ');
+            addData(myChart, datasetName, 0);
+            $("#datasetName").attr('value', ' ');
+        });
     }
 
-    pollForm.addEventListener('submit', (e)=>{
+    pollForm.addEventListener('submit', (e) => {
         e.preventDefault();
         let pollName = $("#formInputName").val().toLowerCase().split(' ').join('');
         $.ajax({
@@ -58,17 +79,15 @@ $(document).ready(() => {
             data: {
                 pollName: pollName
             },
-            success: (data)=>{
+            success: (data) => {
                 console.log(data);
+                createChart(voteData);
             },
-            error: (err)=>{
+            error: (err) => {
                 console.error("Error sending post with poll name.");
                 console.error(err);
             }
         });
     });
-
-    //on document load
-    createChart(voteData);
 
 }); //end of document ready
