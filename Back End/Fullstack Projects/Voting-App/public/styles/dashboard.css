@@ -30,6 +30,10 @@ canvas {
     border-radius: 5px;
 }
 
+.voteOption:hover {
+    cursor: pointer;
+}
+
 #voteOptionsContainer {
     margin-bottom: 15px;
 }

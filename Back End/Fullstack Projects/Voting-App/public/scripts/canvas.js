@@ -67,10 +67,20 @@ $(document).ready(() => {
                 datasetName[i] = datasetName[i].join('');
             }
             datasetName = datasetName.join(' ');
-            addData(myChart, datasetName, 2);
+            addData(myChart, datasetName, 3);
             document.getElementById('addDatasetForm').reset();
             $("#voteOptionsContainer").append('<button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '</button>');
-            voteOptions.push(datasetName + 'Btn');
+            addVoteListener('#voteOptionsBtn' + voteOptions.length);
+            voteOptions.push('voteOptionsBtn' + voteOptions.length);
+        });
+    }
+
+    function addVoteListener(el){
+        let voteOptionButton = document.querySelector(el);
+        voteOptionButton.addEventListener('click', (e)=>{
+            e.preventDefault();
+            console.log(el);
+            console.log('addvotelistener fired');
         });
     }
 
@@ -84,7 +94,7 @@ $(document).ready(() => {
                 pollName: pollName
             },
             success: (data) => {
-                console.log(data);
+                // console.log(data);
                 createChart(voteData);
             },
             error: (err) => {

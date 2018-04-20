@@ -1,0 +1,2 @@
+vote button on click function now working. $inc by 1, save to db and update chart
+research websocket
