@@ -123,15 +123,19 @@ router.post('/pollData', checkAuth, (req, res)=>{
 });
 
 router.post('/pollData/updatePoll', checkAuth, (req, res)=>{
-    console.log('post request received on /api/pollData/updatePoll');
     switch(req.body.updateStatus){
         case 'voteDataset':
         //find dataset, if exists increment dataset count by 1
         //else create new dataset and increment dataset count by 1
+        Poll.find({
+            name: req.body.currentPoll
+        })
+        console.log('voteDataset case executed');
         break;
         case 'removeDataset':
         //find dataset, if exists remove
         //else res.send dataset not found
+        console.log('removeDataset case executed');
         break;
         default:
         res.send('invalid post status');

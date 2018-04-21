@@ -1,2 +1,4 @@
 vote button on click function now working. $inc by 1, save to db and update chart
 research websocket
+
+research how to query more than one parameter

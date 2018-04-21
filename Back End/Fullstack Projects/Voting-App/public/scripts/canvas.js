@@ -3,6 +3,7 @@ $(document).ready(() => {
     let voteData = [];
     let pollForm = document.querySelector('#pollSearchForm');
     let addDatasetForm;
+    let currentPoll = '';
     let voteOptions = [];
 
     function addData(chart, label, data) {
@@ -86,7 +87,8 @@ $(document).ready(() => {
                     url: '/api/pollData/updatePoll',
                     data: {
                         updateStatus: 'removeDataset',
-                        element: el
+                        element: el,
+                        currentPoll: currentPoll
                     },
                     success: (data)=>{
                         console.log("Successful post request removing dataset.");
@@ -110,7 +112,8 @@ $(document).ready(() => {
                 url: '/api/pollData/updatePoll',
                 data: {
                     updateStatus: 'voteDataset',
-                    element: el
+                    element: el,
+                    currentPoll: currentPoll
                 },
                 success: (data)=>{
                     console.log('POST vote to database success.');
@@ -135,6 +138,7 @@ $(document).ready(() => {
             },
             success: (data) => {
                 createChart(voteData);
+                currentPoll = pollName;
             },
             error: (err) => {
                 console.error("Error sending post with poll name.");
