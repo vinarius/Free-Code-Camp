@@ -69,9 +69,35 @@ $(document).ready(() => {
             datasetName = datasetName.join(' ');
             addData(myChart, datasetName, 0);
             document.getElementById('addDatasetForm').reset();
-            $("#voteOptionsContainer").append('<button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '<button class="removeDatasetBtn d-flex justify-content-center btn btn-light">X</button></button>');
+            $("#voteOptionsContainer").append('<div class="d-flex flex-row"><button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '</button><button id="removeDatasetBtn' + voteOptions.length + '" class="removeDatasetBtn btn btn-dark">X</button></div>');
             addVoteListener('#voteOptionsBtn' + voteOptions.length);
+            addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
             voteOptions.push('voteOptionsBtn' + voteOptions.length);
+        });
+    }
+
+    function addRemoveDatasetListener(el){
+        let removeDatasetButton = document.querySelector(el);
+        removeDatasetButton.addEventListener('click', (e)=>{
+            e.preventDefault();
+            if(confirm("Remove this dataset? This is unreversable.")){
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/pollData/updatePoll',
+                    data: {
+                        updateStatus: 'removeDataset',
+                        element: el
+                    },
+                    success: (data)=>{
+                        console.log("Successful post request removing dataset.");
+                        console.log(data);
+                    },
+                    error: (err)=>{
+                        console.log("Error sending post request to delete dataset.");
+                        console.error(err);
+                    }
+                });
+            }
         });
     }
 
@@ -82,7 +108,10 @@ $(document).ready(() => {
             $.ajax({
                 type: 'POST',
                 url: '/api/pollData/updatePoll',
-                data: el,
+                data: {
+                    updateStatus: 'voteDataset',
+                    element: el
+                },
                 success: (data)=>{
                     console.log('POST vote to database success.');
                     console.log(data);

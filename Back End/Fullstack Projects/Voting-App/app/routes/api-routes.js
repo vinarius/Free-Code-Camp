@@ -100,7 +100,7 @@ router.post('/updateUser', checkAuth, (req, res) => {
 });
 
 router.post('/pollData', checkAuth, (req, res)=>{
-    console.log('Post request received: /pollData');
+    console.log('Post request received: /api/pollData');
     Poll.find({
         name: req.body.pollName
     }).then((pollDoc)=>{
@@ -113,10 +113,7 @@ router.post('/pollData', checkAuth, (req, res)=>{
             console.log('Poll not found, creating new poll: ' + req.body.pollName);
             let newPoll = new Poll({
                 name: req.body.pollName,
-                datasets: [{
-                    label: 'Nothing for now',
-                    count: 0
-                }]
+                datasets: []
             });
             newPoll.save().then((result)=>{
                 res.send(result);
@@ -126,8 +123,21 @@ router.post('/pollData', checkAuth, (req, res)=>{
 });
 
 router.post('/pollData/updatePoll', checkAuth, (req, res)=>{
-    console.log('post request received on /pollData/updatePoll');
-    res.send('post request received on /pollData/updatePoll');
+    console.log('post request received on /api/pollData/updatePoll');
+    switch(req.body.updateStatus){
+        case 'voteDataset':
+        //find dataset, if exists increment dataset count by 1
+        //else create new dataset and increment dataset count by 1
+        break;
+        case 'removeDataset':
+        //find dataset, if exists remove
+        //else res.send dataset not found
+        break;
+        default:
+        res.send('invalid post status');
+        break;
+    }
+    res.send('post request received on /api/pollData/updatePoll');
 });
 
 module.exports = router;
