@@ -67,9 +67,9 @@ $(document).ready(() => {
                 datasetName[i] = datasetName[i].join('');
             }
             datasetName = datasetName.join(' ');
-            addData(myChart, datasetName, 3);
+            addData(myChart, datasetName, 0);
             document.getElementById('addDatasetForm').reset();
-            $("#voteOptionsContainer").append('<button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '</button>');
+            $("#voteOptionsContainer").append('<button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '<button class="removeDatasetBtn d-flex justify-content-center btn btn-light">X</button></button>');
             addVoteListener('#voteOptionsBtn' + voteOptions.length);
             voteOptions.push('voteOptionsBtn' + voteOptions.length);
         });
@@ -79,8 +79,19 @@ $(document).ready(() => {
         let voteOptionButton = document.querySelector(el);
         voteOptionButton.addEventListener('click', (e)=>{
             e.preventDefault();
-            console.log(el);
-            console.log('addvotelistener fired');
+            $.ajax({
+                type: 'POST',
+                url: '/api/pollData/updatePoll',
+                data: el,
+                success: (data)=>{
+                    console.log('POST vote to database success.');
+                    console.log(data);
+                },
+                error: (err)=>{
+                    console.log('Error posting vote to database.');
+                    console.error(err);
+                }
+            });
         });
     }
 
@@ -94,7 +105,6 @@ $(document).ready(() => {
                 pollName: pollName
             },
             success: (data) => {
-                // console.log(data);
                 createChart(voteData);
             },
             error: (err) => {

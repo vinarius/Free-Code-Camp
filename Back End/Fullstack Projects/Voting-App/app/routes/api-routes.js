@@ -99,11 +99,6 @@ router.post('/updateUser', checkAuth, (req, res) => {
     }
 });
 
-router.get('/pollData', checkAuth, (req, res)=>{
-    console.log('Get request received: /pollData');
-    res.send('yo sup');
-});
-
 router.post('/pollData', checkAuth, (req, res)=>{
     console.log('Post request received: /pollData');
     Poll.find({
@@ -128,6 +123,11 @@ router.post('/pollData', checkAuth, (req, res)=>{
             });
         }
     })
+});
+
+router.post('/pollData/updatePoll', checkAuth, (req, res)=>{
+    console.log('post request received on /pollData/updatePoll');
+    res.send('post request received on /pollData/updatePoll');
 });
 
 module.exports = router;

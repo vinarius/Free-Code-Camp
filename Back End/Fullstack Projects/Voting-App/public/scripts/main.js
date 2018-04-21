@@ -32,7 +32,6 @@ $(document).ready(() => {
     }
 
     function deleteAllPolls() {
-
         $.ajax({
             type: "POST",
             url: '/api/updateUser',
