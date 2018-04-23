@@ -57,7 +57,7 @@ $(document).ready(() => {
                 }
             }
         });
-        $("#addDatasetFormContainer").append('<form id="addDatasetForm" class="d-flex flex-row"><input type="text" id="datasetName" placeholder="Add Dataset" required><button type="submit" class="btn btn-primary">Submit</button></form>');
+        $("#addDatasetFormContainer").append('<form id="addDatasetForm" class="d-flex flex-row"><input type="text" id="datasetName" placeholder="Add Dataset" required><button type="submit" class="btn btn-primary formInputSubmitBtn">Submit</button></form>');
         addDatasetForm = document.querySelector('#addDatasetForm');
         addDatasetForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -70,8 +70,8 @@ $(document).ready(() => {
             datasetName = datasetName.join(' ');
             addData(myChart, datasetName, 0);
             document.getElementById('addDatasetForm').reset();
-            $("#voteOptionsContainer").append('<div class="d-flex flex-row"><button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '</button><button id="removeDatasetBtn' + voteOptions.length + '" class="removeDatasetBtn btn btn-dark">X</button></div>');
-            addVoteListener('#voteOptionsBtn' + voteOptions.length);
+            $("#voteOptionsContainer").append('<div class="d-flex flex-row voteButtonContainer"><button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '</button><button id="removeDatasetBtn' + voteOptions.length + '" class="removeDatasetBtn btn btn-dark">X</button></div>');
+            addVoteListener('#voteOptionsBtn' + voteOptions.length, datasetName);
             addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
             voteOptions.push('voteOptionsBtn' + voteOptions.length);
         });
@@ -81,7 +81,7 @@ $(document).ready(() => {
         let removeDatasetButton = document.querySelector(el);
         removeDatasetButton.addEventListener('click', (e)=>{
             e.preventDefault();
-            if(confirm("Remove this dataset? This is unreversable.")){
+            if(confirm("Remove this dataset? This is irreversible.")){
                 $.ajax({
                     type: 'POST',
                     url: '/api/pollData/updatePoll',
@@ -103,7 +103,7 @@ $(document).ready(() => {
         });
     }
 
-    function addVoteListener(el){
+    function addVoteListener(el, datasetName){
         let voteOptionButton = document.querySelector(el);
         voteOptionButton.addEventListener('click', (e)=>{
             e.preventDefault();
@@ -112,11 +112,12 @@ $(document).ready(() => {
                 url: '/api/pollData/updatePoll',
                 data: {
                     updateStatus: 'voteDataset',
-                    element: el,
+                    elementID: el,
+                    optionName: datasetName,
                     currentPoll: currentPoll
                 },
                 success: (data)=>{
-                    console.log('POST vote to database success.');
+                    console.log('Post vote to database success.');
                     console.log(data);
                 },
                 error: (err)=>{

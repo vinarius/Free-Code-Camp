@@ -39,6 +39,10 @@ canvas {
     cursor: pointer;
 }
 
+.voteButtonContainer {
+    margin: 5px;
+}
+
 .voteOption {
     border-radius: 5px 0 0 5px;
 }

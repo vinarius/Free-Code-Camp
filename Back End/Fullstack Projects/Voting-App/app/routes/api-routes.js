@@ -99,12 +99,12 @@ router.post('/updateUser', checkAuth, (req, res) => {
     }
 });
 
-router.post('/pollData', checkAuth, (req, res)=>{
+router.post('/pollData', checkAuth, (req, res) => {
     console.log('Post request received: /api/pollData');
     Poll.find({
         name: req.body.pollName
-    }).then((pollDoc)=>{
-        if(pollDoc[0]){
+    }).then((pollDoc) => {
+        if (pollDoc[0]) {
             //poll found, do stuff with doc
             console.log("Poll found.");
             res.send(pollDoc[0]);
@@ -115,33 +115,54 @@ router.post('/pollData', checkAuth, (req, res)=>{
                 name: req.body.pollName,
                 datasets: []
             });
-            newPoll.save().then((result)=>{
+            newPoll.save().then((result) => {
                 res.send(result);
             });
         }
     })
 });
 
-router.post('/pollData/updatePoll', checkAuth, (req, res)=>{
-    switch(req.body.updateStatus){
+router.post('/pollData/updatePoll', checkAuth, (req, res) => {
+    switch (req.body.updateStatus) {
         case 'voteDataset':
-        //find dataset, if exists increment dataset count by 1
-        //else create new dataset and increment dataset count by 1
-        Poll.find({
-            name: req.body.currentPoll
-        })
-        console.log('voteDataset case executed');
-        break;
+            //find dataset, if exists increment dataset count by 1
+            //else create new dataset and increment dataset count by 1
+
+            if (Poll.find({
+                    name: req.body.currentPoll
+                })) {
+                let conditions = {
+                        name: req.body.currentPoll,
+                        'datasets.label': req.body.optionName
+                    },
+                    updateData = {
+                        $inc: { 'datasets.$.count': 1}
+                    };
+                Poll.update(conditions, updateData).then((result) => {
+                    Poll.find({
+                        name: req.body.currentPoll
+                    }).then((doc) => {
+                        res.send(doc);
+                    })
+                });
+            } else {
+                Poll.update(conditions, updateData).then((result)=>{
+                    Poll.find({name: req.body.currentPoll}).then((doc)=>{
+                        res.send(doc);
+                    });
+                });
+            }
+            break;
         case 'removeDataset':
-        //find dataset, if exists remove
-        //else res.send dataset not found
-        console.log('removeDataset case executed');
-        break;
+            //find dataset, if exists remove
+            //else res.send dataset not found
+            console.log('removeDataset case executed');
+            break;
         default:
-        res.send('invalid post status');
-        break;
+            res.send('invalid post status');
+            break;
     }
-    res.send('post request received on /api/pollData/updatePoll');
+    // res.send('Server data: post request received on /api/pollData/updatePoll');
 });
 
 module.exports = router;
