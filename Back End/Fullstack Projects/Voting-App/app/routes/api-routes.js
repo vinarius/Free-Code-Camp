@@ -133,22 +133,26 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
             // });
 
             Poll.find({
-                'datasets.$.label': req.body.optionName
-            }).then((result) => {
-                if (result[0]) {
+                'datasets.0.label': req.body.optionName
+            }).then((findResult) => {
+                if (findResult[0]) {
                     console.log('Vote label found. Incrementing vote.');
+                    Poll.find({$and: [{name: req.body.currentPoll}, {label: req.body.optionName}]}).then((secondFindResult)=>{console.log('secondFindResult: ');console.log(secondFindResult)});
                     let conditions = {
-                            $and: {
-                                [ {name: req.body.currentPoll},
-                                  {'datasets.$.label': req.body.optionName} ]
-                            }
+                            $and: [{
+                                    name: req.body.currentPoll
+                                },
+                                {
+                                    'datasets.0.label': req.body.optionName
+                                }
+                            ]
                         },
                         updateData = {
                             $inc: {
-                                'datasets.$.count': 1
+                                'datasets.0.count': 1
                             }
                         };
-                    Poll.update(conditions, updateData).then((result) => {
+                    Poll.update(conditions, updateData).then((updateResult) => {
                         Poll.find({
                             name: req.body.currentPoll
                         }).then((doc) => {
@@ -158,21 +162,19 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
                 } else {
                     console.log('Vote label not found. Creating new dataset label.');
                     let conditions = {
-                            $and: {
-                                [{
-                                        name: req.body.currentPoll
-                                    },
-                                    {
-                                        'datasets.$.label': req.body.optionName
-                                    }
-                                ]
-                            }
+                            $and: [{
+                                    name: req.body.currentPoll
+                                },
+                                {
+                                    label: req.body.optionName
+                                }
+                            ]
                         },
                         updateData = {
                             $push: {
                                 datasets: {
-                                    'label': req.body.optionName,
-                                    'datasets.count': 1
+                                    label : req.body.optionName,
+                                    count : 1
                                 }
                             }
                         };
