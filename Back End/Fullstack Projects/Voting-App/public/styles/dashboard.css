@@ -16,7 +16,7 @@ canvas {
     cursor: pointer;
 }
 
-#formInputSubmitBtn:hover {
+.formInputSubmitBtn:hover {
     cursor: pointer;
 }
 

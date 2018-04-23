@@ -128,30 +128,63 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
             //find dataset, if exists increment dataset count by 1
             //else create new dataset and increment dataset count by 1
 
-            if (Poll.find({
-                    name: req.body.currentPoll
-                })) {
-                let conditions = {
-                        name: req.body.currentPoll,
-                        'datasets.label': req.body.optionName
-                    },
-                    updateData = {
-                        $inc: { 'datasets.$.count': 1}
-                    };
-                Poll.update(conditions, updateData).then((result) => {
-                    Poll.find({
-                        name: req.body.currentPoll
-                    }).then((doc) => {
-                        res.send(doc);
-                    })
-                });
-            } else {
-                Poll.update(conditions, updateData).then((result)=>{
-                    Poll.find({name: req.body.currentPoll}).then((doc)=>{
-                        res.send(doc);
+            // Poll.find({'datasets.$.label': req.body.optionName}).then((result)=>{
+            //     console.log(result[0]);
+            // });
+
+            Poll.find({
+                'datasets.$.label': req.body.optionName
+            }).then((result) => {
+                if (result[0]) {
+                    console.log('Vote label found. Incrementing vote.');
+                    let conditions = {
+                            $and: {
+                                [ {name: req.body.currentPoll},
+                                  {'datasets.$.label': req.body.optionName} ]
+                            }
+                        },
+                        updateData = {
+                            $inc: {
+                                'datasets.$.count': 1
+                            }
+                        };
+                    Poll.update(conditions, updateData).then((result) => {
+                        Poll.find({
+                            name: req.body.currentPoll
+                        }).then((doc) => {
+                            res.send(doc);
+                        })
                     });
-                });
-            }
+                } else {
+                    console.log('Vote label not found. Creating new dataset label.');
+                    let conditions = {
+                            $and: {
+                                [{
+                                        name: req.body.currentPoll
+                                    },
+                                    {
+                                        'datasets.$.label': req.body.optionName
+                                    }
+                                ]
+                            }
+                        },
+                        updateData = {
+                            $push: {
+                                datasets: {
+                                    'label': req.body.optionName,
+                                    'datasets.count': 1
+                                }
+                            }
+                        };
+                    Poll.update(conditions, updateData).then((result) => {
+                        Poll.find({
+                            name: req.body.currentPoll
+                        }).then((doc) => {
+                            res.send(doc);
+                        });
+                    });
+                }
+            });
             break;
         case 'removeDataset':
             //find dataset, if exists remove
