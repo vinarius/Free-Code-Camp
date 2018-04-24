@@ -1,4 +1,3 @@
-vote button on click function now working. $inc by 1, save to db and update chart
-research websocket
+websocket
 
-research how to query more than one parameter
+add click event listeners separately on poll load
