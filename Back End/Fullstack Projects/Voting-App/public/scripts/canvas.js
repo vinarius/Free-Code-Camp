@@ -170,7 +170,7 @@ $(document).ready(() => {
                     appendVoteOptionBtn(data.datasets[i].label);
                     // addVoteListener('#voteOptionsBtn' + voteOptions.length, data.datasets[i].label);
                     let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
-                    voteOptionButton.addEventListener('click', myListenerTest('#voteOptionsBtn' + voteOptions.length, data.datasets[i].label));
+                    voteOptionButton.addEventListener('click', myListenerTest.bind('#voteOptionsBtn' + voteOptions.length, data.datasets[i].label));
                     // addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
                     voteData.push(data.datasets[i].count);
                     labelData.push(data.datasets[i].label);
