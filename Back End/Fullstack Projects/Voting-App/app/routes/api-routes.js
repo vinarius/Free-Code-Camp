@@ -128,16 +128,12 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
             //find dataset, if exists increment dataset count by 1
             //else create new dataset and increment dataset count by 1
 
-            // Poll.find({'datasets.$.label': req.body.optionName}).then((result)=>{
-            //     console.log(result[0]);
-            // });
-
             Poll.find({
-                'datasets.0.label': req.body.optionName
+                'datasets.label': req.body.optionName,
+                name: req.body.currentPoll
             }).then((findResult) => {
                 if (findResult[0]) {
                     console.log('Vote label found. Incrementing vote.');
-                    Poll.find({$and: [{name: req.body.currentPoll}, {label: req.body.optionName}]}).then((secondFindResult)=>{console.log('secondFindResult: ');console.log(secondFindResult)});
                     let conditions = {
                             $and: [{
                                     name: req.body.currentPoll
@@ -162,19 +158,13 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
                 } else {
                     console.log('Vote label not found. Creating new dataset label.');
                     let conditions = {
-                            $and: [{
-                                    name: req.body.currentPoll
-                                },
-                                {
-                                    label: req.body.optionName
-                                }
-                            ]
+                            name: req.body.currentPoll
                         },
                         updateData = {
                             $push: {
                                 datasets: {
-                                    label : req.body.optionName,
-                                    count : 1
+                                    label: req.body.optionName,
+                                    count: 1
                                 }
                             }
                         };

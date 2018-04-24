@@ -1,6 +1,7 @@
 $(document).ready(() => {
 
     let voteData = [];
+    let labelData = [];
     let pollForm = document.querySelector('#pollSearchForm');
     let addDatasetForm;
     let currentPoll = '';
@@ -14,13 +15,13 @@ $(document).ready(() => {
         chart.update();
     }
 
-    function createChart(voteData) {
+    function createChart(voteData, labelData) {
         $(".chart-row").removeClass("d-none").addClass("d-flex");
         let ctx = document.getElementById("pollCanvas").getContext('2d');
         let myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: [],
+                labels: labelData,
                 datasets: [{
                     label: ' # of Votes',
                     data: voteData,
@@ -77,11 +78,11 @@ $(document).ready(() => {
         });
     }
 
-    function addRemoveDatasetListener(el){
+    function addRemoveDatasetListener(el) {
         let removeDatasetButton = document.querySelector(el);
-        removeDatasetButton.addEventListener('click', (e)=>{
+        removeDatasetButton.addEventListener('click', (e) => {
             e.preventDefault();
-            if(confirm("Remove this dataset? This is irreversible.")){
+            if (confirm("Remove this dataset? This is irreversible.")) {
                 $.ajax({
                     type: 'POST',
                     url: '/api/pollData/updatePoll',
@@ -90,11 +91,11 @@ $(document).ready(() => {
                         element: el,
                         currentPoll: currentPoll
                     },
-                    success: (data)=>{
+                    success: (data) => {
                         console.log("Successful post request removing dataset.");
                         console.log(data);
                     },
-                    error: (err)=>{
+                    error: (err) => {
                         console.log("Error sending post request to delete dataset.");
                         console.error(err);
                     }
@@ -103,9 +104,9 @@ $(document).ready(() => {
         });
     }
 
-    function addVoteListener(el, datasetName){
+    function addVoteListener(el, datasetName) {
         let voteOptionButton = document.querySelector(el);
-        voteOptionButton.addEventListener('click', (e)=>{
+        voteOptionButton.addEventListener('click', (e) => {
             e.preventDefault();
             $.ajax({
                 type: 'POST',
@@ -116,11 +117,10 @@ $(document).ready(() => {
                     optionName: datasetName,
                     currentPoll: currentPoll
                 },
-                success: (data)=>{
+                success: (data) => {
                     console.log('Post vote to database success.');
-                    console.log(data);
                 },
-                error: (err)=>{
+                error: (err) => {
                     console.log('Error posting vote to database.');
                     console.error(err);
                 }
@@ -138,7 +138,12 @@ $(document).ready(() => {
                 pollName: pollName
             },
             success: (data) => {
-                createChart(voteData);
+                for (let i = 0; i < data.datasets.length; i++) {
+                    voteData.push(data.datasets[i].count);
+                    labelData.push(data.datasets[i].label);
+                }
+                console.log(data);
+                createChart(voteData, labelData);
                 currentPoll = pollName;
             },
             error: (err) => {
