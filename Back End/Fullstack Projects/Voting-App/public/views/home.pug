@@ -1,59 +1,73 @@
 extends components/layout
 
 block content
-    br
-    .d-flex.justify-content-center
-        .d-inline-flex.flex-column.align-items-center
-            img(src="https://cdn.glitch.com/a93c96e2-ba1a-47c8-a4e0-21c7d52610b7%2FmeImg.jpg?1511813998271", style="height:170px; width:170px; border-radius: 5%;")
-            br
-            p Built by Mark "vin" Kraus
-            .d-flex.flex-row.justify-content-around(style="width: 100%;")
-                a(href="https://www.linkedin.com/in/mark-kraus-b19858105/", target="blank")
-                    i.fa.fa-linkedin-square.fa-2x(aria-hidden="true")
-                a(href="https://twitter.com/vinar1us", target="blank")
-                    i.fa.fa-twitter-square.fa-2x(aria-hidden="true")
-                a(href="https://github.com/vinarius", target="blank")
-                    i.fa.fa-github-square.fa-2x(aria-hidden="true")
-                a(href="https://www.twitch.tv/vorade", target="blank")
-                    i.fa.fa-twitch.fa-2x(aria-hidden="true")
-    br
-    .d-flex.flex-column.align-items-center.container
-        h1 FreeCodeCamp API Basejump: Voting Application
+    if user
         br
-        ul
-            li <span class="bold">User Story:</span> As an authenticated user, I can keep my polls and come back later to access them.
-            li <span class="bold">User Story:</span> As an authenticated user, I can share my polls with my friends.
-            li <span class="bold">User Story:</span> As an authenticated user, I can see the aggregate results of my polls.
-            li <span class="bold">User Story:</span> As an authenticated user, I can delete polls that I decide I don't want anymore.
-            li <span class="bold">User Story:</span> As an authenticated user, I can create a poll with any number of possible items.
-            li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
-            li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see the results of polls in chart form.
-            li <span class="bold">User Story:</span> As an authenticated user, if I don't like the options on a poll, I can create a new option.
-    br
-    //- br
-    //- .d-flex.justify-content-center
-    //-     button#queryButton Query All Test Data
-    //- br
-    //- ul#queryUl.d-flex.flex-column.align-items-center
-    //- br
-    //- .d-flex.justify-content-center
-    //-     form#myForm.d-inline-flex.flex-column(style="background-color: #ddd;", action="/api/querydb", method="POST")
-    //-         p.d-flex.justify-content-center My Form
-    //-         br
-    //-         input#firstName(type="text", name="firstName", placeholder="First Name" required)
-    //-         input#lastName(type="text", name="lastName", placeholder="Last Name" required)
-    //-         br
-    //-         .d-flex.justify-content-around.align-items-center
-    //-             input.formBtn(type="radio", name="gender", value="male" required)
-    //-             div Male
-    //-             input.formBtn(type="radio", name="gender", value="female")
-    //-             div Female
-    //-         br
-    //-         button#myFormSubmit Submit
-    //- br
-    //- ul#testDiv.d-flex.flex-column.align-items-center
-    //- br
-
+        br
+        .d-flex.justify-content-center
+            .d-inline-flex.flex-column.align-items-center
+                img(src="https://cdn.glitch.com/a93c96e2-ba1a-47c8-a4e0-21c7d52610b7%2FmeImg.jpg?1511813998271", style="height:170px; width:170px; border-radius: 5%;")
+                br
+                p Built by Mark "vin" Kraus
+                .d-flex.flex-row.justify-content-around(style="width: 100%;")
+                    a(href="https://www.linkedin.com/in/mark-kraus-b19858105/", target="blank")
+                        i.fa.fa-linkedin-square.fa-2x(aria-hidden="true")
+                    a(href="https://twitter.com/vinar1us", target="blank")
+                        i.fa.fa-twitter-square.fa-2x(aria-hidden="true")
+                    a(href="https://github.com/vinarius", target="blank")
+                        i.fa.fa-github-square.fa-2x(aria-hidden="true")
+                    a(href="https://www.twitch.tv/vorade", target="blank")
+                        i.fa.fa-twitch.fa-2x(aria-hidden="true")
+        br
+        .d-flex.flex-column.align-items-center.container
+            h1 FreeCodeCamp API Basejump: Voting Application
+            br
+            ul
+                li <span class="bold">User Story:</span> As an authenticated user, I can keep my polls and come back later to access them.
+                li <span class="bold">User Story:</span> As an authenticated user, I can share my polls with my friends.
+                li <span class="bold">User Story:</span> As an authenticated user, I can see the aggregate results of my polls.
+                li <span class="bold">User Story:</span> As an authenticated user, I can delete polls that I decide I don't want anymore.
+                li <span class="bold">User Story:</span> As an authenticated user, I can create a poll with any number of possible items.
+                li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
+                li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see the results of polls in chart form.
+                li <span class="bold">User Story:</span> As an authenticated user, if I don't like the options on a poll, I can create a new option.
+        br
+        .d-inline-flex.justify-content-center
+            a(href="/user/dashboard")
+                button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Dashboard
+            a(href="/user/profile")
+                button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Profile
+    else
+        br
+        br
+        .d-flex.justify-content-center
+            .d-inline-flex.flex-column.align-items-center
+                img(src="https://cdn.glitch.com/a93c96e2-ba1a-47c8-a4e0-21c7d52610b7%2FmeImg.jpg?1511813998271", style="height:170px; width:170px; border-radius: 5%;")
+                br
+                p Built by Mark "vin" Kraus
+                .d-flex.flex-row.justify-content-around(style="width: 100%;")
+                    a(href="https://www.linkedin.com/in/mark-kraus-b19858105/", target="blank")
+                        i.fa.fa-linkedin-square.fa-2x(aria-hidden="true")
+                    a(href="https://twitter.com/vinar1us", target="blank")
+                        i.fa.fa-twitter-square.fa-2x(aria-hidden="true")
+                    a(href="https://github.com/vinarius", target="blank")
+                        i.fa.fa-github-square.fa-2x(aria-hidden="true")
+                    a(href="https://www.twitch.tv/vorade", target="blank")
+                        i.fa.fa-twitch.fa-2x(aria-hidden="true")
+        br
+        .d-flex.flex-column.align-items-center.container
+            h1 FreeCodeCamp API Basejump: Voting Application
+            br
+            ul
+                li <span class="bold">User Story:</span> As an authenticated user, I can keep my polls and come back later to access them.
+                li <span class="bold">User Story:</span> As an authenticated user, I can share my polls with my friends.
+                li <span class="bold">User Story:</span> As an authenticated user, I can see the aggregate results of my polls.
+                li <span class="bold">User Story:</span> As an authenticated user, I can delete polls that I decide I don't want anymore.
+                li <span class="bold">User Story:</span> As an authenticated user, I can create a poll with any number of possible items.
+                li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
+                li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see the results of polls in chart form.
+                li <span class="bold">User Story:</span> As an authenticated user, if I don't like the options on a poll, I can create a new option.
+        br
 block append scripts
     //- home.js
     script(src="../../scripts/home.js", type="text/javascript")

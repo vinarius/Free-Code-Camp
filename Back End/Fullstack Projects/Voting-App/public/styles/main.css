@@ -3,7 +3,8 @@
     font-size: 1.25em;
 }
 
-html, body {
+html,
+body {
     min-width: 320px;
 }
 
@@ -34,6 +35,15 @@ a:visited {
 #facebookLoginBtn:hover {
     background-color: #eee;
     color: #555;
+}
+
+.home-button {
+    margin: 0 5px;
+    border-radius: 5px !important;
+}
+
+.home-button:hover {
+    cursor: pointer;
 }
 
 .margin-side-10 {
