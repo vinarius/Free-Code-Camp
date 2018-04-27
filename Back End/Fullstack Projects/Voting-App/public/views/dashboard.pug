@@ -5,6 +5,13 @@ block append styles
     link(rel="stylesheet", type="text/css", href="../../styles/dashboard.css")
 
 block content
+    br
+    .d-inline-flex.justify-content-center
+        a(href="/user/dashboard")
+            button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Dashboard
+        a(href="/user/profile")
+            button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Profile
+    br
     ul.d-flex.flex-row.justify-content-center
         li.d-flex.justify-content-center.padding10
             button#createPoll.d-flex-justify-content-center.align-items-center.btn.btn-primary.dashboard-btn(type="button") Create Poll
