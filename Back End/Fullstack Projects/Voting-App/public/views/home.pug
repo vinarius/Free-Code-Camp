@@ -3,6 +3,12 @@ extends components/layout
 block content
     if user
         br
+        .d-inline-flex.justify-content-center
+            a(href="/user/dashboard")
+                button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Dashboard
+            a(href="/user/profile")
+                button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Profile
+        br
         br
         .d-flex.justify-content-center
             .d-inline-flex.flex-column.align-items-center
@@ -31,12 +37,6 @@ block content
                 li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see and vote on everyone's polls.
                 li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see the results of polls in chart form.
                 li <span class="bold">User Story:</span> As an authenticated user, if I don't like the options on a poll, I can create a new option.
-        br
-        .d-inline-flex.justify-content-center
-            a(href="/user/dashboard")
-                button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Dashboard
-            a(href="/user/profile")
-                button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Profile
     else
         br
         br
