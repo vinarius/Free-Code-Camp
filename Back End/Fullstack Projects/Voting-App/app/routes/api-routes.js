@@ -100,17 +100,14 @@ router.post('/updateUser', checkAuth, (req, res) => {
 });
 
 router.post('/pollData', checkAuth, (req, res) => {
-    console.log('Post request received: /api/pollData');
     Poll.find({
         name: req.body.pollName
     }).then((pollDoc) => {
         if (pollDoc[0]) {
             //poll found, do stuff with doc
-            console.log("Poll found.");
             res.send(pollDoc[0]);
         } else {
             //poll not found, do stuff
-            console.log('Poll not found, creating new poll: ' + req.body.pollName);
             let newPoll = new Poll({
                 name: req.body.pollName,
                 datasets: []
@@ -133,19 +130,13 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
                 name: req.body.currentPoll
             }).then((findResult) => {
                 if (findResult[0]) {
-                    console.log('Vote label found. Incrementing vote.');
                     let conditions = {
-                            $and: [{
-                                    name: req.body.currentPoll
-                                },
-                                {
-                                    'datasets.0.label': req.body.optionName
-                                }
-                            ]
+                            name: req.body.currentPoll,
+                            'datasets.label': req.body.optionName
                         },
                         updateData = {
                             $inc: {
-                                'datasets.0.count': 1
+                                'datasets.$.count': 1
                             }
                         };
                     Poll.update(conditions, updateData).then((updateResult) => {
@@ -156,7 +147,6 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
                         })
                     });
                 } else {
-                    console.log('Vote label not found. Creating new dataset label.');
                     let conditions = {
                             name: req.body.currentPoll
                         },

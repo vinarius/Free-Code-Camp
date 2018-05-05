@@ -6,6 +6,7 @@ $(document).ready(() => {
     let addDatasetForm;
     let currentPoll = '';
     let voteOptions = [];
+    let myChart;
 
     function addData(chart, label, data) {
         chart.data.labels.push(label);
@@ -22,7 +23,7 @@ $(document).ready(() => {
     function createChart(voteData, labelData) {
         $(".chart-row").removeClass("d-none").addClass("d-flex");
         let ctx = document.getElementById("pollCanvas").getContext('2d');
-        let myChart = new Chart(ctx, {
+        myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labelData,
@@ -112,7 +113,6 @@ $(document).ready(() => {
         let voteOptionButton = document.querySelector(el);
         voteOptionButton.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('something happened');
             $.ajax({
                 type: 'POST',
                 url: '/api/pollData/updatePoll',
@@ -124,7 +124,8 @@ $(document).ready(() => {
                 },
                 success: (data) => {
                     console.log('Post vote to database success.');
-                    // addData(myChart, data.datasets)
+                    console.log(data[0].datasets[1]);
+                    // addData(myChart, datasetName, data[0].datasets.count); ??
                 },
                 error: (err) => {
                     console.log('Error posting vote to database.');
@@ -134,27 +135,26 @@ $(document).ready(() => {
         });
     }
 
-    function myListenerTest(el, datasetName){
-        console.log('somethingasdf happened');
-        $.ajax({
-            type: 'POST',
-            url: '/api/pollData/updatePoll',
-            data: {
-                updateStatus: 'voteDataset',
-                elementID: el,
-                optionName: datasetName,
-                currentPoll: currentPoll
-            },
-            success: (data) => {
-                console.log('Post vote to database success.');
-                // addData(myChart, data.datasets)
-            },
-            error: (err) => {
-                console.log('Error posting vote to database.');
-                console.error(err);
-            }
-        });
-    }
+    // function myListenerTest(el, datasetName){
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/api/pollData/updatePoll',
+    //         data: {
+    //             updateStatus: 'voteDataset',
+    //             elementID: el,
+    //             optionName: datasetName,
+    //             currentPoll: currentPoll
+    //         },
+    //         success: (data) => {
+    //             console.log('Post vote to database success.');
+    //             // addData(myChart, data.datasets)
+    //         },
+    //         error: (err) => {
+    //             console.log('Error posting vote to database.');
+    //             console.error(err);
+    //         }
+    //     });
+    // }
 
     pollForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -168,12 +168,12 @@ $(document).ready(() => {
             success: (data) => {
                 for (let i = 0; i < data.datasets.length; i++) {
                     (function(){
-                        appendVoteOptionBtn(data.datasets[i].label);
+                        let j = i;
+                        appendVoteOptionBtn(data.datasets[j].label);
                         let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
-                        voteOptionButton.addEventListener('click', myListenerTest('#voteOptionsBtn' + voteOptions.length, data.datasets[i].label), false);
-                        // document.querySelector('#voteOptionsBtn' + voteOptions.length).addEventListener('click', myListenerTest('#voteOptionsBtn' + voteOptions.length, data.datasets[i].label), false);
-                        addVoteListener('#voteOptionsBtn' + voteOptions.length, data.datasets[i].label);
+                        addVoteListener('#voteOptionsBtn' + voteOptions.length, data.datasets[j].label);
                         addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
+                        voteOptions.push('voteOptionsBtn' + voteOptions.length);
                     }());
                     voteData.push(data.datasets[i].count);
                     labelData.push(data.datasets[i].label);
