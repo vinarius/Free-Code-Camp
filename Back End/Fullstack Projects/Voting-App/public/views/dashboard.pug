@@ -25,9 +25,10 @@ block content
         .d-flex.flex-row
             input#formInputName(type="text", placeholder="Poll Name")
             button.formInputSubmitBtn.btn.btn-primary(type="submit") Submit
+    #pollDisplayNameContainer.d-none.justify-content-center
     .chart-row.d-none.flex-column.align-items-center
         .chart-container.d-flex.flex-column.align-items-center
-            canvas#pollCanvas(width="400", height="400")
+            canvas#pollCanvas(width="350", height="350")
         #voteOptionsContainer.d-flex.flex-row.justify-content-around
         #addDatasetFormContainer.d-flex.flex-row
             

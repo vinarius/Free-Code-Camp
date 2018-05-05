@@ -135,27 +135,6 @@ $(document).ready(() => {
         });
     }
 
-    // function myListenerTest(el, datasetName){
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/api/pollData/updatePoll',
-    //         data: {
-    //             updateStatus: 'voteDataset',
-    //             elementID: el,
-    //             optionName: datasetName,
-    //             currentPoll: currentPoll
-    //         },
-    //         success: (data) => {
-    //             console.log('Post vote to database success.');
-    //             // addData(myChart, data.datasets)
-    //         },
-    //         error: (err) => {
-    //             console.log('Error posting vote to database.');
-    //             console.error(err);
-    //         }
-    //     });
-    // }
-
     pollForm.addEventListener('submit', (e) => {
         e.preventDefault();
         let pollName = $("#formInputName").val().toLowerCase().split(' ').join('');
@@ -166,6 +145,11 @@ $(document).ready(() => {
                 pollName: pollName
             },
             success: (data) => {
+                document.getElementById('pollSearchForm').reset();
+                let displayNameMutation = data.name.split('');
+                displayNameMutation[0] = displayNameMutation[0].toUpperCase();
+                displayNameMutation = displayNameMutation.join('');
+                $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
                 for (let i = 0; i < data.datasets.length; i++) {
                     (function(){
                         let j = i;

@@ -1,11 +1,11 @@
 canvas {
-    height: 600px;
-    width: 600px;
+    height: 400px;
+    width: 400px;
 }
 
 .chart-container {
-    height: 600px;
-    width: 600px;
+    height: 400px;
+    width: 400px;
 }
 
 .dashboard-btn {
@@ -23,6 +23,11 @@ canvas {
 #inputNumber {
     width: 100px;
     margin: 5px;
+}
+
+#pollDisplayNameContainer {
+    margin-bottom: -20px;
+    padding-top: 20px;
 }
 
 .removeDatasetBtn {
