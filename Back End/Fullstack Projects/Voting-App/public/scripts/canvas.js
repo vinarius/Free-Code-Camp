@@ -7,6 +7,7 @@ $(document).ready(() => {
     let currentPoll = '';
     let voteOptions = [];
     let myChart;
+    let datasetWarning = false;
 
     function addData(chart, label, data) {
         chart.data.labels.push(label);
@@ -74,12 +75,19 @@ $(document).ready(() => {
                 datasetName[i] = datasetName[i].join('');
             }
             datasetName = datasetName.join(' ');
-            addData(myChart, datasetName, 0);
+            if(!myChart.data.labels.includes(datasetName)){
+                addData(myChart, datasetName, 0);
+                appendVoteOptionBtn(datasetName);
+                addVoteListener('#voteOptionsBtn' + voteOptions.length, datasetName);
+                addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
+                voteOptions.push('voteOptionsBtn' + voteOptions.length);
+            } else {
+                if(!datasetWarning){
+                    $("#addDatasetWarningContainer").removeClass("d-none").addClass("d-flex");
+                    datasetWarning = true;
+                }
+            }
             document.getElementById('addDatasetForm').reset();
-            appendVoteOptionBtn(datasetName);
-            addVoteListener('#voteOptionsBtn' + voteOptions.length, datasetName);
-            addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
-            voteOptions.push('voteOptionsBtn' + voteOptions.length);
         });
     }
 
@@ -145,7 +153,15 @@ $(document).ready(() => {
                 pollName: pollName
             },
             success: (data) => {
+                myChart = '';
+                voteData = [];
+                labelData = [];
+                voteOptions = [];
                 document.getElementById('pollSearchForm').reset();
+                if(datasetWarning){
+                    datasetWarning = false;
+                    $("#addDatasetWarningContainer").addClass("d-none").removeClass("d-flex");
+                }
                 let displayNameMutation = data.name.split('');
                 displayNameMutation[0] = displayNameMutation[0].toUpperCase();
                 displayNameMutation = displayNameMutation.join('');

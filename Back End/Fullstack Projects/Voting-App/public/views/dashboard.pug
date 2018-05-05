@@ -30,7 +30,8 @@ block content
         .chart-container.d-flex.flex-column.align-items-center
             canvas#pollCanvas(width="350", height="350")
         #voteOptionsContainer.d-flex.flex-row.justify-content-around
-        #addDatasetFormContainer.d-flex.flex-row
+        #addDatasetFormContainer.d-flex.flex-column-reverse
+            #addDatasetWarningContainer.d-none.justify-content-center Dataset already exists.
             
 
 block append scripts
