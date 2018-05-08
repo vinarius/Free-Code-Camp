@@ -188,4 +188,18 @@ $(document).ready(() => {
         });
     });
 
+    $("#myPollsBtn").click(()=>{
+        $.ajax({
+            type: 'GET',
+            url: '/api/getUserPolls',
+            success: (data)=>{
+                console.log('ajax request successful');
+                console.log(data);
+            },
+            error: (err)=>{
+                console.error('Error sending ajax:', err);
+            }
+        });
+    });
+
 }); //end of document ready

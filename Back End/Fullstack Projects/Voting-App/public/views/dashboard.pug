@@ -5,12 +5,12 @@ block append styles
     link(rel="stylesheet", type="text/css", href="../../styles/dashboard.css")
 
 block content
-    br
-    .d-inline-flex.justify-content-center
-        a(href="/user/dashboard")
-            button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Dashboard
-        a(href="/user/profile")
-            button.d-flex.justify-content-center.align-items-center.home-button.btn.btn-primary Profile
+    #banner.d-flex.justify-content-around.align-items-center.flex-column
+        .d-flex.justify-content-center Dashboard
+        .d-flex.justify-content-center(style="font-size: 0.5em;") What would you like to do?
+        .d-flex.justify-content-center.flex-row(style="margin: 30px;")
+            button.btn.btn-success.home-button Create Poll
+            button#myPollsBtn.btn.btn-info.home-button My Polls
     br
     ul.d-flex.flex-row.justify-content-center
         li.d-flex.justify-content-center.padding10

@@ -180,4 +180,10 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
     // res.send('Server data: post request received on /api/pollData/updatePoll');
 });
 
+router.get('/getUserPolls', checkAuth, (req, res)=>{
+    console.log('get request received on /api/getUserPolls');
+    console.log('req.user:', req.user);
+    res.end();
+});
+
 module.exports = router;

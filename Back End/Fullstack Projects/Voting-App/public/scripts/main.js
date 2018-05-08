@@ -57,9 +57,6 @@ $(document).ready(() => {
             $('footer').height()
         ));
     }
-    $(window).resize(() => {
-        footerAutoHeight();
-    });
 
     //create a new poll on click #createPoll
     $("#createPoll").click(() => {
@@ -73,8 +70,20 @@ $(document).ready(() => {
         }
     });
 
+    function underNavAutoHeight(){
+        let height = $('nav').height();
+        $("#underNav").css('min-height', 0);
+        $("#underNav").css('min-height', height);
+    }
+
+    $(window).resize(() => {
+        footerAutoHeight();
+        underNavAutoHeight();
+    });
+
     //on document load
     footerAutoHeight();
     getPollsCreated();
+    underNavAutoHeight();
 
 }); //end of document.ready
