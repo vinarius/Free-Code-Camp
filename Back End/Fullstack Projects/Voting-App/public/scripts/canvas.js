@@ -77,6 +77,7 @@ $(document).ready(() => {
             datasetName = datasetName.join(' ');
             if (!myChart.data.labels.includes(datasetName)) {
                 //add dataset to db with count at 0
+                addDataset(datasetName);
                 addData(myChart, datasetName, 0);
                 appendVoteOptionBtn(datasetName);
                 addVoteListener('#voteOptionsBtn' + voteOptions.length, datasetName);
@@ -110,7 +111,7 @@ $(document).ready(() => {
                         console.log(data);
                     },
                     error: (err) => {
-                        console.log("Error sending post request to delete dataset.");
+                        console.log("Error sending post request to remove dataset.");
                         console.error(err);
                     }
                 });
@@ -118,45 +119,26 @@ $(document).ready(() => {
         });
     }
 
-    function addDataset(){
-        function addVoteListener(el, datasetName) {
-            let voteOptionButton = document.querySelector(el);
-            voteOptionButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/pollData/updatePoll',
-                    data: {
-                        updateStatus: 'voteDataset',
-                        elementID: el,
-                        optionName: datasetName,
-                        currentPoll: currentPoll
-                    },
-                    success: (data) => {
-                        function getElementPosition(input, dataset) {
-                            let outcome = input[0].datasets;
-                            for (let i = 0; i < outcome.length; i++) {
-                                for (let j in outcome[i]) {
-                                    if (outcome[i][j] == dataset) {
-                                        return i;
-                                    }
-                                }
-                            }
-                            return -1;
-                        }
-    
-                        let targetVoteOption = getElementPosition(data, datasetName);
-                        myChart.data.datasets[0].data[targetVoteOption]++;
-                        myChart.update();
-                    },
-                    error: (err) => {
-                        console.log('Error posting vote to database.');
-                        console.error(err);
-                    }
-                });
-            });
-        }
+    function addDataset(datasetName) {
+        console.log('addDataset() fired');
+        $.ajax({
+            type: 'POST',
+            url: '/api/pollData/updatePoll',
+            data: {
+                updateStatus: 'addDataset',
+                optionName: datasetName,
+                currentPoll: currentPoll
+            },
+            success: (data) => {
+                console.log(data);
+            },
+            error: (err) => {
+                console.log('Error posting vote to database.');
+                console.error(err);
+            }
+        });
     }
+
 
     function addVoteListener(el, datasetName) {
         let voteOptionButton = document.querySelector(el);
@@ -197,7 +179,6 @@ $(document).ready(() => {
     }
 
     function resetChart() {
-        console.log('resetChart() fired');
         $("#addDatasetFormContainer").empty();
         $("#voteOptionsContainer").empty();
         $(".chart-container").empty();
