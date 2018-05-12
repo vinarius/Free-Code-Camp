@@ -121,6 +121,26 @@ router.post('/pollData', checkAuth, (req, res) => {
 
 router.post('/pollData/updatePoll', checkAuth, (req, res) => {
     switch (req.body.updateStatus) {
+        case 'addDataset':
+            let conditions = {
+                    name: req.body.currentPoll
+                },
+                updateData = {
+                    $push: {
+                        datasets: {
+                            label: req.body.optionName,
+                            count: 0
+                        }
+                    }
+                };
+            Poll.update(conditions, updateData).then((result) => {
+                Poll.find({
+                    name: req.body.currentPoll
+                }).then((doc) => {
+                    res.send(doc);
+                });
+            });
+            break;
         case 'voteDataset':
             //find dataset, if exists increment dataset count by 1
             //else create new dataset and increment dataset count by 1
@@ -141,6 +161,8 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
                         };
                     Poll.update(conditions, updateData).then((updateResult) => {
                         Poll.find({
+                            // name: req.body.currentPoll
+                            'datasets.label': req.body.optionName,
                             name: req.body.currentPoll
                         }).then((doc) => {
                             res.send(doc);
@@ -180,7 +202,7 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
     // res.send('Server data: post request received on /api/pollData/updatePoll');
 });
 
-router.get('/getUserPolls', checkAuth, (req, res)=>{
+router.get('/getUserPolls', checkAuth, (req, res) => {
     console.log('get request received on /api/getUserPolls');
     console.log('req.user:', req.user);
     res.end();
