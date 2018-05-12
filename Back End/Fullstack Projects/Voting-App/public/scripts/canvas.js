@@ -98,17 +98,22 @@ $(document).ready(() => {
         removeDatasetButton.addEventListener('click', (e) => {
             e.preventDefault();
             if (confirm("Remove this dataset? This is irreversible.")) {
+                let targetVar = $(removeDatasetButton).parent();
+                targetVar = $(targetVar).first();
+                console.log(targetVar);
                 $.ajax({
                     type: 'POST',
                     url: '/api/pollData/updatePoll',
                     data: {
                         updateStatus: 'removeDataset',
                         element: el,
-                        currentPoll: currentPoll
+                        currentPoll: currentPoll,
+                        optionName: removeDatasetButton.parentNode.id
                     },
                     success: (data) => {
                         console.log("Successful post request removing dataset.");
                         console.log(data);
+                        removeDatasetButton.parentNode.remove();
                     },
                     error: (err) => {
                         console.log("Error sending post request to remove dataset.");
