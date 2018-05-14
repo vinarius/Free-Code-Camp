@@ -157,8 +157,6 @@ $(document).ready(() => {
     }
 
     function addDataset(datasetName) {
-        voteData = [];
-        labelData = [];
         $.ajax({
             type: 'POST',
             url: '/api/pollData/updatePoll',
@@ -168,18 +166,17 @@ $(document).ready(() => {
                 currentPoll: currentPoll
             },
             success: (data) => {
-                console.log(data);
-                console.log('voteData before:', voteData);
-                console.log('labelData before:', labelData);
+                voteData = [];
+                labelData = [];
                 for(let i=0; i<data[0].datasets.length; i++){
                     voteData.push(data[0].datasets[i].count);
                     labelData.push(data[0].datasets[i].label);
                 }
-                console.log('voteData after:', voteData);
-                console.log('labelData after:', labelData);
                 myChart.data.labels = labelData;
                 myChart.data.datasets[0].data = voteData;
                 myChart.update();
+                // addVoteListener('#voteOptionsBtn' + (voteOptions.length - 1), datasetName);
+                // addRemoveDatasetListener('#removeDatasetBtn' + (voteOptions.length - 1));
             },
             error: (err) => {
                 console.log('Error posting vote to database.');
