@@ -185,7 +185,6 @@ $(document).ready(() => {
         });
     }
 
-
     function addVoteListener(el, datasetName) {
         let voteOptionButton = document.querySelector(el);
         voteOptionButton.addEventListener('click', (e) => {
