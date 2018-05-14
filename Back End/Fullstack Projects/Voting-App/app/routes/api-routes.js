@@ -193,38 +193,27 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
         case 'removeDataset':
             //find dataset, if exists remove
             //else res.send dataset not found
-
-            //find datasets element that matches the label
-            //then use $pull to remove that element from datasets
-            console.log(req.body.optionName);
-            // let removeConditions = {
-            //         name: req.body.currentPoll,
-            //         'datasets.label': req.body.optionName
-            //     },
-            //     removeUpdateData = {
-            //         $pull: {
-            //             datasets: {
-            //                 label: req.body.optionName
-            //             }
-            //         }
-            //     };
-            // Poll.update(removeConditions, removeUpdateData).then((result) => {
-            //     Poll.find({
-            //         name: req.body.currentPoll
-            //     }).then((doc) => {
-            //         res.send(doc);
-            //     });
-            // });
-
-            res.end();
-
-            console.log('removeDataset case executed');
+            let removeConditions = {
+                    name: req.body.currentPoll,
+                    'datasets.label': req.body.optionName
+                },
+                removeUpdateData = {
+                    $pull: {
+                        datasets: {label: req.body.optionName}
+                    }
+                };
+            Poll.update(removeConditions, removeUpdateData).then((result)=>{
+                Poll.find({
+                    name: req.body.currentPoll
+                }).then((doc)=>{
+                    res.send(doc);
+                });
+            });
             break;
         default:
             res.send('invalid post status');
             break;
     }
-    // res.send('Server data: post request received on /api/pollData/updatePoll');
 });
 
 router.get('/getUserPolls', checkAuth, (req, res) => {

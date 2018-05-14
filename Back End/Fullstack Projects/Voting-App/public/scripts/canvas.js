@@ -17,12 +17,38 @@ $(document).ready(() => {
         chart.update();
     }
 
+    function removeData(chart, index) {
+        chart.data.labels.splice(index, 1);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.splice(index, 1);
+        });
+        chart.update();
+    }
+
+    function getElementPosition(input, dataset) {
+        let outcome = input[0].datasets;
+        for (let i = 0; i < outcome.length; i++) {
+            for (let j in outcome[i]) {
+                if (outcome[i][j] == dataset) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     function appendVoteOptionBtn(datasetName) {
         $("#voteOptionsContainer").append('<div class="d-flex flex-row voteButtonContainer"><button class="voteOption btn btn-success" id="voteOptionsBtn' + voteOptions.length + '">' + datasetName + '</button><button id="removeDatasetBtn' + voteOptions.length + '" class="removeDatasetBtn btn btn-dark">X</button></div>');
     }
 
     function createChart(voteData, labelData) {
-        $(".chart-row").removeClass("d-none").addClass("d-flex");
+        if($(".chart-row").hasClass("d-none")){
+            $(".chart-row").removeClass("d-none").addClass("d-flex");
+        }
+        if(myChart != null){
+            myChart = null;
+            resetChart();
+        }
         let ctx = document.getElementById("pollCanvas").getContext('2d');
         myChart = new Chart(ctx, {
             type: 'bar',
@@ -98,9 +124,7 @@ $(document).ready(() => {
         removeDatasetButton.addEventListener('click', (e) => {
             e.preventDefault();
             if (confirm("Remove this dataset? This is irreversible.")) {
-                let targetVar = $(removeDatasetButton).parent();
-                targetVar = $(targetVar).first();
-                console.log(targetVar);
+                let targetElementText = removeDatasetButton.parentElement.firstElementChild.textContent;
                 $.ajax({
                     type: 'POST',
                     url: '/api/pollData/updatePoll',
@@ -108,12 +132,20 @@ $(document).ready(() => {
                         updateStatus: 'removeDataset',
                         element: el,
                         currentPoll: currentPoll,
-                        optionName: removeDatasetButton.parentNode.id
+                        optionName: targetElementText
                     },
                     success: (data) => {
-                        console.log("Successful post request removing dataset.");
-                        console.log(data);
                         removeDatasetButton.parentNode.remove();
+                        console.log(data);
+                        voteOptions = [];
+                        labelData = [];
+                        for(let i = 0; i < data[0].datasets.length; i++){
+                            voteData.push(data[0].datasets[i].count);
+                            labelData.push(data[0].datasets[i].label);
+                        }
+                        // createChart(voteData, labelData);
+                        let targetIndex = getElementPosition(data, targetElementText);
+                        removeData(myChart, targetIndex);
                     },
                     error: (err) => {
                         console.log("Error sending post request to remove dataset.");
@@ -125,7 +157,8 @@ $(document).ready(() => {
     }
 
     function addDataset(datasetName) {
-        console.log('addDataset() fired');
+        voteData = [];
+        labelData = [];
         $.ajax({
             type: 'POST',
             url: '/api/pollData/updatePoll',
@@ -136,6 +169,17 @@ $(document).ready(() => {
             },
             success: (data) => {
                 console.log(data);
+                console.log('voteData before:', voteData);
+                console.log('labelData before:', labelData);
+                for(let i=0; i<data[0].datasets.length; i++){
+                    voteData.push(data[0].datasets[i].count);
+                    labelData.push(data[0].datasets[i].label);
+                }
+                console.log('voteData after:', voteData);
+                console.log('labelData after:', labelData);
+                myChart.data.labels = labelData;
+                myChart.data.datasets[0].data = voteData;
+                myChart.update();
             },
             error: (err) => {
                 console.log('Error posting vote to database.');
@@ -159,18 +203,6 @@ $(document).ready(() => {
                     currentPoll: currentPoll
                 },
                 success: (data) => {
-                    function getElementPosition(input, dataset) {
-                        let outcome = input[0].datasets;
-                        for (let i = 0; i < outcome.length; i++) {
-                            for (let j in outcome[i]) {
-                                if (outcome[i][j] == dataset) {
-                                    return i;
-                                }
-                            }
-                        }
-                        return -1;
-                    }
-
                     let targetVoteOption = getElementPosition(data, datasetName);
                     myChart.data.datasets[0].data[targetVoteOption]++;
                     myChart.update();
