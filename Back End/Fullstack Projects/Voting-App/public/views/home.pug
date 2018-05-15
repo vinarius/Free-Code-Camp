@@ -2,6 +2,12 @@ extends components/layout
 
 block content
     if user
+        #banner.d-flex.justify-content-around.align-items-center.flex-column
+            .d-flex.justify-content-center Home
+            .d-flex.justify-content-center(style="font-size: 0.5em;") What would you like to do?
+            .d-flex.justify-content-center.flex-row(style="margin: 30px;")
+                button.btn.btn-success.home-button Create Poll
+                button#myPollsBtn.btn.btn-info.home-button My Polls
         br
         br
         .d-flex.justify-content-center

@@ -15,6 +15,13 @@ a:visited {
     text-decoration: none;
 }
 
+#banner {
+    background-color: rgb(124, 112, 216);
+    min-height: 30vh;
+    color: #fff;
+    font-size: 3em;
+}
+
 .bold {
     font-weight: bold;
 }

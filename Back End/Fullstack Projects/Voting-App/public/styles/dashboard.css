@@ -1,9 +1,3 @@
-#banner {
-    background-color: rgb(124, 112, 216);
-    min-height: 30vh;
-    color: #fff;
-    font-size: 3em;
-}
 
 canvas {
     height: 400px;
