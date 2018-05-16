@@ -9,8 +9,10 @@ block content
         .d-flex.justify-content-center Dashboard
         .d-flex.justify-content-center(style="font-size: 0.5em;") What would you like to do?
         .d-flex.justify-content-center.flex-row(style="margin: 30px;")
-            button.btn.btn-light.home-button Create Poll
-            button#myPollsBtn.btn.btn-light.home-button My Polls
+            a(href="/user/dashboard")
+                button.btn.btn-light.home-button Create Poll
+            a(href="#")
+                button#myPollsBtn.btn.btn-light.home-button My Polls
     br
     ul.d-flex.flex-row.justify-content-center
         li.d-flex.justify-content-center.padding10
