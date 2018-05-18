@@ -59,9 +59,9 @@ $(document).ready(() => {
     }
 
     //create a new poll on click #createPoll
-    $("#createPoll").click(() => {
-        updatePollsCreated();
-    });
+    // $("#createPoll").click(() => {
+    //     updatePollsCreated();
+    // });
 
     //delete all user polls on click #deleteAllPolls
     $("#deleteAllPolls").click(() => {

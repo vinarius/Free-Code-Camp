@@ -9,6 +9,9 @@ $(document).ready(() => {
     let myChart = null;
     let datasetWarning = false;
 
+    //create empty chart as placeholder decoration
+    createChart(voteData, labelData);
+
     function addData(chart, label, data) {
         chart.data.labels.push(label);
         chart.data.datasets.forEach((dataset) => {

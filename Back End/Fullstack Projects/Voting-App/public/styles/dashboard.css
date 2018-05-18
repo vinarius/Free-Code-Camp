@@ -45,6 +45,11 @@ canvas {
     cursor: pointer;
 }
 
+.row {
+    margin: 0;
+    padding: 0;
+}
+
 .voteButtonContainer {
     margin: 5px;
 }
