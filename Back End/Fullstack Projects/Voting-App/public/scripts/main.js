@@ -63,6 +63,8 @@ $(document).ready(() => {
     //     updatePollsCreated();
     // });
 
+    $("#my-Poll-Dashboard-Window").css('max-height', $(".chart-row").height());
+
     //delete all user polls on click #deleteAllPolls
     $("#deleteAllPolls").click(() => {
         if (confirm("Are you sure you want to delete all your polls?")) {

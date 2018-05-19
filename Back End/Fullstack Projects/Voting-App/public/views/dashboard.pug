@@ -13,23 +13,26 @@ block content
                 button.btn.btn-light.home-button Create Poll
             a(href="#")
                 button#myPollsBtn.btn.btn-light.home-button My Polls
-    br
-    .row
-        .col-sm-6
-            //- ul.d-flex.flex-row.justify-content-center
-            //-     li.d-flex.justify-content-center.padding10
-            //-         button#createPoll.d-flex-justify-content-center.align-items-center.btn.btn-primary.dashboard-btn(type="button") Create Poll
-            //-     li.d-flex.justify-content-center.padding10
-            //-         button#deleteAllPolls.d-flex-justify-content-center.align-items-center.btn.btn-danger.dashboard-btn(type="button") Delete All Polls
-            //- ul.d-flex.flex-column.align-items-center
-            //-     #pollsCreated.d-flex.flex-column.align-items-center
-            br
-            form#pollSearchForm.d-flex.flex-column.align-items-center
-                p Search for a poll
-                .d-flex.flex-row
-                    input#formInputName(type="text", placeholder="Poll Name")
-                    button.formInputSubmitBtn.btn.btn-primary(type="submit") Submit
-        .col-sm-6
+    .row.pb-3(style="background-color: #ccc;")
+        .col-sm-6.d-flex.flex-column.align-items-center.pt-3#my-Poll-Dashboard-Window
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+            p My poll listing info.
+        .col-sm-6.mb-3
             #pollDisplayNameContainer.d-none.justify-content-center
             .chart-row.d-none.flex-column.align-items-center
                 .chart-container.d-flex.flex-column.align-items-center
@@ -37,7 +40,12 @@ block content
                 #voteOptionsContainer.d-flex.flex-row.justify-content-around
                 #addDatasetFormContainer.d-flex.flex-column-reverse
                     #addDatasetWarningContainer.d-none.justify-content-center Dataset already exists.
-            
-
+    .d-flex.justify-content-center(style="background-color: #999;")
+        a(href="/globalPollSearch").title-Link Looking for Someone else's poll?
+            form#pollSearchForm.d-flex.flex-column.align-items-center
+                p Search for a poll
+                .d-flex.flex-row
+                    input#formInputName(type="text", placeholder="Poll Name")
+                    button.formInputSubmitBtn.btn.btn-primary(type="submit") Submit
 block append scripts
     script(type="text/javascript", src="../../scripts/canvas.js")

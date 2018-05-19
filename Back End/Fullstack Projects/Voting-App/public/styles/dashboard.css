@@ -26,6 +26,11 @@ canvas {
     margin: 5px;
 }
 
+#my-Poll-Dashboard-Window {
+    /* overflow: auto; */
+    height: 100%;
+}
+
 #pollDisplayNameContainer {
     margin-bottom: -20px;
     padding-top: 20px;

@@ -69,3 +69,8 @@ a:visited {
 .row {
     margin: 0px;
 }
+
+.title-Link {
+    text-decoration: none;
+    font-size: 2em;
+}
