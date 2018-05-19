@@ -51,19 +51,14 @@ $(document).ready(() => {
 
     //ensure footer is always at the 'bottom' of the page even if not enough filler content
     function footerAutoHeight() {
-        $("main").css('min-height', 0);
-        $("main").css('min-height', (
-            $(document).height() -
-            $('footer').height()
-        ));
+        if (document.title != 'Vin Votes | Dashboard') {
+            $("main").css('min-height', 0);
+            $("main").css('min-height', (
+                $(document).height() -
+                $('footer').height()
+            ));
+        }
     }
-
-    //create a new poll on click #createPoll
-    // $("#createPoll").click(() => {
-    //     updatePollsCreated();
-    // });
-
-    $("#my-Poll-Dashboard-Window").css('max-height', $(".chart-row").height());
 
     //delete all user polls on click #deleteAllPolls
     $("#deleteAllPolls").click(() => {
@@ -72,7 +67,7 @@ $(document).ready(() => {
         }
     });
 
-    function underNavAutoHeight(){
+    function underNavAutoHeight() {
         let height = $('nav').height();
         $("#underNav").css('min-height', 0);
         $("#underNav").css('min-height', height);

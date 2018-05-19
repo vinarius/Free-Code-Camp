@@ -9,6 +9,19 @@ $(document).ready(() => {
     let myChart = null;
     let datasetWarning = false;
 
+    function footerAutoHeightDashboard() {
+        let hiddenOverflowHeight = $("#my-Poll-Dashboard-Window")[0].scrollHeight - $("#pollCanvas").height();
+        $("main").css('min-height', 0);
+        $("main").css('min-height', (
+            $(document).height() -
+            $('footer').height()) -
+            hiddenOverflowHeight);
+    }
+
+    function autoHeightMyPollDashboardWindow(){
+        $("#my-Poll-Dashboard-Window").css('max-height', $("#pollCanvas").height());
+    }
+
     //create empty chart as placeholder decoration
     createChart(voteData, labelData);
 
@@ -94,6 +107,7 @@ $(document).ready(() => {
             }
         });
         $("#addDatasetFormContainer").append('<form id="addDatasetForm" class="d-flex flex-row"><input type="text" id="datasetName" placeholder="Add Dataset" required><button type="submit" class="btn btn-primary formInputSubmitBtn">Submit</button></form>');
+        autoHeightMyPollDashboardWindow();
         addDatasetForm = document.querySelector('#addDatasetForm');
         addDatasetForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -279,6 +293,14 @@ $(document).ready(() => {
                 console.error('Error sending ajax:', err);
             }
         });
+    });
+
+    //on load
+    footerAutoHeightDashboard();
+
+    $(window).resize(()=>{
+        autoHeightMyPollDashboardWindow();
+        footerAutoHeightDashboard();
     });
 
 }); //end of document ready

@@ -14,24 +14,52 @@ block content
             a(href="#")
                 button#myPollsBtn.btn.btn-light.home-button My Polls
     .row.pb-3(style="background-color: #ccc;")
-        .col-sm-6.d-flex.flex-column.align-items-center.pt-3#my-Poll-Dashboard-Window
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
-            p My poll listing info.
+        .col-sm-6.d-flex.flex-column.align-items-center#my-Poll-Dashboard-Window.mt-3
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
+            .card(style="width: 15rem;")
+                .card-body
+                    .card-title My Poll Listing
+                    a(href="#").btn.btn-primary.m-1 Go
+                    a(href="#").btn.btn-danger.m-1 Remove
         .col-sm-6.mb-3
             #pollDisplayNameContainer.d-none.justify-content-center
             .chart-row.d-none.flex-column.align-items-center
@@ -40,12 +68,12 @@ block content
                 #voteOptionsContainer.d-flex.flex-row.justify-content-around
                 #addDatasetFormContainer.d-flex.flex-column-reverse
                     #addDatasetWarningContainer.d-none.justify-content-center Dataset already exists.
-    .d-flex.justify-content-center(style="background-color: #999;")
-        a(href="/globalPollSearch").title-Link Looking for Someone else's poll?
-            form#pollSearchForm.d-flex.flex-column.align-items-center
-                p Search for a poll
-                .d-flex.flex-row
-                    input#formInputName(type="text", placeholder="Poll Name")
-                    button.formInputSubmitBtn.btn.btn-primary(type="submit") Submit
+    .d-flex.flex-column.align-items-center(style="background-color: #999;")
+        a(href="/globalPollSearch").title-Link.mb-3 Looking for Someone else's poll?
+        form#pollSearchForm.d-flex.flex-column.align-items-center.mb-3
+            p Search for a poll
+            .d-flex.flex-row
+                input#formInputName(type="text", placeholder="Poll Name")
+                button.formInputSubmitBtn.btn.btn-primary(type="submit") Submit
 block append scripts
     script(type="text/javascript", src="../../scripts/canvas.js")
