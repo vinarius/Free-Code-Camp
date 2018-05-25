@@ -27,7 +27,7 @@ block content
                     a(href="https://www.twitch.tv/vorade", target="blank")
                         i.fa.fa-twitch.fa-2x(aria-hidden="true")
         br
-        .d-flex.flex-column.align-items-center.container
+        .d-flex.flex-column.align-items-center.container.mb-5
             h1 FreeCodeCamp API Basejump: Voting Application
             br
             ul
@@ -70,6 +70,14 @@ block content
                 li <span class="bold">User Story:</span> As an unauthenticated or authenticated user, I can see the results of polls in chart form.
                 li <span class="bold">User Story:</span> As an authenticated user, if I don't like the options on a poll, I can create a new option.
         br
+        .d-flex.flex-row.justify-content-center
+            p Login
+        .d-flex.flex-row.justify-content-center
+            a(href="/auth/google").m-2
+                button.btn.btn-dark(style="border-radius: 5px;") Google
+            //- a(href="/auth/facebook").m-2
+            a(href="#").m-2
+                button.btn.btn-dark(style="border-radius: 5px;") Facebook (WIP)
 block append scripts
     //- home.js
     script(src="../../scripts/home.js", type="text/javascript")

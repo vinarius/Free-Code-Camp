@@ -26,6 +26,10 @@ a:visited {
     font-weight: bold;
 }
 
+.btn:hover {
+    cursor: pointer;
+}
+
 .common-font-weight {
     font-weight: 400;
 }
