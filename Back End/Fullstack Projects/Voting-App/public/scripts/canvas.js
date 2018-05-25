@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     let voteData = [];
     let labelData = [];
-    let pollForm = document.querySelector('#pollSearchForm');
+    let pollForm;
     let addDatasetForm = null;
     let currentPoll = null;
     let voteOptions = [];
@@ -11,6 +11,7 @@ $(document).ready(() => {
 
     function footerAutoHeightDashboard() {
         let hiddenOverflowHeight = $("#my-Poll-Dashboard-Window")[0].scrollHeight - $("#pollCanvas").height();
+        console.log('dashboard function fired');
         $("main").css('min-height', 0);
         $("main").css('min-height', (
             $(document).height() -

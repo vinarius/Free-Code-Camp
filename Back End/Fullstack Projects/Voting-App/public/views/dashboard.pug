@@ -12,12 +12,12 @@ block content
             a(href="#")
                 button.btn.btn-light.home-button Create Poll
             a(href="#")
-                button#myPollsBtn.btn.btn-light.home-button My Polls
+                button#myPollsBtn.btn.btn-light.home-button Public Polls
     .row.pb-3(style="background-color: #ccc;")
         .col-sm-6.d-flex.flex-column.align-items-center#my-Poll-Dashboard-Window.mt-5
             .my-Poll-Listing
-                a(href="#").my-Poll-Listing-Subelement My Poll Lisasdfasidjfasljkdfaslkfjasdlfkj
-                a(href="#").btn.btn-danger.my-Poll-Listing-Subelement X
+                a(href="#").my-Poll-Listing-Subelement.ml-auto.pl-5 My Poll
+                a(href="#").btn.btn-danger.my-Poll-Listing-Subelement-Absolute X
         .col-sm-6.mb-5
             #pollDisplayNameContainer.d-none.justify-content-center
             .chart-row.d-none.flex-column.align-items-center
@@ -26,12 +26,5 @@ block content
                 #voteOptionsContainer.d-flex.flex-row.justify-content-around
                 #addDatasetFormContainer.d-flex.flex-column-reverse
                     #addDatasetWarningContainer.d-none.justify-content-center Dataset already exists.
-    //- .d-flex.flex-column.align-items-center(style="background-color: #999;")
-    //-     a(href="/globalPollSearch").title-Link.mb-3 Looking for Someone else's poll?
-    //-     form#pollSearchForm.d-flex.flex-column.align-items-center.mb-3
-    //-         p Search for a poll
-    //-         .d-flex.flex-row
-    //-             input#formInputName(type="text", placeholder="Poll Name")
-    //-             button.formInputSubmitBtn.btn.btn-primary(type="submit") Submit
 block append scripts
     script(type="text/javascript", src="../../scripts/canvas.js")

@@ -78,6 +78,8 @@ $(document).ready(() => {
         underNavAutoHeight();
     });
 
+    
+
     //on document load
     footerAutoHeight();
     getPollsCreated();
