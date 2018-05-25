@@ -11,15 +11,14 @@ $(document).ready(() => {
 
     function footerAutoHeightDashboard() {
         let hiddenOverflowHeight = $("#my-Poll-Dashboard-Window")[0].scrollHeight - $("#pollCanvas").height();
-        console.log('dashboard function fired');
         $("main").css('min-height', 0);
         $("main").css('min-height', (
-            $(document).height() -
-            $('footer').height()) -
+                $(document).height() -
+                $('footer').height()) -
             hiddenOverflowHeight);
     }
 
-    function autoHeightMyPollDashboardWindow(){
+    function autoHeightMyPollDashboardWindow() {
         $("#my-Poll-Dashboard-Window").css('max-height', $("#pollCanvas").height());
     }
 
@@ -59,10 +58,10 @@ $(document).ready(() => {
     }
 
     function createChart(voteData, labelData) {
-        if($(".chart-row").hasClass("d-none")){
+        if ($(".chart-row").hasClass("d-none")) {
             $(".chart-row").removeClass("d-none").addClass("d-flex");
         }
-        if(myChart != null){
+        if (myChart != null) {
             myChart = null;
             resetChart();
         }
@@ -157,7 +156,7 @@ $(document).ready(() => {
                         console.log(data);
                         voteOptions = [];
                         labelData = [];
-                        for(let i = 0; i < data[0].datasets.length; i++){
+                        for (let i = 0; i < data[0].datasets.length; i++) {
                             voteData.push(data[0].datasets[i].count);
                             labelData.push(data[0].datasets[i].label);
                         }
@@ -186,7 +185,7 @@ $(document).ready(() => {
             success: (data) => {
                 voteData = [];
                 labelData = [];
-                for(let i=0; i<data[0].datasets.length; i++){
+                for (let i = 0; i < data[0].datasets.length; i++) {
                     voteData.push(data[0].datasets[i].count);
                     labelData.push(data[0].datasets[i].label);
                 }
@@ -236,72 +235,92 @@ $(document).ready(() => {
         $(".chart-container").append('<canvas id="pollCanvas" width="350" height="350"></canvas>');
     }
 
-    pollForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        resetChart();
-        let pollName = $("#formInputName").val().toLowerCase().split(' ').join('');
-        $.ajax({
-            type: 'POST',
-            url: '/api/pollData',
-            data: {
-                pollName: pollName
-            },
-            success: (data) => {
-                myChart = null;
-                voteData = [];
-                labelData = [];
-                voteOptions = [];
-                document.getElementById('pollSearchForm').reset();
-                if (datasetWarning) {
-                    datasetWarning = false;
-                    $("#addDatasetWarningContainer").addClass("d-none").removeClass("d-flex");
-                }
-                let displayNameMutation = data.name.split('');
-                displayNameMutation[0] = displayNameMutation[0].toUpperCase();
-                displayNameMutation = displayNameMutation.join('');
-                $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
-                for (let i = 0; i < data.datasets.length; i++) {
-                    (function () {
-                        let j = i;
-                        appendVoteOptionBtn(data.datasets[j].label);
-                        let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
-                        addVoteListener('#voteOptionsBtn' + voteOptions.length, data.datasets[j].label);
-                        addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
-                        voteOptions.push('voteOptionsBtn' + voteOptions.length);
-                    }());
-                    voteData.push(data.datasets[i].count);
-                    labelData.push(data.datasets[i].label);
-                }
-                createChart(voteData, labelData);
-                currentPoll = pollName;
-            },
-            error: (err) => {
-                console.error("Error sending post with poll name.");
-                console.error(err);
-            }
-        });
-    });
+    // pollForm.addEventListener('submit', (e) => {
+    //     e.preventDefault();
+    //     resetChart();
+    //     let pollName = $("#formInputName").val().toLowerCase().split(' ').join('');
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/api/pollData',
+    //         data: {
+    //             pollName: pollName
+    //         },
+    //         success: (data) => {
+    //             myChart = null;
+    //             voteData = [];
+    //             labelData = [];
+    //             voteOptions = [];
+    //             document.getElementById('pollSearchForm').reset();
+    //             if (datasetWarning) {
+    //                 datasetWarning = false;
+    //                 $("#addDatasetWarningContainer").addClass("d-none").removeClass("d-flex");
+    //             }
+    //             let displayNameMutation = data.name.split('');
+    //             displayNameMutation[0] = displayNameMutation[0].toUpperCase();
+    //             displayNameMutation = displayNameMutation.join('');
+    //             $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
+    //             for (let i = 0; i < data.datasets.length; i++) {
+    //                 (function () {
+    //                     let j = i;
+    //                     appendVoteOptionBtn(data.datasets[j].label);
+    //                     let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
+    //                     addVoteListener('#voteOptionsBtn' + voteOptions.length, data.datasets[j].label);
+    //                     addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
+    //                     voteOptions.push('voteOptionsBtn' + voteOptions.length);
+    //                 }());
+    //                 voteData.push(data.datasets[i].count);
+    //                 labelData.push(data.datasets[i].label);
+    //             }
+    //             createChart(voteData, labelData);
+    //             currentPoll = pollName;
+    //         },
+    //         error: (err) => {
+    //             console.error("Error sending post with poll name.");
+    //             console.error(err);
+    //         }
+    //     });
+    // });
 
-    $("#myPollsBtn").click(() => {
-        $.ajax({
-            type: 'GET',
-            url: '/api/getUserPolls',
-            success: (data) => {
-                console.log('ajax request successful');
-                console.log(data);
-            },
-            error: (err) => {
-                console.error('Error sending ajax:', err);
-            }
-        });
-    });
+    // $("#myPollsBtn").click(() => {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/api/getUserPolls',
+    //         success: (data) => {
+    //             console.log('ajax request successful');
+    //             console.log(data);
+    //         },
+    //         error: (err) => {
+    //             console.error('Error sending ajax:', err);
+    //         }
+    //     });
+    // });
 
     //on load
     footerAutoHeightDashboard();
 
-    $(window).resize(()=>{
+    $(window).resize(() => {
         autoHeightMyPollDashboardWindow();
         footerAutoHeightDashboard();
     });
+
+
+    function createPollList() {
+        $.ajax({
+            type: 'GET',
+            url: '/api/queryall',
+            success: (data) => {
+                console.log(data);
+                for(let i=0; i<data.length; i++){
+                    $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing"><a class="my-Poll-Listing-Subelement ml-auto" href="#">${data[i].name}</a><a class="btn btn-danger my-Poll-Listing-Subelement-Absolute" href="#">X</a></div>`);
+                }
+            },
+            error: (err) => {
+                console.error('Error getting poll list data on page load.');
+                console.error(err);
+            }
+        });
+    }
+
+    createPollList();
 
 }); //end of document ready

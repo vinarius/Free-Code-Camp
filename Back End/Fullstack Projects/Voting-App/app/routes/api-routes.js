@@ -49,7 +49,7 @@ router.post('/querydb', (req, res) => {
 });
 
 router.get('/queryall', (req, res) => {
-    Test.find({}).then((result) => {
+    Poll.find({}).then((result) => {
         res.send(result);
     });
 });
