@@ -16,6 +16,7 @@ block content
     .row.pb-3(style="background-color: #ccc;")
         .col-sm-6.d-flex.flex-column.align-items-center#my-Poll-Dashboard-Window.mt-5
             //- ajax call from canvas.js populates list with polls created by user in db
+            i.fas.fa-sync.fa-3x.fa-spin.d-none#pollListLoadingIcon
         .col-sm-6.mb-5
             #pollDisplayNameContainer.d-none.justify-content-center
             .chart-row.d-none.flex-column.align-items-center
@@ -24,5 +25,10 @@ block content
                 #voteOptionsContainer.d-flex.flex-row.justify-content-around
                 #addDatasetFormContainer.d-flex.flex-column-reverse
                     #addDatasetWarningContainer.d-none.justify-content-center Dataset already exists.
+    form#pollSearchForm.d-flex.flex-column.align-items-center
+        p Search for a poll
+        .d-flex.flex-row
+            input#formInputName(type="text", placeholder="Poll Name")
+            button.formInputSubmitBtn.btn.btn-primary(type="submit") Submit
 block append scripts
     script(type="text/javascript", src="../../scripts/canvas.js")

@@ -2,7 +2,8 @@ $(document).ready(() => {
 
     let voteData = [];
     let labelData = [];
-    let pollForm;
+    let pollMenuListings = [];
+    let pollForm = document.getElementById('pollSearchForm');
     let addDatasetForm = null;
     let currentPoll = null;
     let voteOptions = [];
@@ -235,51 +236,51 @@ $(document).ready(() => {
         $(".chart-container").append('<canvas id="pollCanvas" width="350" height="350"></canvas>');
     }
 
-    // pollForm.addEventListener('submit', (e) => {
-    //     e.preventDefault();
-    //     resetChart();
-    //     let pollName = $("#formInputName").val().toLowerCase().split(' ').join('');
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/api/pollData',
-    //         data: {
-    //             pollName: pollName
-    //         },
-    //         success: (data) => {
-    //             myChart = null;
-    //             voteData = [];
-    //             labelData = [];
-    //             voteOptions = [];
-    //             document.getElementById('pollSearchForm').reset();
-    //             if (datasetWarning) {
-    //                 datasetWarning = false;
-    //                 $("#addDatasetWarningContainer").addClass("d-none").removeClass("d-flex");
-    //             }
-    //             let displayNameMutation = data.name.split('');
-    //             displayNameMutation[0] = displayNameMutation[0].toUpperCase();
-    //             displayNameMutation = displayNameMutation.join('');
-    //             $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
-    //             for (let i = 0; i < data.datasets.length; i++) {
-    //                 (function () {
-    //                     let j = i;
-    //                     appendVoteOptionBtn(data.datasets[j].label);
-    //                     let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
-    //                     addVoteListener('#voteOptionsBtn' + voteOptions.length, data.datasets[j].label);
-    //                     addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
-    //                     voteOptions.push('voteOptionsBtn' + voteOptions.length);
-    //                 }());
-    //                 voteData.push(data.datasets[i].count);
-    //                 labelData.push(data.datasets[i].label);
-    //             }
-    //             createChart(voteData, labelData);
-    //             currentPoll = pollName;
-    //         },
-    //         error: (err) => {
-    //             console.error("Error sending post with poll name.");
-    //             console.error(err);
-    //         }
-    //     });
-    // });
+    pollForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        resetChart();
+        let pollName = $("#formInputName").val().toLowerCase().split(' ').join('');
+        $.ajax({
+            type: 'POST',
+            url: '/api/pollData',
+            data: {
+                pollName: pollName
+            },
+            success: (data) => {
+                myChart = null;
+                voteData = [];
+                labelData = [];
+                voteOptions = [];
+                document.getElementById('pollSearchForm').reset();
+                if (datasetWarning) {
+                    datasetWarning = false;
+                    $("#addDatasetWarningContainer").addClass("d-none").removeClass("d-flex");
+                }
+                let displayNameMutation = data.name.split('');
+                displayNameMutation[0] = displayNameMutation[0].toUpperCase();
+                displayNameMutation = displayNameMutation.join('');
+                $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
+                for (let i = 0; i < data.datasets.length; i++) {
+                    (function () {
+                        let j = i;
+                        appendVoteOptionBtn(data.datasets[j].label);
+                        let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
+                        addVoteListener('#voteOptionsBtn' + voteOptions.length, data.datasets[j].label);
+                        addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
+                        voteOptions.push('voteOptionsBtn' + voteOptions.length);
+                    }());
+                    voteData.push(data.datasets[i].count);
+                    labelData.push(data.datasets[i].label);
+                }
+                createChart(voteData, labelData);
+                currentPoll = pollName;
+            },
+            error: (err) => {
+                console.error("Error sending post with poll name.");
+                console.error(err);
+            }
+        });
+    });
 
     // $("#myPollsBtn").click(() => {
     //     $.ajax({
@@ -305,13 +306,21 @@ $(document).ready(() => {
 
 
     function createPollList() {
+        resetPollList();
         $.ajax({
             type: 'GET',
             url: '/api/queryall',
             success: (data) => {
-                console.log(data);
+                $("#pollListLoadingIcon").remove();
                 for(let i=0; i<data.length; i++){
-                    $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing"><a class="my-Poll-Listing-Subelement ml-auto" href="#">${data[i].name}</a><a class="btn btn-danger my-Poll-Listing-Subelement-Absolute" href="#">X</a></div>`);
+                    let mutateString = data[i].name.split('');
+                    mutateString[0] = mutateString[0].toUpperCase();
+                    mutateString = mutateString.join('');
+                    $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing"><a class="my-Poll-Listing-Subelement ml-auto" id="pollMenuListing${pollMenuListings.length}" href="#">${mutateString}</a><a class="btn btn-danger my-Poll-Listing-Subelement-Absolute" href="#">X</a></div>`);
+                    $("#pollMenuListing" + pollMenuListings.length).click(()=>{
+                        $.ajax();
+                    });
+                    pollMenuListings.push(pollMenuListings.length);
                 }
             },
             error: (err) => {
@@ -319,6 +328,12 @@ $(document).ready(() => {
                 console.error(err);
             }
         });
+    }
+
+    function resetPollList(){
+        pollMenuListings = [];
+        $("#my-Poll-Dashboard-Window").empty();
+        $("#my-Poll-Dashboard-Window").append('<i class="fas fa-sync fa-3x fa-spin" id="pollListLoadingIcon"></i>');
     }
 
     createPollList();
