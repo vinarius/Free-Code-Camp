@@ -217,9 +217,18 @@ router.post('/pollData/updatePoll', checkAuth, (req, res) => {
 });
 
 router.get('/getUserPolls', checkAuth, (req, res) => {
-    console.log('get request received on /api/getUserPolls');
-    console.log('req.user:', req.user);
-    res.end();
+    let mutateStr = req.query.queryContent.toLowerCase();
+    Poll.find({name: mutateStr}).then((result)=>{
+        res.send(result);
+    });
+});
+
+router.get('/deleteUserPoll', checkAuth, (req, res)=>{
+    console.log(req.query);
+    let mutateStr = req.query.queryContent.toLowerCase();
+    Poll.remove({name: mutateStr}).then(()=>{
+        res.send('success');
+    });
 });
 
 module.exports = router;

@@ -23,9 +23,6 @@ $(document).ready(() => {
         $("#my-Poll-Dashboard-Window").css('max-height', $("#pollCanvas").height());
     }
 
-    //create empty chart as placeholder decoration
-    createChart(voteData, labelData);
-
     function addData(chart, label, data) {
         chart.data.labels.push(label);
         chart.data.datasets.forEach((dataset) => {
@@ -236,6 +233,10 @@ $(document).ready(() => {
         $(".chart-container").append('<canvas id="pollCanvas" width="350" height="350"></canvas>');
     }
 
+    //on load
+    footerAutoHeightDashboard();
+    createPollList();
+    createChart(voteData, labelData);
     pollForm.addEventListener('submit', (e) => {
         e.preventDefault();
         resetChart();
@@ -282,28 +283,10 @@ $(document).ready(() => {
         });
     });
 
-    // $("#myPollsBtn").click(() => {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/api/getUserPolls',
-    //         success: (data) => {
-    //             console.log('ajax request successful');
-    //             console.log(data);
-    //         },
-    //         error: (err) => {
-    //             console.error('Error sending ajax:', err);
-    //         }
-    //     });
-    // });
-
-    //on load
-    footerAutoHeightDashboard();
-
     $(window).resize(() => {
         autoHeightMyPollDashboardWindow();
         footerAutoHeightDashboard();
     });
-
 
     function createPollList() {
         resetPollList();
@@ -311,14 +294,75 @@ $(document).ready(() => {
             type: 'GET',
             url: '/api/queryall',
             success: (data) => {
+                let pollName = data[0].name.toLowerCase().split(' ').join('');
                 $("#pollListLoadingIcon").remove();
                 for(let i=0; i<data.length; i++){
                     let mutateString = data[i].name.split('');
                     mutateString[0] = mutateString[0].toUpperCase();
                     mutateString = mutateString.join('');
-                    $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing"><a class="my-Poll-Listing-Subelement ml-auto" id="pollMenuListing${pollMenuListings.length}" href="#">${mutateString}</a><a class="btn btn-danger my-Poll-Listing-Subelement-Absolute" href="#">X</a></div>`);
-                    $("#pollMenuListing" + pollMenuListings.length).click(()=>{
-                        $.ajax();
+                    $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing" id="my-Poll-Listing${pollMenuListings.length}"><a class="my-Poll-Listing-Subelement ml-auto" id="pollMenuListing${pollMenuListings.length}" href="#">${mutateString}</a><a class="btn btn-danger my-Poll-Listing-Subelement-Absolute" id="removeMenuListingBtn${pollMenuListings.length}" href="#">X</a></div>`);
+                    let removeMenuListingStr = document.querySelector(`#removeMenuListingBtn${pollMenuListings.length}`);
+                    removeMenuListingStr.addEventListener('click', (e)=>{
+                        e.preventDefault();
+                        if(confirm("Are you sure?")){
+                            $.ajax({
+                                type: 'GET',
+                                url: '/api/deleteUserPoll',
+                                data: { queryContent: removeMenuListingStr.parentElement.firstElementChild.textContent },
+                                success: (data)=>{
+                                    console.log(data);
+                                    resetChart();
+                                    myChart = null;
+                                    voteData = [];
+                                    labelData = [];
+                                    voteOptions = [];
+                                    $("#my-Poll-Listing" + pollMenuListings.length).remove();
+                                },
+                                error: (err)=>{
+                                    console.error('Error removing poll listing.');
+                                    console.error(err);
+                                }
+                            });
+                        }
+                    });
+                    let pollMenuListingStr = document.querySelector("#pollMenuListing" + pollMenuListings.length);
+                    pollMenuListingStr.addEventListener('click', (e)=>{
+                        e.preventDefault();
+                        console.log(pollMenuListingStr.textContent);
+                        $.ajax({
+                            type: 'GET',
+                            url: '/api/getUserPolls',
+                            data: { queryContent: pollMenuListingStr.textContent },
+                            success: (data)=>{
+                                resetChart();
+                                myChart = null;
+                                voteData = [];
+                                labelData = [];
+                                voteOptions = [];
+                                let displayNameMutation = data[0].name.split('');
+                                displayNameMutation[0] = displayNameMutation[0].toUpperCase();
+                                displayNameMutation = displayNameMutation.join('');
+                                $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
+                                for (let i = 0; i < data[0].datasets.length; i++) {
+                                    (function () {
+                                        let j = i;
+                                        appendVoteOptionBtn(data[0].datasets[j].label);
+                                        let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
+                                        addVoteListener('#voteOptionsBtn' + voteOptions.length, data[0].datasets[j].label);
+                                        addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
+                                        voteOptions.push('voteOptionsBtn' + voteOptions.length);
+                                    }());
+                                    voteData.push(data[0].datasets[i].count);
+                                    labelData.push(data[0].datasets[i].label);
+                                }
+                                createChart(voteData, labelData);
+                                currentPoll = pollName;
+                            },
+                            error: (err)=>{
+                                console.error(`Error loading ${pollMenuListingStr.textContent} data.`);
+                                console.error(err);
+                            }
+                        });
                     });
                     pollMenuListings.push(pollMenuListings.length);
                 }
@@ -335,7 +379,5 @@ $(document).ready(() => {
         $("#my-Poll-Dashboard-Window").empty();
         $("#my-Poll-Dashboard-Window").append('<i class="fas fa-sync fa-3x fa-spin" id="pollListLoadingIcon"></i>');
     }
-
-    createPollList();
 
 }); //end of document ready
