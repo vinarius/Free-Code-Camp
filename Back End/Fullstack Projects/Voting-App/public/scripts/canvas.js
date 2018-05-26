@@ -9,6 +9,7 @@ $(document).ready(() => {
     let voteOptions = [];
     let myChart = null;
     let datasetWarning = false;
+    let noPollsFound = false;
 
     function footerAutoHeightDashboard() {
         let hiddenOverflowHeight = $("#my-Poll-Dashboard-Window")[0].scrollHeight - $("#pollCanvas").height();
@@ -151,7 +152,6 @@ $(document).ready(() => {
                     },
                     success: (data) => {
                         removeDatasetButton.parentNode.remove();
-                        console.log(data);
                         voteOptions = [];
                         labelData = [];
                         for (let i = 0; i < data[0].datasets.length; i++) {
@@ -163,7 +163,7 @@ $(document).ready(() => {
                         removeData(myChart, targetIndex);
                     },
                     error: (err) => {
-                        console.log("Error sending post request to remove dataset.");
+                        console.error("Error sending post request to remove dataset.");
                         console.error(err);
                     }
                 });
@@ -194,7 +194,7 @@ $(document).ready(() => {
                 // addRemoveDatasetListener('#removeDatasetBtn' + (voteOptions.length - 1));
             },
             error: (err) => {
-                console.log('Error posting vote to database.');
+                console.error('Error posting vote to database.');
                 console.error(err);
             }
         });
@@ -219,7 +219,7 @@ $(document).ready(() => {
                     myChart.update();
                 },
                 error: (err) => {
-                    console.log('Error posting vote to database.');
+                    console.error('Error posting vote to database.');
                     console.error(err);
                 }
             });
@@ -239,8 +239,12 @@ $(document).ready(() => {
     createChart(voteData, labelData);
     pollForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        if(noPollsFound){
+            $("#my-Poll-Dashboard-Window").empty();
+            noPollsFound = false;
+        }
         resetChart();
-        let pollName = $("#formInputName").val().toLowerCase().split(' ').join('');
+        let pollName = $("#formInputName").val().toLowerCase();
         $.ajax({
             type: 'POST',
             url: '/api/pollData',
@@ -257,9 +261,13 @@ $(document).ready(() => {
                     datasetWarning = false;
                     $("#addDatasetWarningContainer").addClass("d-none").removeClass("d-flex");
                 }
-                let displayNameMutation = data.name.split('');
-                displayNameMutation[0] = displayNameMutation[0].toUpperCase();
-                displayNameMutation = displayNameMutation.join('');
+                let displayNameMutation = data.name.split(' ');
+                for (let i = 0; i < displayNameMutation.length; i++) {
+                    displayNameMutation[i] = displayNameMutation[i].split('');
+                    displayNameMutation[i][0] = displayNameMutation[i][0].toUpperCase();
+                    displayNameMutation[i] = displayNameMutation[i].join('');
+                }
+                displayNameMutation = displayNameMutation.join(' ');
                 $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
                 for (let i = 0; i < data.datasets.length; i++) {
                     (function () {
@@ -294,77 +302,92 @@ $(document).ready(() => {
             type: 'GET',
             url: '/api/queryall',
             success: (data) => {
-                let pollName = data[0].name.toLowerCase().split(' ').join('');
-                $("#pollListLoadingIcon").remove();
-                for(let i=0; i<data.length; i++){
-                    let mutateString = data[i].name.split('');
-                    mutateString[0] = mutateString[0].toUpperCase();
-                    mutateString = mutateString.join('');
-                    $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing" id="my-Poll-Listing${pollMenuListings.length}"><a class="my-Poll-Listing-Subelement ml-auto" id="pollMenuListing${pollMenuListings.length}" href="#">${mutateString}</a><a class="btn btn-danger my-Poll-Listing-Subelement-Absolute" id="removeMenuListingBtn${pollMenuListings.length}" href="#">X</a></div>`);
-                    let removeMenuListingStr = document.querySelector(`#removeMenuListingBtn${pollMenuListings.length}`);
-                    removeMenuListingStr.addEventListener('click', (e)=>{
-                        e.preventDefault();
-                        if(confirm("Are you sure?")){
+                if (data.length == 0) {
+                    $("#my-Poll-Dashboard-Window").empty();
+                    $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing" id="my-Poll-Listing-None">No Polls Found!</div>`);
+                    noPollsFound = true;
+                } else {
+                    let pollName = data[0].name.toLowerCase().split(' ').join('');
+                    $("#pollListLoadingIcon").remove();
+                    for (let i = 0; i < data.length; i++) {
+                        // let mutateString = data[i].name.split('');
+                        // mutateString[0] = mutateString[0].toUpperCase();
+                        // mutateString = mutateString.join('');
+                        let displayNameMutation = data[0].name.split(' ');
+                        for (let i = 0; i < displayNameMutation.length; i++) {
+                            displayNameMutation[i] = displayNameMutation[i].split('');
+                            displayNameMutation[i][0] = displayNameMutation[i][0].toUpperCase();
+                            displayNameMutation[i] = displayNameMutation[i].join('');
+                        }
+                        displayNameMutation = displayNameMutation.join(' ');
+                        $("#my-Poll-Dashboard-Window").append(`<div class="my-Poll-Listing" id="my-Poll-Listing${pollMenuListings.length}"><a class="my-Poll-Listing-Subelement ml-auto" id="pollMenuListing${pollMenuListings.length}" href="#">${displayNameMutation}</a><a class="btn btn-danger my-Poll-Listing-Subelement-Absolute" id="removeMenuListingBtn${pollMenuListings.length}" href="#">X</a></div>`);
+                        let removeMenuListingStr = document.querySelector(`#removeMenuListingBtn${pollMenuListings.length}`);
+                        removeMenuListingStr.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if (confirm("Are you sure?")) {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/api/deleteUserPoll',
+                                    data: {
+                                        queryContent: removeMenuListingStr.parentElement.firstElementChild.textContent
+                                    },
+                                    success: (data) => {
+                                        resetChart();
+                                        myChart = null;
+                                        voteData = [];
+                                        labelData = [];
+                                        voteOptions = [];
+                                        $("#my-Poll-Listing" + pollMenuListings.length).remove();
+                                    },
+                                    error: (err) => {
+                                        console.error('Error removing poll listing.');
+                                        console.error(err);
+                                    }
+                                });
+                            }
+                        });
+                        let pollMenuListingStr = document.querySelector("#pollMenuListing" + pollMenuListings.length);
+                        pollMenuListingStr.addEventListener('click', (e) => {
+                            e.preventDefault();
                             $.ajax({
                                 type: 'GET',
-                                url: '/api/deleteUserPoll',
-                                data: { queryContent: removeMenuListingStr.parentElement.firstElementChild.textContent },
-                                success: (data)=>{
-                                    console.log(data);
+                                url: '/api/getUserPolls',
+                                data: {
+                                    queryContent: pollMenuListingStr.textContent
+                                },
+                                success: (data) => {
                                     resetChart();
                                     myChart = null;
                                     voteData = [];
                                     labelData = [];
                                     voteOptions = [];
-                                    $("#my-Poll-Listing" + pollMenuListings.length).remove();
+                                    let displayNameMutation = data[0].name.split('');
+                                    displayNameMutation[0] = displayNameMutation[0].toUpperCase();
+                                    displayNameMutation = displayNameMutation.join('');
+                                    $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
+                                    for (let i = 0; i < data[0].datasets.length; i++) {
+                                        (function () {
+                                            let j = i;
+                                            appendVoteOptionBtn(data[0].datasets[j].label);
+                                            let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
+                                            addVoteListener('#voteOptionsBtn' + voteOptions.length, data[0].datasets[j].label);
+                                            addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
+                                            voteOptions.push('voteOptionsBtn' + voteOptions.length);
+                                        }());
+                                        voteData.push(data[0].datasets[i].count);
+                                        labelData.push(data[0].datasets[i].label);
+                                    }
+                                    createChart(voteData, labelData);
+                                    currentPoll = pollName;
                                 },
-                                error: (err)=>{
-                                    console.error('Error removing poll listing.');
+                                error: (err) => {
+                                    console.error(`Error loading ${pollMenuListingStr.textContent} data.`);
                                     console.error(err);
                                 }
                             });
-                        }
-                    });
-                    let pollMenuListingStr = document.querySelector("#pollMenuListing" + pollMenuListings.length);
-                    pollMenuListingStr.addEventListener('click', (e)=>{
-                        e.preventDefault();
-                        console.log(pollMenuListingStr.textContent);
-                        $.ajax({
-                            type: 'GET',
-                            url: '/api/getUserPolls',
-                            data: { queryContent: pollMenuListingStr.textContent },
-                            success: (data)=>{
-                                resetChart();
-                                myChart = null;
-                                voteData = [];
-                                labelData = [];
-                                voteOptions = [];
-                                let displayNameMutation = data[0].name.split('');
-                                displayNameMutation[0] = displayNameMutation[0].toUpperCase();
-                                displayNameMutation = displayNameMutation.join('');
-                                $("#pollDisplayNameContainer").removeClass("d-none").addClass("d-flex").text(displayNameMutation);
-                                for (let i = 0; i < data[0].datasets.length; i++) {
-                                    (function () {
-                                        let j = i;
-                                        appendVoteOptionBtn(data[0].datasets[j].label);
-                                        let voteOptionButton = document.querySelector('#voteOptionsBtn' + voteOptions.length);
-                                        addVoteListener('#voteOptionsBtn' + voteOptions.length, data[0].datasets[j].label);
-                                        addRemoveDatasetListener('#removeDatasetBtn' + voteOptions.length);
-                                        voteOptions.push('voteOptionsBtn' + voteOptions.length);
-                                    }());
-                                    voteData.push(data[0].datasets[i].count);
-                                    labelData.push(data[0].datasets[i].label);
-                                }
-                                createChart(voteData, labelData);
-                                currentPoll = pollName;
-                            },
-                            error: (err)=>{
-                                console.error(`Error loading ${pollMenuListingStr.textContent} data.`);
-                                console.error(err);
-                            }
                         });
-                    });
-                    pollMenuListings.push(pollMenuListings.length);
+                        pollMenuListings.push(pollMenuListings.length);
+                    }
                 }
             },
             error: (err) => {
@@ -374,10 +397,10 @@ $(document).ready(() => {
         });
     }
 
-    function resetPollList(){
+    function resetPollList() {
         pollMenuListings = [];
         $("#my-Poll-Dashboard-Window").empty();
-        $("#my-Poll-Dashboard-Window").append('<i class="fas fa-sync fa-3x fa-spin" id="pollListLoadingIcon"></i>');
+        $("#my-Poll-Dashboard-Window").append('<i class="fas fa-sync fa-3x fa-spin mt-5" id="pollListLoadingIcon"></i>');
     }
 
 }); //end of document ready

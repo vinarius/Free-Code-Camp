@@ -10,13 +10,13 @@ block content
         .d-flex.justify-content-center(style="font-size: 0.5em;") What would you like to do?
         .d-flex.justify-content-center.flex-row(style="margin: 20px;")
             a(href="#")
-                button.btn.btn-light.home-button Create Poll
+                button.btn.btn-light.home-button My Polls
             a(href="#")
                 button#myPollsBtn.btn.btn-light.home-button Public Polls
     .row.pb-3(style="background-color: #ccc;")
         .col-sm-6.d-flex.flex-column.align-items-center#my-Poll-Dashboard-Window.mt-5
             //- ajax call from canvas.js populates list with polls created by user in db
-            i.fas.fa-sync.fa-3x.fa-spin.d-none#pollListLoadingIcon
+            i.fas.fa-sync.fa-3x.fa-spin.mt-5.d-none#pollListLoadingIcon
         .col-sm-6.mb-5
             #pollDisplayNameContainer.d-none.justify-content-center
             .chart-row.d-none.flex-column.align-items-center
