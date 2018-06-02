@@ -11,7 +11,12 @@ module.exports = (app) => {
     app.route('/polls')
         .get((req, res) => {
             renderPage(req, res, 'Polls');
-        })
+        });
+
+    app.route('/todo')
+        .get((req, res)=>{
+            renderPage(req, res, 'Todo');
+        });
 
     app.use((req, res, next) => {
         res.status(404);

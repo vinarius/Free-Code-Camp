@@ -1,6 +1,8 @@
 nav.d-flex.flex-row.justify-content-between
     a#vinVotesLogo.d-flex.justify-content-center.align-items-center.padding10(href="/") Vin Votes
     if user
+        a(href="/todo")
+            btn.btn.btn-light.ml-auto(style="border-radius: 5px;") To Do List
         .btn-group
             button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")= welcome
             .dropdown-menu.dropdown-menu-right
@@ -10,7 +12,9 @@ nav.d-flex.flex-row.justify-content-between
                     button.dropdown-item(type="button") Dashboard
                 a(href="/auth/logout")
                     button.dropdown-item(type="button") Log Out
-    else        
+    else
+        a(href="/todo")
+            btn.btn.btn-light.ml-auto(style="border-radius: 5px;") To Do List
         .btn-group
             button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Log In
             .dropdown-menu.dropdown-menu-right
