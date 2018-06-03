@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Survey Form | Free Code Camp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body class="pt-5">
+    <div class="container">
+        <h1 class="text-center mb-3" id="title">Survey Form</h1>
+        <div class="d-flex flex-column align-items-center" id="form-container">
+            <p class="center mt-3" id="description">Let us know how we can improve freeCodeCamp</p>
+            <form id="survey-form">
+                <div class="form-row">
+                    <div class="label-col">
+                        <label id="name-label">* Name:</label>
+                    </div>
+                    <div class="input-col">
+                        <input type="text" required placeholder="Enter Your Name" id="name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="label-col">
+                        <label id="email-label">* Email:</label>
+                    </div>
+                    <div class="input-col">
+                        <input type="email" required placeholder="Enter Your Email" id="email">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="label-col">
+                        <label id="number-label">* Age:</label>
+                    </div>
+                    <div class="input-col">
+                        <input type="number" required placeholder="Age" min="0" max="120" id="number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="label-col">
+                        <label>Which option best describes your current role?</label>
+                    </div>
+                    <div class="input-col">
+                        <select class="form-control custom-dropdown-menu" id="occupation">
+                            <option selected>Choose An Option</option>
+                            <option>Student</option>
+                            <option>Full Time Job</option>
+                            <option>Full Time Learner</option>
+                            <option>Prefer Not To Say</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="label-col" style="text-align: end;">* How likely would you recommend freeCodeCamp to a friend?</div>
+                    <div class="input-col-radio">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="freeCodeCamp-Recommendation" value="Definitely" required checked>
+                            <label class="form-check-label">
+                                Definitely
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="freeCodeCamp-Recommendation" value="Maybe" required>
+                            <label class="form-check-label">
+                                Maybe
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="freeCodeCamp-Recommendation" value="Not sure" required>
+                            <label class="form-check-label">
+                                Not sure
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="label-col">
+                        <label>What do you like most in FCC:</label>
+                    </div>
+                    <div class="input-col">
+                        <select class="form-control custom-dropdown-menu" id="dropdown">
+                            <option selected>Choose An Option</option>
+                            <option>Challenges</option>
+                            <option>Projects</option>
+                            <option>Community</option>
+                            <option>Open Source</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="label-col" style="text-align: end; align-items: flex-start;">Things that should be improved in the future
+                        <br>(Check all that apply):</div>
+                    <div class="input-col-checkbox">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Front-End Projects">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Front-End Projects
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Back-End Projects">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Back-End Projects
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Data Visualization">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Data Visualization
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Challenges">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Challenges
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Open Source Community">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Open Source Community
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Gitter help rooms">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Gitter help rooms
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Videos">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Videos
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="City Meetups">
+                            <label class="form-check-label" for="defaultCheck1">
+                                City Meetups
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Wiki">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Wiki
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Forum">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Forum
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Additional Courses">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Additional Courses
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="label-col" style="align-items: flex-start;">Any Comments or Suggestions?</div>
+                    <div class="input-col">
+                        <textarea name="" id="" cols="35" rows="3" placeholder="Enter Your Text Here . . ."></textarea>
+                    </div>
+                </div>
+                <div class="d-flex flex-row align-items-center m-3">
+                    <button class="btn btn-primary m-2" type="submit" id="submit">Submit</button>
+                    <button class="btn btn-primary m-2" type="reset">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <script src="https://gitcdn.link/repo/freeCodeCamp/testable-projects-fcc/master/build/bundle.js"></script>
+    <noscript>You must enable javascript to use this application.</noscript>
+</body>
+
+</html>
