@@ -8,23 +8,75 @@
     <title>Product Landing Page | Free Code Camp</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="reset.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="main.css" type="text/css">
 </head>
 
 <body>
 
     <nav>
-        <div class="mr-auto navOption">brand name</div>
+        <div class="mr-auto navOptionBrand">
+            <i class="fas fa-music"></i>Original Trombones</div>
         <div class="navOption">Features</div>
         <div class="navOption">How It Works</div>
         <div class="navOption">Pricing</div>
     </nav>
 
-    <main id="main"></main>
+    <main id="main">
+        <div class="container d-flex flex-column align-items-center">
+            <div class="spaceUnderNav m-3"></div>
+            <h1 class="mb-3">Handcrafted, home-made masterpieces</h1>
+            <form id="myForm" class="mb-5">
+                <input type="email" placeholder="Enter Your Email Address" id="email" class="mb-3">
+                <button class="btn btn-primary" type="submit" id="submitBtn">Get Started</button>
+            </form>
+
+            <div id="listContainerColumn">
+                <div class="listContainerRow mb-3">
+                    <div class="iconWidth">
+                        <i class="fab fa-fort-awesome fa-3x"></i>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="listTitle mb-1">Premium Materials</div>
+                        <div class="listDescription">Our trombones use the shiniest brass which is sourced locally. This will increase the longevity of your purchase.</div>
+                    </div>
+                </div>
+                <div class="listContainerRow mb-3">
+                    <div class="iconWidth">
+                        <i class="fas fa-fast-forward fa-3x"></i>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="listTitle mb-1">Fast Shipping</div>
+                        <div class="listDescription">We make sure you recieve your trombone as soon as we have finished making it. We also provide free returns if you are not satisfied.</div>
+                    </div>
+                </div>
+                <div class="listContainerRow mb-3">
+                    <div class="iconWidth">
+                        <i class="fas fa-battery-full fa-3x"></i>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="listTitle mb-1">Quality Assurance</div>
+                        <div class="listDescription">For every purchase you make, we will ensure there are no damages or faults and we will check and test the pitch of your instrument.</div>
+                    </div>
+                </div>
+            </div>
+
+            <iframe src="https://www.youtube.com/watch?v=y8Yv4pnO7qc&feature=youtu.be" allowfullscreen height="315" frameborder="0"></iframe>
+        </div>
+    </main>
 
     <footer id="footer">
-        <div>content 1</div>
-        <div>content 2</div>
+        <div class="footerSubcontainer mr-2">
+            <div class="footerSubelement">Privacy</div>
+            <div class="footerSubelement">Terms</div>
+            <div class="footerSubelement">Contact</div>
+        </div>
+        <div class="footerSubcontainer mr-2">
+            <p>Copyright 2018, Original Trombones</p>
+        </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

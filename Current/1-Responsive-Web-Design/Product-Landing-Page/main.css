@@ -1,11 +1,64 @@
+:root {
+    font-family: 'Roboto Mono', monospace;
+}
+
+#email {
+    font-size: 0.8em;
+    width: 275px;
+}
+
 footer {
     width: 100%;
     background-color: #444;
     color: #fff;
     height: 55px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-end;
+    justify-content: space-around;
+}
+
+.footerSubcontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerSubelement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.iconWidth {
+    width: 75px;
+}
+
+#listContainerColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.listContainerRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.listDescription {
+    font-size: 0.9em;
+}
+
+.listTitle {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+#myForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 nav {
@@ -19,7 +72,7 @@ nav {
     align-items: flex-end;
 }
 
-.navOption {
+.navOption, .navOptionBrand {
     background-color: inherit;
     color: inherit;
     padding: 10px;
@@ -28,9 +81,16 @@ nav {
 }
 
 .navOption:hover {
-    transition: color 0.3s, background-color 0.3s, margin 0.3s;
+    transition: color 0.3s, background-color 0.3s;
     color: #444;
     background-color: #fff;
-    margin: 5px 10px;
     cursor: pointer;
+}
+
+.spaceUnderNav {
+    height: 55px;
+}
+
+#submitBtn {
+    width: 150px !important;
 }
