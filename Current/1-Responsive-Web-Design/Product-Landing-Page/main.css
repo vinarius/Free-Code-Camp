@@ -1,0 +1,36 @@
+footer {
+    width: 100%;
+    background-color: #444;
+    color: #fff;
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    background-color: #444;
+    color: #fff;
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.navOption {
+    background-color: inherit;
+    color: inherit;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.navOption:hover {
+    transition: color 0.3s, background-color 0.3s, margin 0.3s;
+    color: #444;
+    background-color: #fff;
+    margin: 5px 10px;
+    cursor: pointer;
+}
