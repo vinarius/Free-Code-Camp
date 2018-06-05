@@ -36,6 +36,15 @@ footer {
     width: 75px;
 }
 
+.instrumentCard {
+    background-color: #444;
+    color: #fff;
+    height: 100px;
+    width: 50px;
+    padding: 0;
+    margin: 15px;
+}
+
 #listContainerColumn {
     display: flex;
     flex-direction: column;
@@ -85,6 +94,11 @@ nav {
     color: #444;
     background-color: #fff;
     cursor: pointer;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
 }
 
 .spaceUnderNav {
