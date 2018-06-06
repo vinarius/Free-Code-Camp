@@ -1,0 +1,104 @@
+:root,
+html,
+body {
+    min-width: 320px !important;
+}
+
+code {
+    color: #000 !important;
+    font-size: 0.8em;
+}
+
+.codeContainer {
+    background-color: #F7F7F7 !important;
+}
+
+#main-doc {
+    position: absolute;
+    left: 300px;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    overflow-y: auto;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.15em;
+    font-weight: 500;
+    padding: 5px;
+    border-top: 1px solid #aaa;
+}
+
+.nav-link:hover {
+    cursor: pointer;
+}
+
+#navbar {
+    width: 300px;
+    position: fixed;
+    height: 100vh;
+    border-right: 1px solid #aaa;
+}
+
+#navbar header {
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 300px;
+}
+
+#nav-link-container {
+    top: 52px;
+    margin-top: 1rem;
+    position: fixed;
+    height: 100vh;
+    width: 300px;
+}
+
+section header {
+    font-size: 1.7em;
+    font-weight: 500;
+}
+
+@media (max-width: 815px) {
+    #main-doc {
+        margin: 0;
+        position: absolute;
+        width: 100vw;
+        top: 315px;
+        left: 0px;
+        overflow-y: auto;
+    }
+    #navbar {
+        width: 100vw;
+        position: fixed;
+        height: 315px;
+        z-index: 2;
+        background-color: #fff;
+    }
+    #navbar header {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #nav-link-container {
+        top: 68px;
+        width: 100vw;
+        position: fixed;
+        height: 245px;
+        overflow-y: auto;
+        border: 1px solid #000;
+        z-index: 2;
+        background-color: #fff;
+    }
+}
+
+@media (max-width: 500px) {
+    code {
+        font-size: 0.65em;
+    }
+}
