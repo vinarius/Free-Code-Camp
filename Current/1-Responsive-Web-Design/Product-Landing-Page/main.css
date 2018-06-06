@@ -1,5 +1,10 @@
 :root {
     font-family: 'Roboto Mono', monospace;
+    min-width: 320px;
+}
+
+#collapse-btn:hover {
+    curser: pointer;
 }
 
 #email {
@@ -33,16 +38,22 @@ footer {
 }
 
 .iconWidth {
-    width: 75px;
+    width: 75px !important;
 }
 
-.instrumentCard {
-    background-color: #444;
-    color: #fff;
-    height: 100px;
-    width: 50px;
-    padding: 0;
-    margin: 15px;
+.instrument-subcontainer {
+    border: 1px solid #222;
+    border-radius: 5px;
+    height: 300px;
+    width: 250px;
+}
+
+.instrument-subcontainer-title {
+    background-color: #777;
+    color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #listContainerColumn {
@@ -71,17 +82,11 @@ footer {
 }
 
 nav {
-    position: fixed;
-    width: 100%;
-    background-color: #444;
     color: #fff;
-    height: 55px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
 }
 
-.navOption, .navOptionBrand {
+.navOption,
+.navOptionBrand {
     background-color: inherit;
     color: inherit;
     padding: 10px;
@@ -107,4 +112,51 @@ nav {
 
 #submitBtn {
     width: 150px !important;
+}
+
+.subtitle-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#trombone-description-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#video {
+    width: 500px;
+    height: 300px;
+}
+
+#videoiFrame {
+    width: 100%;
+    display: block;
+    height: 100%;
+}
+
+@media (max-width: 780px) {
+    footer {
+        font-size: 0.9em;
+    }
+    .instrument-subcontainer {
+        margin-bottom: 1rem;
+    }
+    #trombone-description-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .navOptionBrand {
+        font-size: 0.95em;
+    }
+    #video {
+        width:300px;
+        height: 200px;
+    }
 }

@@ -17,17 +17,26 @@
 
 <body>
 
-    <nav>
-        <div class="mr-auto navOptionBrand">
-            <i class="fas fa-music"></i>Original Trombones</div>
-        <div class="navOption">Features</div>
-        <div class="navOption">How It Works</div>
-        <div class="navOption">Pricing</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="mr-auto navOptionBrand navbar-brand">
+            <i class="fas fa-music"></i> Original Trombones
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-target" aria-controls="collapse-target"
+            aria-expanded="false" aria-label="Toggle navigation" id="collapse-btn">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="collapse-target" class="collapse navbar-collapse">
+            <div class="navbar-nav ml-auto">
+                <div class="navOption">Features</div>
+                <div class="navOption">How It Works</div>
+                <div class="navOption">Pricing</div>
+            </div>
+        </div>
     </nav>
 
     <main id="main">
         <div class="container d-flex flex-column align-items-center">
-            <div class="spaceUnderNav m-3"></div>
+            <div class="spaceUnderNav m-4"></div>
             <h1 class="mb-3">Handcrafted, home-made masterpieces</h1>
             <form id="myForm" class="mb-5">
                 <input type="email" placeholder="Enter Your Email Address" id="email" class="mb-3">
@@ -36,7 +45,7 @@
 
             <div id="listContainerColumn" class="mb-5">
                 <div class="listContainerRow mb-3">
-                    <div class="iconWidth">
+                    <div class="iconWidth mr-3">
                         <i class="fab fa-fort-awesome fa-3x"></i>
                     </div>
                     <div class="d-flex flex-column">
@@ -46,7 +55,7 @@
                     </div>
                 </div>
                 <div class="listContainerRow mb-3">
-                    <div class="iconWidth">
+                    <div class="iconWidth mr-3">
                         <i class="fas fa-fast-forward fa-3x"></i>
                     </div>
                     <div class="d-flex flex-column">
@@ -56,7 +65,7 @@
                     </div>
                 </div>
                 <div class="listContainerRow mb-3">
-                    <div class="iconWidth">
+                    <div class="iconWidth mr-3">
                         <i class="fas fa-battery-full fa-3x"></i>
                     </div>
                     <div class="d-flex flex-column">
@@ -67,19 +76,39 @@
                 </div>
             </div>
 
-            <div class="container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/y8Yv4pnO7qc" frameborder="0" allow="autoplay; encrypted-media"
-                    allowfullscreen class="mb-5"></iframe>
+            <div id="video" class="mb-5">
+                <iframe src="https://www.youtube.com/embed/y8Yv4pnO7qc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
+                    class="mb-5" id="videoiFrame"></iframe>
             </div>
         </div>
-        
-        <div class="row" style="width: 100%;">
-            <div class="col-4 col-sm instrumentCard">1</div>
-            <div class="w-100"></div>
-            <div class="col-4 col-sm instrumentCard">2</div>
-            <div class="w-100"></div>
-            <div class="col-4 col-sm instrumentCard">3</div>
-        </div>
+
+        <section id="trombone-description-container" class="mb-5">
+            <div class="instrument-subcontainer">
+                <div class="instrument-subcontainer-title p-3">Tenor Trombone</div>
+                <div class="subtitle-container" id="subtitle-container0">
+                    <h4>$600</h4>
+                    <div class="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo, eius.</div>
+                    <button class="btn btn-info">Select</button>
+                </div>
+            </div>
+            <div class="instrument-subcontainer">
+                <div class="instrument-subcontainer-title p-3">Bass Trombone</div>
+                <div class="subtitle-container" id="subtitle-container1">
+                    <h4>$900</h4>
+                    <div class="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo, eius.</div>
+                    <button class="btn btn-info">Select</button>
+                </div>
+            </div>
+            <div class="instrument-subcontainer">
+                <div class="instrument-subcontainer-title p-3">Valve Trombone</div>
+                <div class="subtitle-container" id="subtitle-container2">
+                    <h4>$1200</h4>
+                    <div class="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo, eius.</div>
+                    <button class="btn btn-info">Select</button>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer id="footer">
