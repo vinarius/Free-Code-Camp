@@ -17,30 +17,39 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="mr-auto navOptionBrand navbar-brand">
-            <i class="fas fa-music"></i> Original Trombones
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-target" aria-controls="collapse-target"
-            aria-expanded="false" aria-label="Toggle navigation" id="collapse-btn">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="collapse-target" class="collapse navbar-collapse">
-            <div class="navbar-nav ml-auto">
-                <div class="navOption">Features</div>
-                <div class="navOption">How It Works</div>
-                <div class="navOption">Pricing</div>
+    <header id="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="nav-bar">
+            <div class="mr-auto navOptionBrand navbar-brand">
+                <img id="header-img" src="https://dl.dropbox.com/s/mujt9x80g6h2y1l/music.svg?dl=0" /> Original Trombones
             </div>
-        </div>
-    </nav>
+            <!-- <i class="fas fa-music"></i> -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-target" aria-controls="collapse-target"
+                aria-expanded="false" aria-label="Toggle navigation" id="collapse-btn">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="collapse-target" class="collapse navbar-collapse">
+                <div class="navbar-nav ml-auto">
+                    <a href="#listContainerColumn" class="nav-link">
+                        <div class="navOption">Features</div>
+                    </a>
+                    <a href="#video" class="nav-link">
+                        <div class="navOption">How It Works</div>
+                    </a>
+                    <a href="#trombone-description-container" class="nav-link">
+                        <div class="navOption">Pricing</div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <main id="main">
         <div class="container d-flex flex-column align-items-center">
             <div class="spaceUnderNav m-4"></div>
-            <h1 class="mb-3">Handcrafted, home-made masterpieces</h1>
-            <form id="myForm" class="mb-5">
-                <input type="email" placeholder="Enter Your Email Address" id="email" class="mb-3">
-                <button class="btn btn-primary" type="submit" id="submitBtn">Get Started</button>
+            <h1 class="mb-3 smallFont">Handcrafted, home-made masterpieces</h1>
+            <form id="form" class="mb-5" action="https://www.freecodecamp.com/email-submit" method="POST">
+                <input type="email" placeholder="Enter Your Email Address" name="email" id="email" class="mb-3">
+                <input class="btn btn-primary" type="submit" id="submit" value="Get Started">
             </form>
 
             <div id="listContainerColumn" class="mb-5">
@@ -76,9 +85,9 @@
                 </div>
             </div>
 
-            <div id="video" class="mb-5">
+            <div id="videoContainer" class="mb-5">
                 <iframe src="https://www.youtube.com/embed/y8Yv4pnO7qc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
-                    class="mb-5" id="videoiFrame"></iframe>
+                    class="mb-5" id="video"></iframe>
             </div>
         </div>
 
@@ -129,6 +138,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
     <script src="main.js" type="text/javascript"></script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" type="text/javascript"></script>
     <noscript>You must enable javascript to use this application.</noscript>
 </body>
 

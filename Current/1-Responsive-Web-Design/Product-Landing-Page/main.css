@@ -37,6 +37,10 @@ footer {
     margin: 0 5px;
 }
 
+#header-img {
+    height: 25px;
+}
+
 .iconWidth {
     width: 75px !important;
 }
@@ -75,7 +79,7 @@ footer {
     font-weight: 500;
 }
 
-#myForm {
+#form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,8 +93,6 @@ nav {
 .navOptionBrand {
     background-color: inherit;
     color: inherit;
-    padding: 10px;
-    margin: 5px;
     border-radius: 5px;
 }
 
@@ -110,7 +112,7 @@ nav {
     height: 55px;
 }
 
-#submitBtn {
+#submit {
     width: 150px !important;
 }
 
@@ -128,12 +130,12 @@ nav {
     align-items: center;
 }
 
-#video {
+#videoContainer {
     width: 500px;
     height: 300px;
 }
 
-#videoiFrame {
+#video {
     width: 100%;
     display: block;
     height: 100%;
@@ -155,8 +157,11 @@ nav {
     .navOptionBrand {
         font-size: 0.95em;
     }
-    #video {
+    #videoContainer {
         width:300px;
         height: 200px;
+    }
+    .smallFont {
+        font-size: 0.8em;
     }
 }
