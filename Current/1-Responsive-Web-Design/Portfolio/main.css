@@ -1,0 +1,195 @@
+:root {
+    --my-grid-template-area: "tribute-page survey-form technical-documentation" "product-landing-page vincenzos-place noble-aesthetic";
+}
+
+:root,
+html,
+body {
+    min-width: 320px;
+}
+
+#about {
+    background: url('https://dl.dropbox.com/s/gte2c25atteal17/rawpixel-623448-unsplash2.jpg?dl=0');
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#contact {
+    background-color: #E1EBE8;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 600px;
+}
+
+#contactIconContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#contactIconContainer div a {
+    color: #333;
+    transition: color 0.2s;
+}
+
+#contactIconContainer div a:hover {
+    color: #999;
+}
+
+.contact-item {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+#custom-grid-container-work {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 50px;
+    grid-column-gap: 4rem;
+    grid-template-areas: var(--my-grid-template-area);
+}
+
+footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 75px;
+    font-size: 1.75em;
+}
+
+#noble-aesthetic {
+    grid-area: noble-aesthetic;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#noble-aesthetic img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+#product-landing-page {
+    grid-area: product-landing-page;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#product-landing-page img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+#survey-form {
+    grid-area: survey-form;
+}
+
+#survey-form img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+#technical-documentation {
+    grid-area: technical-documentation;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#technical-documentation img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+#tribute-page {
+    grid-area: tribute-page;
+    background: url('https://dl.dropbox.com/s/9dgi41wme9d3zem/normanborlaug.jpg?dl=0');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#vincenzos-place {
+    grid-area: vincenzos-place;
+}
+
+#vincenzos-place img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+#work {
+    color: #518A88;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.work-item {
+    height: 250px;
+    width: 250px;
+    border-radius: 5px;
+}
+
+@media (max-width: 900px) {
+    :root {
+        --my-grid-template-area: "tribute-page survey-form" "technical-documentation product-landing-page" "vincenzos-place noble-aesthetic";
+    }
+    /* #contactIconContainer {
+        flex-direction: column;
+        align-items: space-around;
+    } */
+    .contact-item {
+        margin: 2.5rem;
+    }
+    #custom-grid-container-work {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-row-gap: 50px;
+        grid-column-gap: 2rem;
+        grid-template-areas: var(--my-grid-template-area);
+    }
+    #work h1 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 580px) {
+    :root {
+        --my-grid-template-area: "tribute-page" "survey-form" "technical-documentation" "product-landing-page" "vincenzos-place" "noble-aesthetic";
+    }
+    #contact h1 {
+        font-size: 2em;
+    }
+    #contact h4 {
+        font-size: 1.2em;
+    }
+    .contact-item {
+        margin: 1rem;
+    }
+    #custom-grid-container-work {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-row-gap: 50px;
+        grid-column-gap: 2rem;
+        grid-template-areas: var(--my-grid-template-area);
+    }
+    #work h1 {
+        font-size: 1.5em;
+    }
+}
