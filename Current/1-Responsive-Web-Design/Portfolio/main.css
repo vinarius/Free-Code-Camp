@@ -8,7 +8,7 @@ body {
     min-width: 320px;
 }
 
-#about {
+#welcome-section {
     background: url('https://dl.dropbox.com/s/gte2c25atteal17/rawpixel-623448-unsplash2.jpg?dl=0');
     height: 100vh;
     display: flex;
@@ -133,14 +133,14 @@ footer {
     display: block;
 }
 
-#work {
+#projects {
     color: #518A88;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.work-item {
+.project-tile {
     height: 250px;
     width: 250px;
     border-radius: 5px;
@@ -164,7 +164,7 @@ footer {
         grid-column-gap: 2rem;
         grid-template-areas: var(--my-grid-template-area);
     }
-    #work h1 {
+    #projects h1 {
         font-size: 2em;
     }
 }
@@ -189,7 +189,7 @@ footer {
         grid-column-gap: 2rem;
         grid-template-areas: var(--my-grid-template-area);
     }
-    #work h1 {
+    #projects h1 {
         font-size: 1.5em;
     }
 }
