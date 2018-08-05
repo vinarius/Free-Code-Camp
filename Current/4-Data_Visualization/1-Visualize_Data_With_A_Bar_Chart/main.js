@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", function () {
 
     const h = 550;
-    const w = 1000;
+    const w = 900;
     const padding = 60;
 
     const xhr = new XMLHttpRequest();
@@ -14,9 +14,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     function createChart(data) {
 
-        // console.log(data);
-        const barWidth = 5;
-        const barPadding = 1;
+        const barWidth = 10;
 
         const svg = d3.select("main")
             .append("svg")
@@ -42,33 +40,34 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
         let dataset = data;
-        dataset = dataset.sort((a, b) => {
-            return a + b;
-        });
 
-        // svg.selectAll('rect')
-        //     .data(dataset)
-        //     .enter()
-        //     .append('rect')
-        //     .attr('x', (d, i) => i * 6.5)
-        //     .attr('y', (d, i) => h - d)
-        //     .attr('width', barWidth)
-        //     .attr('height', (d, i) => d[1])
-        //     .attr('fill', 'navy')
+        console.log(dataset);
 
         const xScale = d3.scaleLinear()
-            .domain([0, d3.max(data, (d) => {
+            .domain([d3.min(data, (d)=>{
+                let dataString = d[0].split('-');
+                dataString = dataString[0];
+                return Number(dataString);
+            }),
+                d3.max(data, (d) => {
                 let dataString = d[0].split('-');
                 dataString = dataString[0];
                 return Number(dataString);
             })])
             .range([padding, w - padding]);
 
+        const gdp = dataset.map((element)=>{
+            return element[1];
+        });
+
+        const gdpMin = d3.min(gdp);
+        const gdpMax = d3.max(gdp);
+
         const yScale = d3.scaleLinear()
             .domain([0, d3.max(data, (d) => d[1])])
-            .range([h - padding, padding]);
+            .range([h - padding, ((gdpMin / gdpMax) * h) + padding]);
 
-        const xAxis = d3.axisBottom(xScale);
+        const xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('d'));
         const yAxis = d3.axisLeft(yScale);
 
         svg.append('g')
@@ -78,6 +77,27 @@ window.addEventListener("DOMContentLoaded", function () {
         svg.append("g")
             .attr('transform', 'translate(' + padding + ', 0)')
             .call(yAxis);
+
+        svg.selectAll('rect')
+            .data(dataset)
+            .enter()
+            .append('rect')
+            .attr('x', (d, i) => {
+                let dataString = d[0].split('-');
+                dataString = dataString[0];
+                return xScale(Number(dataString))})
+            .attr('y', (d, i) => {return yScale(d[1])})
+            .attr('width', barWidth)
+            .attr('height', (d, i) => d[1])
+            .attr('fill', '#aaa')
+            .attr('class', 'bar')
+            .on('mouseover', ()=>{
+                overlay.transition().style('opacity', 0.8)
+            })
+            .append('title')
+            .text((d) => {
+                return d[0]
+            });
 
     }
 
