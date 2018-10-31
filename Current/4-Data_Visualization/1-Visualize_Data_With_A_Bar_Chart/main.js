@@ -1,8 +1,15 @@
 window.addEventListener("DOMContentLoaded", function () {
 
-    const h = 550;
-    const w = 900;
-    const padding = 60;
+    let h,
+        w;
+    const padding = 60,
+        margin = {
+            top: 23,
+            right: 0,
+            bottom: 0,
+            left: 8
+        },
+        targetDiv = document.getElementById('barChart');
 
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json", true);
@@ -12,11 +19,16 @@ window.addEventListener("DOMContentLoaded", function () {
         createChart(json.data);
     }
 
-    function createChart(data) {
+    function setDimensions(dom) {
+        h = d3.select(dom).node().clientHeight;
+        w = d3.select(dom).node().clientWidth;
+    }
 
+    function createChart(data) {
+        setDimensions(targetDiv);
         const barWidth = 10;
 
-        const svg = d3.select("main")
+        const svg = d3.select("#barChart")
             .append("svg")
             .attr("width", w)
             .attr("height", h)
@@ -44,19 +56,18 @@ window.addEventListener("DOMContentLoaded", function () {
         console.log(dataset);
 
         const xScale = d3.scaleLinear()
-            .domain([d3.min(data, (d)=>{
-                let dataString = d[0].split('-');
-                dataString = dataString[0];
-                return Number(dataString);
-            }),
+            .domain([d3.min(data, (d) => {
+                    let dataString = d[0].split('-');
+                    return Number(dataString[0]);
+                }),
                 d3.max(data, (d) => {
-                let dataString = d[0].split('-');
-                dataString = dataString[0];
-                return Number(dataString);
-            })])
+                    let dataString = d[0].split('-');
+                    return Number(dataString[0]);
+                })
+            ])
             .range([padding, w - padding]);
 
-        const gdp = dataset.map((element)=>{
+        const gdp = dataset.map((element) => {
             return element[1];
         });
 
@@ -84,21 +95,52 @@ window.addEventListener("DOMContentLoaded", function () {
             .append('rect')
             .attr('x', (d, i) => {
                 let dataString = d[0].split('-');
-                dataString = dataString[0];
-                return xScale(Number(dataString))})
-            .attr('y', (d, i) => {return yScale(d[1])})
+                return xScale(Number(dataString[0]));
+            })
+            .attr('y', (d, i) => {
+                return yScale(d[1])
+            })
             .attr('width', barWidth)
-            .attr('height', (d, i) => d[1])
+            .attr('height', (d, i) => {
+                return d[1];
+            })
             .attr('fill', '#aaa')
             .attr('class', 'bar')
-            .on('mouseover', ()=>{
-                overlay.transition().style('opacity', 0.8)
-            })
-            .append('title')
-            .text((d) => {
-                return d[0]
-            });
+            .on('mousemove', (d) => {
+                var e = event;
+                d3.select('#barChartTooltip').remove();
+                var tooltip = svg.append('g').attr('id', 'barChartTooltip');
+                tooltip.append('rect')
+                    .attr('fill', '#ddd')
+                    .attr('height', '40')
+                    .attr('width', '105')
+                    .attr('x', (e.offsetX) + margin.left)
+                    .attr('y', (e.offsetY) + margin.top)
+                    .attr('rx', 5)
+                    .attr('ry', 5)
+                    .style('opacity', '0.7');
 
+                //year
+                tooltip.append('text')
+                    .attr('fill', '#000')
+                    .attr('x', (e.offsetX) + margin.left + 2.5)
+                    .attr('y', (e.offsetY) + margin.top + 20)
+                    .attr('dy', '0em')
+                    .text(() => {
+                        return d[0];
+                    });
+
+                //gdp number
+                tooltip.append('text')
+                    .attr('fill', '#000')
+                    .attr('x', (e.offsetX) + margin.left + 2.5)
+                    .attr('y', (e.offsetY) + margin.top + 20)
+                    .attr('dy', '1em')
+                    .text(() => {
+                        let temp = ``;
+                        return d[1];
+                    });
+            });
     }
 
 
