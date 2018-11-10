@@ -1,7 +1,9 @@
 window.addEventListener("DOMContentLoaded", function () {
 
     let h,
-        w;
+        w,
+        toolTipWidth = 105,
+        toolTipHeight = 40;
     const padding = 60,
         margin = {
             top: 23,
@@ -53,8 +55,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
         let dataset = data;
 
-        console.log(dataset);
-
         const xScale = d3.scaleLinear()
             .domain([d3.min(data, (d) => {
                     let dataString = d[0].split('-');
@@ -89,7 +89,7 @@ window.addEventListener("DOMContentLoaded", function () {
             .attr('transform', 'translate(' + padding + ', 0)')
             .call(yAxis);
 
-        svg.selectAll('rect')
+        const dataBars = svg.selectAll('rect')
             .data(dataset)
             .enter()
             .append('rect')
@@ -112,10 +112,24 @@ window.addEventListener("DOMContentLoaded", function () {
                 var tooltip = svg.append('g').attr('id', 'barChartTooltip');
                 tooltip.append('rect')
                     .attr('fill', '#ddd')
-                    .attr('height', '40')
-                    .attr('width', '105')
-                    .attr('x', (e.offsetX) + margin.left)
-                    .attr('y', (e.offsetY) + margin.top)
+                    .attr('height', toolTipHeight)
+                    .attr('width', toolTipWidth)
+                    .attr('x', () => {
+                        let val = (e.offsetX) + margin.left;
+                        if(val > (w - toolTipWidth)){
+                            return w - toolTipWidth;
+                        } else {
+                            return val;
+                        }
+                    })
+                    .attr('y', () => {
+                        let val = (e.offsetY) + margin.top;
+                        if(val > (h - toolTipHeight)){
+                            return h - toolTipHeight;
+                        } else {
+                            return val;
+                        }
+                    })
                     .attr('rx', 5)
                     .attr('ry', 5)
                     .style('opacity', '0.7');
@@ -123,8 +137,22 @@ window.addEventListener("DOMContentLoaded", function () {
                 //year
                 tooltip.append('text')
                     .attr('fill', '#000')
-                    .attr('x', (e.offsetX) + margin.left + 2.5)
-                    .attr('y', (e.offsetY) + margin.top + 20)
+                    .attr('x', ()=>{
+                        let val = (e.offsetX) + margin.left + 2.5;
+                        if(val > (w - toolTipWidth)){
+                            return w - toolTipWidth + 2.5;
+                        } else {
+                            return val;
+                        }
+                    })
+                    .attr('y', () => {
+                        let val = (e.offsetY) + margin.top + 20;
+                        if(val > (h - toolTipHeight + 20)){
+                            return h - toolTipHeight + 20;
+                        } else {
+                            return val;
+                        }
+                    })
                     .attr('dy', '0em')
                     .text(() => {
                         return d[0];
@@ -133,13 +161,39 @@ window.addEventListener("DOMContentLoaded", function () {
                 //gdp number
                 tooltip.append('text')
                     .attr('fill', '#000')
-                    .attr('x', (e.offsetX) + margin.left + 2.5)
-                    .attr('y', (e.offsetY) + margin.top + 20)
+                    .attr('x', ()=>{
+                        let val = (e.offsetX) + margin.left + 2.5;
+                        if(val > (w - toolTipWidth)){
+                            return w - toolTipWidth + 2.5;
+                        } else {
+                            return val;
+                        }
+                    })
+                    .attr('y', () => {
+                        let val = (e.offsetY) + margin.top + 20;
+                        if(val > (h - toolTipHeight + 20)){
+                            return h - toolTipHeight + 20;
+                        } else {
+                            return val;
+                        }
+                    })
                     .attr('dy', '1em')
                     .text(() => {
                         let temp = ``;
                         return d[1];
                     });
+            })
+            .on('mouseout', (d) => {
+                d3.select('#barChartTooltip').remove();
+                d3.select(this).attr('fill', '#aaa');
+            });
+
+            dataBars.on('mouseover', ()=>{
+                d3.select(this).attr('fill', '#eee');
+            });
+
+            dataBars.on('mouseout', ()=>{
+                d3.select(this).attr('fill', '#ddd');
             });
     }
 
