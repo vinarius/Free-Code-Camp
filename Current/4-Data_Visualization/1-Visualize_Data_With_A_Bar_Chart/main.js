@@ -11,6 +11,7 @@ window.addEventListener("DOMContentLoaded", function () {
             bottom: 0,
             left: 8
         },
+        barWidth = 7.5,
         targetDiv = document.getElementById('barChart');
 
     const xhr = new XMLHttpRequest();
@@ -28,7 +29,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
     function createChart(data) {
         setDimensions(targetDiv);
-        const barWidth = 10;
 
         const svg = d3.select("#barChart")
             .append("svg")
@@ -56,7 +56,7 @@ window.addEventListener("DOMContentLoaded", function () {
         let dataset = data;
 
         const xScale = d3.scaleLinear()
-            .domain([d3.min(data, (d) => {
+            .domain([d3.min(dataset, (d) => {
                     let dataString = d[0].split('-');
                     return Number(dataString[0]);
                 }),
@@ -67,19 +67,25 @@ window.addEventListener("DOMContentLoaded", function () {
             ])
             .range([padding, w - padding]);
 
-        const gdp = dataset.map((element) => {
-            return element[1];
+        const gdpMin = d3.min(dataset, (d) => {
+            return d[1];
+        });
+        const gdpMax = d3.max(dataset, (d) => {
+            return d[1];
         });
 
-        const gdpMin = d3.min(gdp);
-        const gdpMax = d3.max(gdp);
-
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(data, (d) => d[1])])
-            .range([h - padding, ((gdpMin / gdpMax) * h) + padding]);
+            .domain([0, gdpMax])
+            .range([(h - padding), padding]);
+
+        gdp = dataset.map((el) => {
+            el[0] = el[0].split('-');
+            el[0] = xScale(Number(el[0]));
+            el[1] = yScale(el[1]);
+        });
 
         const xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('d'));
-        const yAxis = d3.axisLeft(yScale);
+        const yAxis = d3.axisLeft().scale(yScale);
 
         svg.append('g')
             .attr('transform', 'translate(0, ' + (h - padding) + ')')
@@ -94,15 +100,18 @@ window.addEventListener("DOMContentLoaded", function () {
             .enter()
             .append('rect')
             .attr('x', (d, i) => {
-                let dataString = d[0].split('-');
-                return xScale(Number(dataString[0]));
+                // let dataString = d[0].split('-');
+                // return xScale(Number(dataString[0]));
+                return d[0];
             })
             .attr('y', (d, i) => {
-                return yScale(d[1])
+                // return yScale(d[1] - h);
+                return d[1];
             })
             .attr('width', barWidth)
             .attr('height', (d, i) => {
                 return d[1];
+                // return (d[1] - h);
             })
             .attr('fill', '#aaa')
             .attr('class', 'bar')
@@ -116,7 +125,7 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('width', toolTipWidth)
                     .attr('x', () => {
                         let val = (e.offsetX) + margin.left;
-                        if(val > (w - toolTipWidth)){
+                        if (val > (w - toolTipWidth)) {
                             return w - toolTipWidth;
                         } else {
                             return val;
@@ -124,7 +133,7 @@ window.addEventListener("DOMContentLoaded", function () {
                     })
                     .attr('y', () => {
                         let val = (e.offsetY) + margin.top;
-                        if(val > (h - toolTipHeight)){
+                        if (val > (h - toolTipHeight)) {
                             return h - toolTipHeight;
                         } else {
                             return val;
@@ -137,9 +146,9 @@ window.addEventListener("DOMContentLoaded", function () {
                 //year
                 tooltip.append('text')
                     .attr('fill', '#000')
-                    .attr('x', ()=>{
+                    .attr('x', () => {
                         let val = (e.offsetX) + margin.left + 2.5;
-                        if(val > (w - toolTipWidth)){
+                        if (val > (w - toolTipWidth)) {
                             return w - toolTipWidth + 2.5;
                         } else {
                             return val;
@@ -147,7 +156,7 @@ window.addEventListener("DOMContentLoaded", function () {
                     })
                     .attr('y', () => {
                         let val = (e.offsetY) + margin.top + 20;
-                        if(val > (h - toolTipHeight + 20)){
+                        if (val > (h - toolTipHeight + 20)) {
                             return h - toolTipHeight + 20;
                         } else {
                             return val;
@@ -161,9 +170,9 @@ window.addEventListener("DOMContentLoaded", function () {
                 //gdp number
                 tooltip.append('text')
                     .attr('fill', '#000')
-                    .attr('x', ()=>{
+                    .attr('x', () => {
                         let val = (e.offsetX) + margin.left + 2.5;
-                        if(val > (w - toolTipWidth)){
+                        if (val > (w - toolTipWidth)) {
                             return w - toolTipWidth + 2.5;
                         } else {
                             return val;
@@ -171,7 +180,7 @@ window.addEventListener("DOMContentLoaded", function () {
                     })
                     .attr('y', () => {
                         let val = (e.offsetY) + margin.top + 20;
-                        if(val > (h - toolTipHeight + 20)){
+                        if (val > (h - toolTipHeight + 20)) {
                             return h - toolTipHeight + 20;
                         } else {
                             return val;
@@ -185,15 +194,6 @@ window.addEventListener("DOMContentLoaded", function () {
             })
             .on('mouseout', (d) => {
                 d3.select('#barChartTooltip').remove();
-                d3.select(this).attr('fill', '#aaa');
-            });
-
-            dataBars.on('mouseover', ()=>{
-                d3.select(this).attr('fill', '#eee');
-            });
-
-            dataBars.on('mouseout', ()=>{
-                d3.select(this).attr('fill', '#ddd');
             });
     }
 
