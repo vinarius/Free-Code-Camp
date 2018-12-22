@@ -3,7 +3,7 @@
 }
 
 .bar:hover {
-    fill: 'navy';
+    fill: #777;
 }
 
 #bar-chart-svg-js {

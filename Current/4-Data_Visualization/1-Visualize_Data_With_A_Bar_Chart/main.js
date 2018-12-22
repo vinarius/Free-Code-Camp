@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", function () {
             .attr("id", "bar-chart-svg-js");
 
         const svgTitle = svg.append('text')
-            .attr('id', 'svg-title')
+            .attr('id', 'title')
             .attr('x', (w / 2))
             .attr('y', padding)
             .attr('text-anchor', 'middle')
@@ -112,17 +112,26 @@ window.addEventListener("DOMContentLoaded", function () {
         //xAxis
         svg.append('g')
         .attr('transform', 'translate(0, ' + (h - padding) + ')')
+        .attr('id', 'x-axis')
         .call(xAxis);
 
         //yAxis
         svg.append("g")
             .attr('transform', 'translate(' + padding + ', 0)')
+            .attr('id', 'y-axis')
             .call(yAxis);
 
         const dataBars = svg.selectAll('rect')
             .data(dataset)
             .enter()
             .append('rect')
+            .attr('stroke', '#fff')
+            .attr('data-date', (d, i)=> {
+                return d[0];
+            })
+            .attr('data-gdp', (d, i)=>{
+                return d[1];
+            })
             .attr('x', (d, i) => {
                 let dataString = d[0].split('-');
                 let delta = Number(dataString[0]);
@@ -139,8 +148,12 @@ window.addEventListener("DOMContentLoaded", function () {
             .attr('class', 'bar')
             .on('mousemove', (d) => { //tooltip on mouseover
                 var e = event;
-                d3.select('#barChartTooltip').remove();
-                var tooltip = svg.append('g').attr('id', 'barChartTooltip');
+                let data = d;
+                d3.select('#tooltip').remove();
+                var tooltip = svg.append('g').attr('id', 'tooltip')
+                .attr('data-date', ()=>{
+                    return data[0];
+                });
                 tooltip.append('rect')
                     .attr('fill', '#ddd')
                     .attr('height', toolTipHeight)
@@ -186,7 +199,6 @@ window.addEventListener("DOMContentLoaded", function () {
                     })
                     .attr('dy', '1em')
                     .text(() => {
-                        //modifications here
                         let temp = d[0].split('-');
                         let split = temp[1].split('');
                         let quarter;
@@ -238,7 +250,7 @@ window.addEventListener("DOMContentLoaded", function () {
                     });
             })
             .on('mouseout', (d) => {
-                d3.select('#barChartTooltip').remove();
+                d3.select('#tooltip').remove();
             });
     }
 
