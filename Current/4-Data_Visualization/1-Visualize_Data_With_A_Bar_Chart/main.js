@@ -13,7 +13,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
         for(let i = data.length - 1; i >= 0; i--){
             if(counter % 3 === 0 && counter !== 0){
-                console.log('testing');
                 result.unshift(',');
             }
             let digit = data[i];
@@ -188,8 +187,28 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('dy', '1em')
                     .text(() => {
                         //modifications here
-                        
-                        return d[0];
+                        let temp = d[0].split('-');
+                        let split = temp[1].split('');
+                        let quarter;
+                        switch(split[1]){
+                            case '1':
+                            quarter = '1';
+                            break;
+                            case '4':
+                            quarter = '2';
+                            break;
+                            case '7':
+                            quarter = '3';
+                            break;
+                            case '0':
+                            quarter = '4';
+                            break;
+                            default:
+                            //do nothing
+                            break;
+                        }
+                        let delta = `${temp[0]} Q${quarter}`;
+                        return delta;
                     });
 
                 //gdp number
