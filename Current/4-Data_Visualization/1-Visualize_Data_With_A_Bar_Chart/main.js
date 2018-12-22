@@ -3,7 +3,9 @@ window.addEventListener("DOMContentLoaded", function () {
     let h,
         w,
         toolTipWidth = 105,
-        toolTipHeight = 40;
+        toolTipHeight = 40,
+        barWidth;
+
     const padding = 60,
         margin = {
             top: 23,
@@ -11,7 +13,6 @@ window.addEventListener("DOMContentLoaded", function () {
             bottom: 0,
             left: 8
         },
-        barWidth = 7.5,
         targetDiv = document.getElementById('barChart');
 
     const xhr = new XMLHttpRequest();
@@ -20,15 +21,16 @@ window.addEventListener("DOMContentLoaded", function () {
     xhr.onload = function () {
         var json = JSON.parse(xhr.responseText);
         createChart(json.data);
-    }
+    }   
 
-    function setDimensions(dom) {
+    function setDimensions(dom, data) {
         h = d3.select(dom).node().clientHeight;
         w = d3.select(dom).node().clientWidth;
+        barWidth = w/data.length;
     }
 
     function createChart(data) {
-        setDimensions(targetDiv);
+        setDimensions(targetDiv, data);
 
         const svg = d3.select("#barChart")
             .append("svg")
@@ -56,15 +58,16 @@ window.addEventListener("DOMContentLoaded", function () {
         let dataset = data;
 
         const xScale = d3.scaleLinear()
-            .domain([d3.min(dataset, (d) => {
-                    let dataString = d[0].split('-');
-                    return Number(dataString[0]);
-                }),
-                d3.max(data, (d) => {
-                    let dataString = d[0].split('-');
-                    return Number(dataString[0]);
-                })
-            ])
+            // .domain([d3.min(dataset, (d) => {
+            //         let dataString = d[0].split('-');
+            //         return Number(dataString[0]);
+            //     }),
+            //     d3.max(data, (d) => {
+            //         let dataString = d[0].split('-');
+            //         return Number(dataString[0]);
+            //     })
+            // ])
+            .domain([0, dataset.length])
             .range([padding, w - padding]);
 
         const gdpMin = d3.min(dataset, (d) => {
@@ -75,22 +78,18 @@ window.addEventListener("DOMContentLoaded", function () {
         });
 
         const yScale = d3.scaleLinear()
-            .domain([0, gdpMax])
+            .domain([gdpMin, gdpMax])
             .range([(h - padding), padding]);
-
-        gdp = dataset.map((el) => {
-            el[0] = el[0].split('-');
-            el[0] = xScale(Number(el[0]));
-            el[1] = yScale(el[1]);
-        });
 
         const xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('d'));
         const yAxis = d3.axisLeft().scale(yScale);
 
+        //xAxis
         svg.append('g')
-            .attr('transform', 'translate(0, ' + (h - padding) + ')')
-            .call(xAxis);
+        .attr('transform', 'translate(0, ' + (h - padding) + ')')
+        .call(xAxis);
 
+        //yAxis
         svg.append("g")
             .attr('transform', 'translate(' + padding + ', 0)')
             .call(yAxis);
@@ -100,22 +99,21 @@ window.addEventListener("DOMContentLoaded", function () {
             .enter()
             .append('rect')
             .attr('x', (d, i) => {
-                // let dataString = d[0].split('-');
-                // return xScale(Number(dataString[0]));
-                return d[0];
+                let dataString = d[0].split('-');
+                let delta = Number(dataString[0]);
+                return xScale(i);
             })
             .attr('y', (d, i) => {
-                // return yScale(d[1] - h);
-                return d[1];
+                // return h - padding;
+                return yScale(d[1]);
             })
             .attr('width', barWidth)
             .attr('height', (d, i) => {
-                return d[1];
-                // return (d[1] - h);
+                return (h - yScale(d[1])) - padding;
             })
             .attr('fill', '#aaa')
             .attr('class', 'bar')
-            .on('mousemove', (d) => {
+            .on('mousemove', (d) => { //tooltip on mouseover
                 var e = event;
                 d3.select('#barChartTooltip').remove();
                 var tooltip = svg.append('g').attr('id', 'barChartTooltip');
@@ -125,19 +123,21 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('width', toolTipWidth)
                     .attr('x', () => {
                         let val = (e.offsetX) + margin.left;
-                        if (val > (w - toolTipWidth)) {
-                            return w - toolTipWidth;
-                        } else {
-                            return val;
-                        }
+                        // if (val > (w - toolTipWidth)) {
+                        //     return w - toolTipWidth;
+                        // } else {
+                        //     return val;
+                        // }
+                        return val + (padding/2);
                     })
                     .attr('y', () => {
-                        let val = (e.offsetY) + margin.top;
-                        if (val > (h - toolTipHeight)) {
-                            return h - toolTipHeight;
-                        } else {
-                            return val;
-                        }
+                        // let val = (e.offsetY) + margin.top;
+                        // if (val > (h - toolTipHeight)) {
+                        //     return h - toolTipHeight;
+                        // } else {
+                        //     return val;
+                        // }
+                        return h - (padding * 2);
                     })
                     .attr('rx', 5)
                     .attr('ry', 5)
@@ -148,21 +148,23 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('fill', '#000')
                     .attr('x', () => {
                         let val = (e.offsetX) + margin.left + 2.5;
-                        if (val > (w - toolTipWidth)) {
-                            return w - toolTipWidth + 2.5;
-                        } else {
-                            return val;
-                        }
+                        // if (val > (w - toolTipWidth)) {
+                        //     return w - toolTipWidth + 2.5;
+                        // } else {
+                        //     return val;
+                        // }
+                        return val + (padding/2);
                     })
                     .attr('y', () => {
-                        let val = (e.offsetY) + margin.top + 20;
-                        if (val > (h - toolTipHeight + 20)) {
-                            return h - toolTipHeight + 20;
-                        } else {
-                            return val;
-                        }
+                        // let val = (e.offsetY) + margin.top + 20;
+                        // if (val > (h - toolTipHeight + 20)) {
+                        //     return h - toolTipHeight + 20;
+                        // } else {
+                        //     return val;
+                        // }
+                        return h - (padding * 2);
                     })
-                    .attr('dy', '0em')
+                    .attr('dy', '1em')
                     .text(() => {
                         return d[0];
                     });
