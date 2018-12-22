@@ -1,17 +1,52 @@
 window.addEventListener("DOMContentLoaded", function () {
 
+    function insertCommas(d){
+        let temp = String(d);
+
+        let delta = temp.split('.');
+        let data = delta[0];
+        //measure digits, insert comma after every three starting from length
+        data = data.split('');
+        let counter = 0;
+        //construct new array
+        let result = [];
+
+        for(let i = data.length - 1; i >= 0; i--){
+            if(counter % 3 === 0 && counter !== 0){
+                console.log('testing');
+                result.unshift(',');
+            }
+            let digit = data[i];
+            result.unshift(digit);
+            counter++;
+        }
+
+        result = result.join('');
+        result = result.split();
+        result.push(delta[1]);
+        result = result.join('.');
+
+        return result;
+    }
+
     let h,
         w,
-        toolTipWidth = 105,
+        toolTipWidth = 123,
         toolTipHeight = 40,
         barWidth;
 
     const padding = 60,
+        tooltipMargin = {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 5
+        },
         margin = {
             top: 23,
             right: 0,
             bottom: 0,
-            left: 8
+            left: 15
         },
         targetDiv = document.getElementById('barChart');
 
@@ -113,10 +148,19 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('width', toolTipWidth)
                     .attr('x', () => {
                         let val = (e.offsetX) + margin.left;
-                        return val + (padding/2);
+                        if (val > (w - toolTipWidth)) {
+                            return w - toolTipWidth;
+                        } else {
+                            return val;
+                        }
                     })
                     .attr('y', () => {
-                        return h - (padding * 2);
+                        let val = (e.offsetY) + margin.top;
+                        if (val > (h - toolTipHeight)) {
+                            return h - toolTipHeight;
+                        } else {
+                            return val;
+                        }
                     })
                     .attr('rx', 5)
                     .attr('ry', 5)
@@ -126,14 +170,25 @@ window.addEventListener("DOMContentLoaded", function () {
                 tooltip.append('text')
                     .attr('fill', '#000')
                     .attr('x', () => {
-                        let val = (e.offsetX) + margin.left + 2.5;
-                        return val + (padding/2);
+                        let val = (e.offsetX) + margin.left;
+                        if (val > (w - toolTipWidth)) {
+                            return w - toolTipWidth + tooltipMargin.left;
+                        } else {
+                            return val + tooltipMargin.left;
+                        }
                     })
                     .attr('y', () => {
-                        return h - (padding * 2);
+                        let val = (e.offsetY) + margin.top;
+                        if (val > (h - toolTipHeight)) {
+                            return h - toolTipHeight;
+                        } else {
+                            return val;
+                        }
                     })
                     .attr('dy', '1em')
                     .text(() => {
+                        //modifications here
+                        
                         return d[0];
                     });
 
@@ -141,16 +196,26 @@ window.addEventListener("DOMContentLoaded", function () {
                 tooltip.append('text')
                     .attr('fill', '#000')
                     .attr('x', () => {
-                        let val = (e.offsetX) + margin.left + 2.5;
-                        return val + (padding/2);
+                        let val = (e.offsetX) + margin.left;
+                        if (val > (w - toolTipWidth)) {
+                            return w - toolTipWidth + tooltipMargin.left;
+                        } else {
+                            return val + tooltipMargin.left;
+                        }
                     })
                     .attr('y', () => {
-                        return h - (padding * 2);
+                        let val = (e.offsetY) + margin.top;
+                        if (val > (h - toolTipHeight)) {
+                            return h - toolTipHeight;
+                        } else {
+                            return val;
+                        }
                     })
                     .attr('dy', '2em')
                     .text(() => {
-                        let temp = ``; //modifications here
-                        return d[1];
+                        let delta = insertCommas(d[1]);
+                        let temp = `$${delta} Billion`;
+                        return temp;
                     });
             })
             .on('mouseout', (d) => {
