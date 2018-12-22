@@ -58,15 +58,6 @@ window.addEventListener("DOMContentLoaded", function () {
         let dataset = data;
 
         const xScale = d3.scaleLinear()
-            // .domain([d3.min(dataset, (d) => {
-            //         let dataString = d[0].split('-');
-            //         return Number(dataString[0]);
-            //     }),
-            //     d3.max(data, (d) => {
-            //         let dataString = d[0].split('-');
-            //         return Number(dataString[0]);
-            //     })
-            // ])
             .domain([0, dataset.length])
             .range([padding, w - padding]);
 
@@ -104,7 +95,6 @@ window.addEventListener("DOMContentLoaded", function () {
                 return xScale(i);
             })
             .attr('y', (d, i) => {
-                // return h - padding;
                 return yScale(d[1]);
             })
             .attr('width', barWidth)
@@ -123,20 +113,9 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('width', toolTipWidth)
                     .attr('x', () => {
                         let val = (e.offsetX) + margin.left;
-                        // if (val > (w - toolTipWidth)) {
-                        //     return w - toolTipWidth;
-                        // } else {
-                        //     return val;
-                        // }
                         return val + (padding/2);
                     })
                     .attr('y', () => {
-                        // let val = (e.offsetY) + margin.top;
-                        // if (val > (h - toolTipHeight)) {
-                        //     return h - toolTipHeight;
-                        // } else {
-                        //     return val;
-                        // }
                         return h - (padding * 2);
                     })
                     .attr('rx', 5)
@@ -148,20 +127,9 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('fill', '#000')
                     .attr('x', () => {
                         let val = (e.offsetX) + margin.left + 2.5;
-                        // if (val > (w - toolTipWidth)) {
-                        //     return w - toolTipWidth + 2.5;
-                        // } else {
-                        //     return val;
-                        // }
                         return val + (padding/2);
                     })
                     .attr('y', () => {
-                        // let val = (e.offsetY) + margin.top + 20;
-                        // if (val > (h - toolTipHeight + 20)) {
-                        //     return h - toolTipHeight + 20;
-                        // } else {
-                        //     return val;
-                        // }
                         return h - (padding * 2);
                     })
                     .attr('dy', '1em')
@@ -174,23 +142,14 @@ window.addEventListener("DOMContentLoaded", function () {
                     .attr('fill', '#000')
                     .attr('x', () => {
                         let val = (e.offsetX) + margin.left + 2.5;
-                        if (val > (w - toolTipWidth)) {
-                            return w - toolTipWidth + 2.5;
-                        } else {
-                            return val;
-                        }
+                        return val + (padding/2);
                     })
                     .attr('y', () => {
-                        let val = (e.offsetY) + margin.top + 20;
-                        if (val > (h - toolTipHeight + 20)) {
-                            return h - toolTipHeight + 20;
-                        } else {
-                            return val;
-                        }
+                        return h - (padding * 2);
                     })
-                    .attr('dy', '1em')
+                    .attr('dy', '2em')
                     .text(() => {
-                        let temp = ``;
+                        let temp = ``; //modifications here
                         return d[1];
                     });
             })
