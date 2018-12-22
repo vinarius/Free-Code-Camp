@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3 Scatterplot Graph | FreeCodeCamp</title>
+    <link rel="stylesheet" href="reset.css" type="text/css">
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://dl.dropbox.com/s/5r01s9ie2g9re1c/MKDesign_Final_v1_BLACK.png?dl=0" />
+</head>
+<body>
+    
+    <header></header>
+
+    <main class="customMt-3">
+        <!-- User stories -->
+        <h1>Data Visualization Projects</h1>
+        <h2>Visualize Data with a Scatterplot Graph.</h2>
+        <h3 class="customMt-1">Built by Mark on 12/22/2018</h3>
+
+        <ul class="customMt-3">
+            <li class="customMt-1">
+                <span class="user-story-item-title">Objective:</span> Build a
+                <a href="https://codepen.io/" target="_blank">CodePen.io</a> app that is functionally similar to this:
+                <a href="https://codepen.io/freeCodeCamp/full/bgpXyK" target="_blank">https://codepen.io/freeCodeCamp/full/bgpXyK</a>.</li>
+            <li class="customMt-1">Fulfill the below <a href="https://en.wikipedia.org/wiki/User_story" target="_blank">user stories</a> and get all of the tests to pass. Give it your own personal style.</li>
+            <li class="customMt-1">You can use HTML, JavaScript, CSS, and the D3 svg-based visualization library. The tests require axes to be generated
+                using the D3 axis property, which automatically generates ticks along the axis. These ticks are required
+                for passing the D3 tests because their positions are used to determine alignment of graphed elements. You
+                will find information about generating axes at
+                <a href="https://github.com/d3/d3/blob/master/API.md#axes-d3-axis" target="_blank">https://github.com/d3/d3/blob/master/API.md#axes-d3-axis</a>. Required (non-virtual) DOM elements are queried
+                on the moment of each test. If you use a frontend framework (like Vue for example), the test results may
+                be inaccurate for dynamic content. We hope to accommodate them eventually, but these frameworks are not currently
+                supported for D3 projects.</li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #1: </span>
+                My chart should have a title with a corresponding
+                <span class="code-highlight">id="title"</span>.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #2: </span>
+                I can see an x-axis that has a corresponding
+                <span class="code-highlight">id="x-axis"</span>.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #3: </span>
+                I can see a y-axis that has a corresponding
+                <span class="code-highlight">id="y-axis"</span>.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #4: </span>
+                I can see dots, that each have a class of <span class="code-highlight">dot</span>, which represent the data being plotted.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #5: </span>
+                Each dot should have the properties <span class="code-highlight">data-xvalue</span> and <span class="code-highlight">data-yvalue</span> containing their corresponding x and y values.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #6: </span>
+                The <span class="code-highlight">data-xvalue</span> and <span class="code-highlight">data-yvalue</span> of each dot should be within the range of the actual data and in the correct data format. For <span class="code-highlight">data-xvalue</span>, integers (full years) or Date objects are acceptable for test evaluation. For <span class="code-highlight">data-yvalue</span> (minutes), use Date objects.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #7: </span>
+                The <span class="code-highlight">data-xvalue</span> and its corresponding dot should align with the corresponding point/value on the x-axis.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #8: </span>
+                The <span class="code-highlight">data-yvalue</span> and its corresponding dot should align with the corresponding point/value on the y-axis.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #9: </span>
+                I can see multiple tick labels on the y-axis with <span class="code-highlight">%M:%S</span> time format.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #10: </span>
+                I can see multiple tick labels on the x-axis that show the year.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #11: </span>
+                I can see that the range of the x-axis labels are within the range of the actual x-axis data.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #12: </span>
+                I can see that the range of the y-axis labels are within the range of the actual y-axis data.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #13: </span>
+                I can see a legend containing descriptive text that has <span class="code-highlight">id="legend"</span>.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #14: </span>
+                I can mouse over an area and see a tooltip with a corresponding <span class="code-highlight">id="tooltip"</span> which displays more information about the area.
+            </li>
+            <li class="customMt-1">
+                <span class="user-story-item-title">User Story #15: </span>
+                My tooltip should have a <span class="code-highlight">data-year</span> property that corresponds to the <span class="code-highlight">data-xvalue</span> of the active area.
+            </li>
+            <li class="customMt-1">
+                Here is the dataset you will need to complete this project:
+                <span class="code-highlight">https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json</span>
+            </li>
+            <li class="customMt-1">
+                You can build your project by forking <a href="https://codepen.io/freeCodeCamp/pen/MJjpwO" target="_blank">this CodePen pen</a>. Or you can use this CDN link to run the tests in any environment
+                you like:
+                <br>
+                <span class="code-highlight">https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js</span>.
+            </li>
+            <li class="customMt-1">
+                Once you're done, submit the URL to your working project with all its tests passing.
+            </li>
+            <li class="customMt-1">
+                Remember to use the
+                <a href="https://forum.freecodecamp.org/t/how-to-get-help-when-you-are-stuck/19514" target="_blank">Read-Search-Ask</a> method if you get stuck.
+            </li>
+        </ul>
+
+        <div id="scatterplot" class="m-5"></div>
+
+    </main>
+
+    <footer></footer>
+
+
+    <!-- D3 -->
+    <script src="" type="text/javascript"></script>
+    <!-- My Code -->
+    <script src="main.js" type="text/javascript"></script>
+    <!-- test suite -->
+    <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" type="text/javascript"></script> -->
+    <noscript>You must enable JavaScript to use this application.</noscript>
+</body>
+</html>
