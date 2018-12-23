@@ -12,12 +12,16 @@ window.addEventListener('DOMContentLoaded', ()=>{
             radius: 0
         };
 
-    const padding = 60,
+    const padding = 90,
         margin = {
             top: 0,
             right: 0,
             bottom: 0,
             left: 0
+        },
+        colors = {
+            orange: '#F67E00',
+            blue: '#3378B6'
         },
         svg = document.getElementById('scatterplot');
 
@@ -62,15 +66,33 @@ window.addEventListener('DOMContentLoaded', ()=>{
         const svgYAxisTitle = svg.append('text')
             .attr('id', 'svgYAxisTitle')
             .attr('x', -(svgMeasurement.width / 4))
-            .attr('y', (svgMeasurement.height / 7))
+            .attr('y', (svgMeasurement.height / 15))
             .attr('text-anchor', 'start')
             .attr('transform', 'rotate(-90)')
             .text('Time in Minutes');
 
         let dataset = data;
+        let minYear = d3.min(dataset, (d)=>{
+            return d['Year'];
+        });
+        let maxYear = d3.max(dataset, (d)=>{
+            return d['Year'];
+        });
+        
 
         //years on x axis
+        const xScale = d3.scaleLinear()
+            .domain([minYear, maxYear])
+            .range([padding, (svgMeasurement.width - padding)]);
+
+        const xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('d'));
+
         //times on y axis - longer times at bottom, shorter times at top
+
+        svg.append('g')
+        .attr('transform', 'translate(0,' + (svgMeasurement.height - padding) + ')')
+        .attr('id', 'x-axis')
+        .call(xAxis);
 
 
     }
