@@ -13,10 +13,10 @@ a:hover {
 }
 
 .code-highlight {
-    color: #eee;
+    color: greenyellow;
     background-color: #222;
     border-radius: 5px;
-    padding: 2px;
+    padding: 0px 2px;
 }
 
 .customMb-5 {
@@ -40,6 +40,10 @@ h1 {
     font-weight: 500;
 }
 
+li {
+    line-height: 1.5em;
+}
+
 main {
     display: flex;
     align-items: center;
@@ -52,9 +56,14 @@ main {
     height: 600px;
     border: 1px solid #333;
     border-radius: 5px;
-    -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+#title {
+    font-size: 1.75em;
+    font-weight: 650;
 }
 
 ul {
