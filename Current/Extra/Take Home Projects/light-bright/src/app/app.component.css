@@ -1,0 +1,41 @@
+:host {
+    background-color: #000;
+    color: #A4FF00;
+}
+
+.button {
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  color: #A4FF00;
+  background-color: #000;
+  border: 1px solid #E782F0;
+  -webkit-box-shadow: 0px 0px 31px 6px rgba(231, 130, 240, 1);
+  -moz-box-shadow: 0px 0px 31px 6px rgba(231, 130, 240, 1);
+  box-shadow: 0px 0px 31px 6px rgba(231, 130, 240, 1);
+}
+
+.button:active {
+    transform: translate(1px, -1px);
+}
+
+.button: hover {
+    cursor: pointer;
+}
+
+.center {
+    margin: 1rem auto;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+.title {
+    margin: 1rem;
+    color: #A4FF00;
+    background-color: #000;
+}

@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.css';
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+* {
+    background-color: #000;
+    color: #A4FF00;
+    font-family: 'Press Start 2P', cursive;
+}
+
+h1 {
+    font-size: 1.75em;
+}
