@@ -66,6 +66,14 @@ main {
     font-weight: 650;
 }
 
+.tooltip {
+    position: absolute;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #0A9045;
+    color: #fff;
+}
+
 ul {
     list-style-type: disc;
 }
