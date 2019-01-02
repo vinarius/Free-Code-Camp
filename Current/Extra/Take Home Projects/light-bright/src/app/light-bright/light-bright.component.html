@@ -1,4 +1,7 @@
-<!-- 27 X 19 -->
-<div class="d-flex">
-    <app-light *ngFor="let light of lights"></app-light>
+<div *ngFor="let row of rows" class="d-flex flex-wrap"> <!-- ??? -->
+
+  <div class="d-flex">
+    <app-light *ngFor="let light of columns"></app-light>
+  </div>
+
 </div>
