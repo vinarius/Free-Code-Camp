@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     const jsonURL = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json';
     // const colorScheme = d3.scaleOrdinal(d3.schemeBlues[11]);
     const color = d3.scaleThreshold()
-    .domain([0, 10])
+    .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     .range([
         '#343797', // 0
         '#4D76B6', // 1
@@ -23,8 +23,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
         '#CE2D1F', // 9
         '#9E0023'  // 10
     ]);
-
-    
 
     let xhr = new XMLHttpRequest();
     xhr.open('GET', jsonURL);
@@ -77,14 +75,39 @@ window.addEventListener('DOMContentLoaded', ()=>{
         // need titles
         // need a legend
 
-        const legend = svg.select('div')
-        .data(colorScheme)
-        .enter()
-        .append('div')
-        .style('fill', (d)=>{
-            console.log('d:', d);
-            return d;
+        // const legend = svg.select('div')
+        // .data(color)
+        // .enter()
+        // .append('div')
+        // .style('fill', (d)=>{
+        //     console.log('d:', d);
+        //     return d;
+        // });
+
+        //left y axis
+        //tick values
+        //tick format
+        //tick size?
+        //tick padding?
+
+        const yScale = d3.scaleOrdinal() //figure out how to space out y axis ticks
+        .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+        .range([0, svgMeasurement.height]);
+
+        const yAxis = d3.axisLeft()
+        .scale(yScale)
+        .tickValues(yScale.domain())
+        .tickFormat(function(d){
+            let delta = new Date();
+            delta.setUTCMonth(d);
+            return d3.utcFormat("%B")(delta);
         });
+
+        svg.append('g')
+        .call(yAxis)
+        .attr('transform', 'translate(' + padding + ', ' + padding + ')');
+        
+
 
 
 
