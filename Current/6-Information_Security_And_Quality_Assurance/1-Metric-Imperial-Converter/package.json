@@ -1,0 +1,23 @@
+{
+  "name": "1-Metric-Imperial-Converter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeCodeCamp/boilerplate-project-metricimpconverter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/freeCodeCamp/boilerplate-project-metricimpconverter/issues"
+  },
+  "homepage": "https://github.com/freeCodeCamp/boilerplate-project-metricimpconverter#readme"
+}
