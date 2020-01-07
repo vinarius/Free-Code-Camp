@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,40 +9,70 @@
     <link rel="stylesheet" href="reset.css" type="text/css">
     <link rel="stylesheet" href="main.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://dl.dropbox.com/s/5r01s9ie2g9re1c/MKDesign_Final_v1_BLACK.png?dl=0" />
+    <link rel="icon" type="image/png"
+        href="https://dl.dropbox.com/s/5r01s9ie2g9re1c/MKDesign_Final_v1_BLACK.png?dl=0" />
 </head>
+
 <body>
-    
+
     <header></header>
 
     <main class="customMt-3">
-        <!-- User stories -->
         <h1>Data Visualization Projects</h1>
         <h2>Visualize Data with a Heat Map.</h2>
-        <h3 class="customMt-1">Built by Mark on 05/29/2019</h3>
+        <h3 class="customMt-1">Built by Mark on 01/06/2020</h3>
 
         <ul class="customMt-3">
-            <li class="customMt-1"><strong>Objective:</strong> Build a <a href="https://www.codepen.io/">CodePen.io</a> app that is functionally similar to this: <a href="https://codepen.io/freeCodeCamp/full/JEXgeY" target="blank">https://codepen.io/freeCodeCamp/full/JEXgeY</a>.</li>
-            <li class="customMt-1">Fulfill the below <a href="https://en.wikipedia.org/wiki/User_story">user stories</a> and get all of the tests to pass. Give it your own personal style.</li>
-            <li class="customMt-1">You can use HTML, JavaScript, CSS, and the D3 svg-based visualization library. Required (non-virtual) DOM elements are queried on the moment of each test. If you use a frontend framework (like Vue for example), the test results may be inaccurate for dynamic content. We hope to accommodate them eventually, but these frameworks are not currently supported for D3 projects.</li>
-            <li class="customMt-1"><strong>User Story #1:</strong> My heat map should have a title with a corresponding <span class="code-highlight">id="title"</span>.</li>
-            <li class="customMt-1"><strong>User Story #2:</strong> My heat map should have a description with a corresponding <span class="code-highlight">id="description"</span>.</li>
-            <li class="customMt-1"><strong>User Story #3:</strong> My heat map should have an x-axis with a corresponding <span class="code-highlight">id="x-axis"</span>.</li>
-            <li class="customMt-1"><strong>User Story #4:</strong> My heat map should have a y-axis with a corresponding <span class="code-highlight">id="y-axis"</span>.</li>
-            <li class="customMt-1"><strong>User Story #5:</strong> My heat map should have <span class="code-highlight">rect</span> elements with a <span class="code-highlight">class="cell"</span> that represent the data.</li>
-            <li class="customMt-1"><strong>User Story #6:</strong> There should be at least 4 different fill colors used for the cells.</li>
-            <li class="customMt-1"><strong>User Story #7:</strong> Each cell will have the properties <span class="code-highlight">data-month</span>, <span class="code-highlight">data-year</span>, <span class="code-highlight">data-temp</span> containing their corresponding month, year, and temperature values.</li>
-            <li class="customMt-1"><strong>User Story #8:</strong> The <span class="code-highlight">data-month</span>, <span class="code-highlight">data-year</span> of each cell should be within the range of the data.</li>
-            <li class="customMt-1"><strong>User Story #9:</strong> My heat map should have cells that align with the corresponding month on the y-axis.</li>
-            <li class="customMt-1"><strong>User Story #10:</strong> My heat map should have cells that align with the corresponding year on the x-axis.</li>
-            <li class="customMt-1"><strong>User Story #11:</strong> My heat map should have multiple tick labels on the y-axis with the full month name.</li>
-            <li class="customMt-1"><strong>User Story #12:</strong> My heat map should have multiple tick labels on the x-axis with the years between 1754 and 2015.</li>
-            <li class="customMt-1"><strong>User Story #13:</strong> My heat map should have a legend with a corresponding <span class="code-highlight">id="legend"</span>.</li>
-            <li class="customMt-1"><strong>User Story #14:</strong> My legend should contain <span class="code-highlight">rect</span> elements</span>.</li>
-            <li class="customMt-1"><strong>User Story #15:</strong> The <span class="code-highlight">rect</span> elements in the legend should use at least 4 different fill colors.</li>
-            <li class="customMt-1"><strong>User Story #16:</strong> I can mouse over an area and see a tooltip with a corresponding <span class="code-highlight">id="tooltip"</span> which displays more information about the area.</li>
-            <li class="customMt-1"><strong>User Story #17:</strong> My tooltip should have a <span class="code-highlight">data-year</span> property that corresponds to the <span class="code-highlight">data-year</span> of the active area.</li>
-            <li class="customMt-1">Here is the dataset you will need to complete this project: https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json</li>
+            <li class="customMt-1"><strong>Objective:</strong> Build a <a href="https://www.codepen.io/">CodePen.io</a>
+                app that is functionally similar to this: <a href="https://codepen.io/freeCodeCamp/full/JEXgeY"
+                    target="blank">https://codepen.io/freeCodeCamp/full/JEXgeY</a>.</li>
+            <li class="customMt-1">Fulfill the below <a href="https://en.wikipedia.org/wiki/User_story">user stories</a>
+                and get all of the tests to pass. Give it your own personal style.</li>
+            <li class="customMt-1">You can use HTML, JavaScript, CSS, and the D3 svg-based visualization library.
+                Required (non-virtual) DOM elements are queried on the moment of each test. If you use a frontend
+                framework (like Vue for example), the test results may be inaccurate for dynamic content. We hope to
+                accommodate them eventually, but these frameworks are not currently supported for D3 projects.</li>
+            <li class="customMt-1"><strong>User Story #1:</strong> My heat map should have a title with a corresponding
+                <span class="code-highlight">id="title"</span>.</li>
+            <li class="customMt-1"><strong>User Story #2:</strong> My heat map should have a description with a
+                corresponding <span class="code-highlight">id="description"</span>.</li>
+            <li class="customMt-1"><strong>User Story #3:</strong> My heat map should have an x-axis with a
+                corresponding <span class="code-highlight">id="x-axis"</span>.</li>
+            <li class="customMt-1"><strong>User Story #4:</strong> My heat map should have a y-axis with a corresponding
+                <span class="code-highlight">id="y-axis"</span>.</li>
+            <li class="customMt-1"><strong>User Story #5:</strong> My heat map should have <span
+                    class="code-highlight">rect</span> elements with a <span class="code-highlight">class="cell"</span>
+                that represent the data.</li>
+            <li class="customMt-1"><strong>User Story #6:</strong> There should be at least 4 different fill colors used
+                for the cells.</li>
+            <li class="customMt-1"><strong>User Story #7:</strong> Each cell will have the properties <span
+                    class="code-highlight">data-month</span>, <span class="code-highlight">data-year</span>, <span
+                    class="code-highlight">data-temp</span> containing their corresponding month, year, and temperature
+                values.</li>
+            <li class="customMt-1"><strong>User Story #8:</strong> The <span class="code-highlight">data-month</span>,
+                <span class="code-highlight">data-year</span> of each cell should be within the range of the data.</li>
+            <li class="customMt-1"><strong>User Story #9:</strong> My heat map should have cells that align with the
+                corresponding month on the y-axis.</li>
+            <li class="customMt-1"><strong>User Story #10:</strong> My heat map should have cells that align with the
+                corresponding year on the x-axis.</li>
+            <li class="customMt-1"><strong>User Story #11:</strong> My heat map should have multiple tick labels on the
+                y-axis with the full month name.</li>
+            <li class="customMt-1"><strong>User Story #12:</strong> My heat map should have multiple tick labels on the
+                x-axis with the years between 1754 and 2015.</li>
+            <li class="customMt-1"><strong>User Story #13:</strong> My heat map should have a legend with a
+                corresponding <span class="code-highlight">id="legend"</span>.</li>
+            <li class="customMt-1"><strong>User Story #14:</strong> My legend should contain <span
+                    class="code-highlight">rect</span> elements</span>.</li>
+            <li class="customMt-1"><strong>User Story #15:</strong> The <span class="code-highlight">rect</span>
+                elements in the legend should use at least 4 different fill colors.</li>
+            <li class="customMt-1"><strong>User Story #16:</strong> I can mouse over an area and see a tooltip with a
+                corresponding <span class="code-highlight">id="tooltip"</span> which displays more information about the
+                area.</li>
+            <li class="customMt-1"><strong>User Story #17:</strong> My tooltip should have a <span
+                    class="code-highlight">data-year</span> property that corresponds to the <span
+                    class="code-highlight">data-year</span> of the active area.</li>
+            <li class="customMt-1">Here is the dataset you will need to complete this project:
+                https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json</li>
         </ul>
 
         <div id="heatMap" class="customMb-5 customMt-3"></div>
@@ -49,7 +80,6 @@
     </main>
 
     <footer></footer>
-
 
     <!-- D3 -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
@@ -59,4 +89,5 @@
     <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" type="text/javascript"></script> -->
     <noscript>You must enable JavaScript to use this application.</noscript>
 </body>
+
 </html>
