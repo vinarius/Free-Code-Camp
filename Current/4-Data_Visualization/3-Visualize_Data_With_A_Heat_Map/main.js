@@ -25,16 +25,14 @@ window.addEventListener('DOMContentLoaded', () => {
         "December"
     ];
 
-    let baseTemperature;
-
     const testText = document.getElementById('test-text');
     const colorBox = document.getElementById('test-color-box');
-
+    const colorArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const padding = 40;
     const heatMap = document.getElementById('heatMap');
     const jsonURL = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json';
     const color = d3.scaleLinear()
-        .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        .domain(colorArray)
         .range([
             '#343797', // 0
             '#4D76B6', // 1
@@ -46,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
             '#F6AD5A', // 7
             '#EB6C3C', // 8
             '#CE2D1F', // 9
-            '#9E0023'  // 10
+            '#9E0023' // 10
         ]);
 
     let xhr = new XMLHttpRequest();
@@ -54,7 +52,6 @@ window.addEventListener('DOMContentLoaded', () => {
     xhr.send();
     xhr.onload = function (d) {
         let json = JSON.parse(d.currentTarget.responseText);
-        baseTemperature = json.baseTemperature;
         createHeatMap(json, heatMap);
     };
 
@@ -89,11 +86,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 return;
         }
     }
-    
+
     function calculateNewTemperature(base, variance) {
         return base + variance;
     }
-    
+
     function setDimensions(_parent) {
         let parent = _parent;
         height = parent.clientHeight - margin.top - margin.bottom;
@@ -102,17 +99,17 @@ window.addEventListener('DOMContentLoaded', () => {
         margin.right = parent.clientWidth / 10;
         margin.bottom = (parent.clientHeight / 6) + 25;
     }
-    
+
     function createHeatMap(_data, _parent) {
         setDimensions(_parent);
         let data = JSON.parse(JSON.stringify(_data));
-    
+
         console.log(data);
-    
+
         const minYear = d3.min(data.monthlyVariance, (d) => {
             return d.year;
         });
-    
+
         const maxYear = d3.max(data.monthlyVariance, (d) => {
             return d.year;
         });
@@ -122,35 +119,34 @@ window.addEventListener('DOMContentLoaded', () => {
         data.monthlyVariance.forEach(element => {
             yearsArray.push(element.year);
         });
-    
+
         const svg = d3.select(_parent)
             .append('svg')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom);
-    
+
         const xAxisGroup = svg.append('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(${margin.left}, ${height + margin.top})`);
-    
+
         const yAxisGroup = svg.append('g')
             .attr('class', 'y-axis')
             .attr('transform', `translate(${margin.left}, ${margin.top})`)
-    
+
         const x = d3.scaleBand()
-            .domain(data.monthlyVariance.map(variance => variance.year))
+            .domain(data.monthlyVariance.map(variance => variance.year).filter(year => year % 10 === 0))
             .rangeRound([0, width]);
-    
+
         const y = d3.scaleBand()
             .domain(months)
             .rangeRound([0, height]);
-    
+
         const yAxisCall = d3.axisLeft(y);
-        const xAxisCall = d3.axisBottom(x)
-            .tickValues([1, 2, 3, 4]);
-    
+        const xAxisCall = d3.axisBottom(x);
+
         yAxisGroup.call(yAxisCall);
         xAxisGroup.call(xAxisCall);
-    
+
         // Heading Title
         svg.append('text')
             .attr('id', 'title')
@@ -162,7 +158,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 return padding;
             })
             .text('Monthly Global Land-Surface Temperature');
-    
+
         // Heading Description
         svg.append('text')
             .attr('id', 'description')
@@ -174,47 +170,39 @@ window.addEventListener('DOMContentLoaded', () => {
             })
             .text('1753 - 2015: base temperature 8.66°C');
 
-    
-        // need an x and y axis
-        // need titles
-        // need a legend
-    
-        // const legend = svg.select('div')
-        // .data(color)
-        // .enter()
-        // .append('div')
-        // .style('fill', (d)=>{
-        //     console.log('d:', d);
-        //     return d;
-        // });
-    
-        //left y axis
-        //tick values
-        //tick format
-        //tick size?
-        //tick padding?
-    
-        // const yScale = d3.scaleOrdinal() //figure out how to space out y axis ticks
-        // .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-        // .range([0, svgMeasurement.height]);
-    
-        // const yAxis = d3.axisLeft()
-        // .scale(yScale)
-        // .tickValues(yScale.domain())
-        // .tickFormat(function(d){
-        //     let delta = new Date();
-        //     delta.setUTCMonth(d);
-        //     return d3.utcFormat("%B")(delta);
-        // });
-    
-        // svg.append('g')
-        // .call(yAxis)
-        // .attr('transform', 'translate(' + padding + ', ' + padding + ')');
-    
-    
-    
-    
-    
+        const legend = svg
+            .append('rect')
+            .attr('height', '100px')
+            .attr('width', '100px')
+            .style('fill', color(7));
+
+
+        // draw out the map
+        // draw out the legend
+
+        // heat map
+        
+
+
+
+
+
+        // legend
+        // get width of parent, add margin right and width of legend and set to x
+        // add margin top and set to y
+
+
+
+
+        // let counter = 0;
+        // setInterval(() => {
+        //     counter++;
+        //     const randomNumber = Math.floor(Math.random() * 10);
+        //     testText.innerHTML = 'The text is ' + randomNumber + ' ' + 'counter: ' + counter;
+        //     colorBox.style.backgroundColor = color(randomNumber);
+        // }, 500);
+
+
     }
 
 }); //end of doc ready
