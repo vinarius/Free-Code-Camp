@@ -153,6 +153,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .on('mouseover', (d) => {
+                tooltipDiv.style('display', 'block');
                 tooltipDiv.style('opacity', .9)
                     .attr('data-year', d.Year)
                     .html(
@@ -162,7 +163,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     .style('top', `${(d3.event.pageY + 25)}px`);
             })
             .on('mouseout', (d) => {
-                tooltipDiv.style('opacity', 0);
+                tooltipDiv.style('display', 'none');
             });
 
         //legend
@@ -198,10 +199,6 @@ window.addEventListener('DOMContentLoaded', () => {
                     return 'No doping allegations';
                 }
             });
-
-
-
-
     }
 
 }); //end of doc ready

@@ -49,8 +49,6 @@ window.addEventListener('DOMContentLoaded', () => {
             '#9E0023'  // 10
         ]);
 
-    
-
     let xhr = new XMLHttpRequest();
     xhr.open('GET', jsonURL);
     xhr.send();
