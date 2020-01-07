@@ -27,13 +27,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let baseTemperature;
 
-    const testText = document.getElementById('test');
+    const testText = document.getElementById('test-text');
+    const colorBox = document.getElementById('test-color-box');
 
     const padding = 40;
     const heatMap = document.getElementById('heatMap');
     const jsonURL = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json';
-    // const colorScheme = d3.scaleOrdinal(d3.schemeBlues[11]);
-    const color = d3.scaleOrdinal()
+    const color = d3.scaleLinear()
         .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         .range([
             '#343797', // 0
@@ -49,6 +49,8 @@ window.addEventListener('DOMContentLoaded', () => {
             '#9E0023'  // 10
         ]);
 
+    
+
     let xhr = new XMLHttpRequest();
     xhr.open('GET', jsonURL);
     xhr.send();
@@ -63,43 +65,30 @@ window.addEventListener('DOMContentLoaded', () => {
         switch (int) {
             case 1:
                 return "January";
-                break;
             case 2:
                 return "February";
-                break;
             case 3:
                 return "March";
-                break;
             case 4:
                 return "April";
-                break;
             case 5:
                 return "May";
-                break;
             case 6:
                 return "June";
-                break;
             case 7:
                 return "July";
-                break;
             case 8:
                 return "August";
-                break;
             case 9:
                 return "September";
-                break;
             case 10:
                 return "October";
-                break;
             case 11:
                 return "November";
-                break;
             case 12:
                 return "December";
-                break;
             default:
-                // Do nothing.
-                break;
+                return;
         }
     }
     
@@ -114,7 +103,6 @@ window.addEventListener('DOMContentLoaded', () => {
         margin.top = parent.clientHeight / 6;
         margin.right = parent.clientWidth / 10;
         margin.bottom = (parent.clientHeight / 6) + 25;
-        // margin.left = ;
     }
     
     function createHeatMap(_data, _parent) {
@@ -150,22 +138,20 @@ window.addEventListener('DOMContentLoaded', () => {
             .attr('class', 'y-axis')
             .attr('transform', `translate(${margin.left}, ${margin.top})`)
     
-        const x = d3.scaleOrdinal()
-            // .domain([minYear, maxYear])
-            .domain(yearsArray)
-            .range([0, width]);
+        const x = d3.scaleBand()
+            .domain(data.monthlyVariance.map(variance => variance.year))
+            .rangeRound([0, width]);
     
         const y = d3.scaleBand()
             .domain(months)
             .rangeRound([0, height]);
     
         const yAxisCall = d3.axisLeft(y);
-        const xAxisCall = d3.axisBottom(x);
+        const xAxisCall = d3.axisBottom(x)
+            .tickValues([1, 2, 3, 4]);
     
         yAxisGroup.call(yAxisCall);
         xAxisGroup.call(xAxisCall);
-    
-    
     
         // Heading Title
         svg.append('text')
@@ -189,15 +175,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 return padding * 1.5;
             })
             .text('1753 - 2015: base temperature 8.66°C');
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
         // need an x and y axis
         // need titles
