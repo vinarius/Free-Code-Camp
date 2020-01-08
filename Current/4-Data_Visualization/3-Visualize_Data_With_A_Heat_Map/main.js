@@ -203,19 +203,23 @@ window.addEventListener('DOMContentLoaded', () => {
             .range([0, legendSize.width]);
 
         const legendTicks = d3.scaleThreshold()
-            .domain(function (min, max, count) {
+            .domain((function (min, max, count) {
                 const result = [];
                 const step = (max - min) / count;
                 for (let i = 1; i < count; i++) {
-                    result.push((min + step * i));
+                    let tickMark = (min + step * i);
+                    tickMark = tickMark.toFixed(2);
+                    result.push(+tickMark);
                 }
                 return result;
-            })(lowestTemp, highestTemp, colorArray.length)
+            })(lowestTemp, highestTemp, colorArray.length))
             .range(colorTextArray);
 
         xAxisGroupLegend.call(
             d3.axisBottom(xLegend)
-            .ticks(legendTicks.domain(), '.1f')
+            .tickValues(legendTicks.domain())
+            .tickFormat(d3.format(".1f"))
+            .tickSizeOuter(0)
         );
 
         xAxisGroupLegend.selectAll('g')
