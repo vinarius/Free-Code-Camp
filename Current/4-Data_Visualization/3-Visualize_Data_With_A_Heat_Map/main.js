@@ -164,8 +164,6 @@ window.addEventListener('DOMContentLoaded', () => {
         // heat map
 
 
-
-
         // legend
         const legendSize = {
             height: 40,
@@ -222,19 +220,28 @@ window.addEventListener('DOMContentLoaded', () => {
             .tickSizeOuter(0)
         );
 
-        xAxisGroupLegend.selectAll('g')
-            .data(colorArray)
+        xAxisGroupLegend.selectAll('rect')
+            .data(colorTextArray.map((colorString)=> {
+                return legendTicks.invertExtent(colorString);
+            }))
             .enter()
             .append('rect')
-            .attr('x', function (d) {
-                // return (legendSize.width / colorArray.length) * d;
-                return 10 * d;
+            .attr('height', legendSize.height/2)
+            .attr('width', function(d){
+                return 20;
             })
-            .attr('fill', function (d) {
-                return color(d);
+            .attr('x', function (d, i) {
+                return xLegend(i + .2) + 30;
+            })
+            .attr('y', function(d){
+                return -(legendSize.height/2);
+            })
+            .style('fill', function (d, i) {
+                return color(i);
             });
 
-
+            console.log(xLegend(4));
+            console.log(color(4));
 
 
         // let counter = 0;
