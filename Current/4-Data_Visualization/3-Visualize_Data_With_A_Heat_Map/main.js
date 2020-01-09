@@ -128,8 +128,10 @@ window.addEventListener('DOMContentLoaded', () => {
             .domain(months)
             .rangeRound([0, height]);
 
-        const yAxisCall = d3.axisLeft(y);
-        const xAxisCall = d3.axisBottom(x);
+        const yAxisCall = d3.axisLeft(y)
+            .tickSizeOuter(0);
+        const xAxisCall = d3.axisBottom(x)
+            .tickSizeOuter(0);
 
         yAxisGroup.call(yAxisCall);
         xAxisGroup.call(xAxisCall);
@@ -138,7 +140,7 @@ window.addEventListener('DOMContentLoaded', () => {
         svg.append('text')
             .attr('id', 'title')
             .attr('x', () => {
-                return width / 5;
+                return width / 9;
             })
             .attr('text-anchor', 'center')
             .attr('y', () => {
@@ -150,7 +152,7 @@ window.addEventListener('DOMContentLoaded', () => {
         svg.append('text')
             .attr('id', 'description')
             .attr('x', () => {
-                return width / 5;
+                return width / 9;
             })
             .attr('y', () => {
                 return padding * 1.5;
@@ -159,30 +161,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
         // draw out the map
-        // draw out the legend
 
         // heat map
 
 
         // legend
         const legendSize = {
-            height: 40,
-            width: 225
+            height: 55,
+            width: 275
         };
-
-        // const legend = svg.append('g')
-        //     .attr('y', 30)
-        //     .append('g')
-        //     .attr('height', legendSize.height)
-        //     .attr('width', legendSize.width)
-        //     .attr('x', function(){
-        //         return _parent.clientWidth - legendSize.width - 7.5;
-        //     })
-        //     .attr('x', 100)
-        //     .attr('y', 100)
-        // .attr('fill', function(){
-        //     return color(Math.floor(Math.random() * 10))
-        // });
 
         const lowestTemp = d3.min(data.monthlyVariance, function (d) {
             return data.baseTemperature + d.variance;
@@ -194,7 +181,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const xAxisGroupLegend = svg.append('g')
             .attr('class', 'x-axis')
-            .attr('transform', `translate(${_parent.clientWidth - legendSize.width - 7.5}, ${30})`);
+            .attr('transform', `translate(${_parent.clientWidth - legendSize.width - 7.5}, 40)`);
 
         const xLegend = d3.scaleLinear()
             .domain([lowestTemp, highestTemp])
@@ -213,6 +200,18 @@ window.addEventListener('DOMContentLoaded', () => {
             })(lowestTemp, highestTemp, colorArray.length))
             .range(colorTextArray);
 
+        // domain
+        // 0: 2.79
+        // 1: 3.9
+        // 2: 5.01
+        // 3: 6.12
+        // 4: 7.23
+        // 5: 8.34
+        // 6: 9.45
+        // 7: 10.56
+        // 8: 11.67
+        // 9: 12.78
+
         xAxisGroupLegend.call(
             d3.axisBottom(xLegend)
             .tickValues(legendTicks.domain())
@@ -222,16 +221,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
         xAxisGroupLegend.selectAll('rect')
             .data(colorTextArray.map((colorString)=> {
-                return legendTicks.invertExtent(colorString);
+                let d = legendTicks.invertExtent(colorString);
+                if(!d[0]) d[0] = lowestTemp;
+                if(!d[1]) d[1] = highestTemp;
+                return d;
             }))
             .enter()
             .append('rect')
             .attr('height', legendSize.height/2)
             .attr('width', function(d){
-                return 20;
+                return xLegend(d[1]) - xLegend(d[0]);
             })
             .attr('x', function (d, i) {
-                return xLegend(i + .2) + 30;
+                return xLegend(d[0]);
             })
             .attr('y', function(d){
                 return -(legendSize.height/2);
@@ -239,19 +241,6 @@ window.addEventListener('DOMContentLoaded', () => {
             .style('fill', function (d, i) {
                 return color(i);
             });
-
-            console.log(xLegend(4));
-            console.log(color(4));
-
-
-        // let counter = 0;
-        // setInterval(() => {
-        //     counter++;
-        //     const randomNumber = Math.floor(Math.random() * 10);
-        //     testText.innerHTML = 'The text is ' + randomNumber + ' ' + 'counter: ' + counter;
-        //     colorBox.style.backgroundColor = color(randomNumber);
-        // }, 500);
-
 
     }
 
