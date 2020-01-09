@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3 Choropleth Map | FreeCodeCamp</title>
+    <link rel="stylesheet" href="reset.css" type="text/css">
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="icon" type="image/png"
+        href="https://dl.dropbox.com/s/5r01s9ie2g9re1c/MKDesign_Final_v1_BLACK.png?dl=0" />
+</head>
+
+<body>
+
+    <header></header>
+
+    <main class="customMt-3">
+        <h1>Data Visualization Projects</h1>
+        <h2>Visualize Data with a choropleth.</h2>
+        <h3 class="customMt-1">Built by Mark on 01/06/2020</h3>
+
+        <ul class="customMt-3">
+            <li class="customMt-1"><strong>Objective:</strong> Build a <a href="https://www.codepen.io/">CodePen.io</a>
+                app that is functionally similar to this: <a href="https://codepen.io/freeCodeCamp/full/EZKqza"
+                    target="blank">https://codepen.io/freeCodeCamp/full/EZKqza</a>.</li>
+            <li class="customMt-1">Fulfill the below <a href="https://en.wikipedia.org/wiki/User_story">user stories</a>
+                and get all of the tests to pass. Give it your own personal style.</li>
+            <li class="customMt-1">You can use HTML, JavaScript, CSS, and the D3 svg-based visualization library.
+                Required (non-virtual) DOM elements are queried on the moment of each test. If you use a frontend
+                framework (like Vue for example), the test results may be inaccurate for dynamic content. We hope to
+                accommodate them eventually, but these frameworks are not currently supported for D3 projects.</li>
+            <li class="customMt-1"><strong>User Story #1:</strong> My choropleth should have a title with a
+                corresponding
+                <span class="code-highlight">id="title"</span>.</li>
+            <li class="customMt-1"><strong>User Story #2:</strong> My choropleth should have a description with a
+                corresponding <span class="code-highlight">id="description"</span>.</li>
+            <li class="customMt-1"><strong>User Story #3:</strong> My choropleth should have counties with a
+                corresponding <span class="code-highlight">class="county"</span>.</li>
+            <li class="customMt-1"><strong>User Story #4:</strong> There should be at least 4 different fill colors used
+                for the counties.</li>
+            <li class="customMt-1"><strong>User Story #5:</strong> My counties should each have <span class="code-highlight">data-fips</span> and
+                <span class="code-highlight">data-education</span> properties containing their corresponding fips and education values.</li>
+            <li class="customMt-1"><strong>User Story #6:</strong> My choropleth should have a county for each provided data point.</li>
+            <li class="customMt-1"><strong>User Story #7:</strong> The counties should have data-fips and data-education values that match the sample data.</li>
+            <li class="customMt-1"><strong>User Story #8:</strong> My choropleth should have a legend with a corresponding <span class="code-highlight">id="legend"</span>.</li>
+            <li class="customMt-1"><strong>User Story #9:</strong> There should be at least 4 different fill colors used for the legend.</li>
+            <li class="customMt-1"><strong>User Story #10:</strong> I can mouse over an area and see a tooltip with a corresponding <span class="code-highlight">id="tooltip"</span> which displays more information about the area.</li>
+            <li class="customMt-1"><strong>User Story #11:</strong> My tooltip should have a <span class="code-highlight">data-education</span> property that corresponds to the <span class="code-highlight">data-education</span> of the active area.</li>
+            <li class="customMt-1">Here are the datasets you will need to complete this project:
+                <ul>
+                    <li>
+                        <strong>US Education Data:</strong><br>
+                        <span class="code-highlight">https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json</span>
+                    </li>
+                    <li>
+                        <strong>US County Data:</strong>
+                        <span class="code-highlight">https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div id="heatMap" class="customMb-5 customMt-3"></div>
+    </main>
+
+    <footer></footer>
+
+    <!-- D3 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+    <!-- My Code -->
+    <script src="main.js" type="text/javascript"></script>
+    <!-- test suite -->
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" type="text/javascript"></script>
+    <noscript>You must enable JavaScript to use this application.</noscript>
+</body>
+
+</html>
