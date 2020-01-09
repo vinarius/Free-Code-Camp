@@ -88,10 +88,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function calculateNewTemperature(base, variance) {
-        return base + variance;
-    }
-
     function setDimensions(_parent) {
         let parent = _parent;
         height = parent.clientHeight - margin.top - margin.bottom;
@@ -121,7 +117,7 @@ window.addEventListener('DOMContentLoaded', () => {
             .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
         const x = d3.scaleBand()
-            .domain(data.monthlyVariance.map(variance => variance.year).filter(year => year % 10 === 0))
+            .domain(data.monthlyVariance.map(variance => variance.year))
             .rangeRound([0, width]);
 
         const y = d3.scaleBand()
@@ -131,6 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const yAxisCall = d3.axisLeft(y)
             .tickSizeOuter(0);
         const xAxisCall = d3.axisBottom(x)
+            .tickValues(x.domain().filter(year => year % 10 === 0))
             .tickSizeOuter(0);
 
         yAxisGroup.call(yAxisCall);
@@ -159,12 +156,6 @@ window.addEventListener('DOMContentLoaded', () => {
             })
             .text('1753 - 2015: base temperature 8.66°C');
 
-
-        // draw out the map
-
-        // heat map
-
-
         // legend
         const legendSize = {
             height: 55,
@@ -181,13 +172,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const xAxisGroupLegend = svg.append('g')
             .attr('class', 'x-axis')
-            .attr('transform', `translate(${_parent.clientWidth - legendSize.width - 7.5}, 40)`);
+            .attr('transform', `translate(${_parent.clientWidth - legendSize.width - 10}, ${legendSize.height / 1.15})`);
 
         const xLegend = d3.scaleLinear()
             .domain([lowestTemp, highestTemp])
             .range([0, legendSize.width]);
 
-        const legendTicks = d3.scaleThreshold()
+        const legendThreshold = d3.scaleThreshold()
             .domain((function (min, max, count) {
                 const result = [];
                 const step = (max - min) / count;
@@ -214,32 +205,66 @@ window.addEventListener('DOMContentLoaded', () => {
 
         xAxisGroupLegend.call(
             d3.axisBottom(xLegend)
-            .tickValues(legendTicks.domain())
-            .tickFormat(d3.format(".1f"))
-            .tickSizeOuter(0)
+                .tickValues(legendThreshold.domain())
+                .tickFormat(d3.format(".1f"))
+                .tickSizeOuter(0)
         );
 
         xAxisGroupLegend.selectAll('rect')
-            .data(colorTextArray.map((colorString)=> {
-                let d = legendTicks.invertExtent(colorString);
-                if(!d[0]) d[0] = lowestTemp;
-                if(!d[1]) d[1] = highestTemp;
+            .data(colorTextArray.map((colorString) => {
+                let d = legendThreshold.invertExtent(colorString);
+                if (!d[0]) d[0] = lowestTemp;
+                if (!d[1]) d[1] = highestTemp;
                 return d;
             }))
             .enter()
             .append('rect')
-            .attr('height', legendSize.height/2)
-            .attr('width', function(d){
+            .attr('height', legendSize.height / 2)
+            .attr('width', function (d) {
                 return xLegend(d[1]) - xLegend(d[0]);
             })
             .attr('x', function (d, i) {
                 return xLegend(d[0]);
             })
-            .attr('y', function(d){
-                return -(legendSize.height/2);
+            .attr('y', function (d) {
+                return -(legendSize.height / 2);
             })
             .style('fill', function (d, i) {
                 return color(i);
+            });
+
+        const earliestYear = d3.min(data.monthlyVariance, (d) => {
+            return d.year;
+        });
+
+        const latestYear = d3.max(data.monthlyVariance, (d) => {
+            return d.year;
+        });
+
+        const yearAverage = (latestYear - earliestYear) / data.monthlyVariance.length;
+        console.log(data.monthlyVariance.length);
+
+        // heat map
+        svg.selectAll('rect')
+            .data(data.monthlyVariance)
+            .enter()
+            .append('rect')
+            .attr('x', (d) => {
+                return x(d.year);
+            })
+            .attr('y', (d) => {
+                const month = convertNumberToMonth(d.month);
+                return y(month);
+            })
+            .attr('width', (d) => {
+                return x.bandwidth();
+            })
+            .attr('height', (d) => {
+                return y.bandwidth();
+            })
+            .attr('transform', `translate(${margin.left}, ${margin.top})`)
+            .style('fill', function (d) {
+                return legendThreshold(d.variance + data.baseTemperature);
             });
 
     }
