@@ -4,10 +4,17 @@ window.addEventListener('DOMContentLoaded', () => {
     let width = 0;
 
     const margin = {
-        top: 50,
+        top: 100,
         right: 20,
-        bottom: 100,
+        bottom: 40,
         left: 80
+    };
+
+    const tooltipInfo = {
+        height: 75,
+        width: 50,
+        margin: 25,
+        id: 'tooltip'
     };
 
     const months = [
@@ -25,8 +32,6 @@ window.addEventListener('DOMContentLoaded', () => {
         "December"
     ];
 
-    const testText = document.getElementById('test-text');
-    const colorBox = document.getElementById('test-color-box');
     const colorArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const colorTextArray = [
         '#343797', // 0
@@ -56,32 +61,31 @@ window.addEventListener('DOMContentLoaded', () => {
         createHeatMap(json, heatMap);
     };
 
-
     function convertNumberToMonth(int) {
         switch (int) {
-            case 1:
+            case 0:
                 return "January";
-            case 2:
+            case 1:
                 return "February";
-            case 3:
+            case 2:
                 return "March";
-            case 4:
+            case 3:
                 return "April";
-            case 5:
+            case 4:
                 return "May";
-            case 6:
+            case 5:
                 return "June";
-            case 7:
+            case 6:
                 return "July";
-            case 8:
+            case 7:
                 return "August";
-            case 9:
+            case 8:
                 return "September";
-            case 10:
+            case 9:
                 return "October";
-            case 11:
+            case 10:
                 return "November";
-            case 12:
+            case 11:
                 return "December";
             default:
                 return;
@@ -92,16 +96,22 @@ window.addEventListener('DOMContentLoaded', () => {
         let parent = _parent;
         height = parent.clientHeight - margin.top - margin.bottom;
         width = parent.clientWidth - margin.left - margin.right;
-        margin.top = parent.clientHeight / 6;
-        margin.right = parent.clientWidth / 10;
-        margin.bottom = (parent.clientHeight / 6) + 25;
     }
 
     function createHeatMap(_data, _parent) {
         setDimensions(_parent);
         let data = JSON.parse(JSON.stringify(_data));
 
-        console.log(data);
+        data.monthlyVariance.forEach((element) => {
+            element.month = element.month - 1;
+            return element;
+        });
+
+        d3.select('#heatMap')
+            .append('div')
+            .attr('id', tooltipInfo.id)
+            .style('opacity', '0.8')
+            .style('display', 'none');
 
         const svg = d3.select(_parent)
             .append('svg')
@@ -109,11 +119,11 @@ window.addEventListener('DOMContentLoaded', () => {
             .attr('height', height + margin.top + margin.bottom);
 
         const xAxisGroup = svg.append('g')
-            .attr('class', 'x-axis')
+            .attr('id', 'x-axis')
             .attr('transform', `translate(${margin.left}, ${height + margin.top})`);
 
         const yAxisGroup = svg.append('g')
-            .attr('class', 'y-axis')
+            .attr('id', 'y-axis')
             .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
         const x = d3.scaleBand()
@@ -126,6 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const yAxisCall = d3.axisLeft(y)
             .tickSizeOuter(0);
+
         const xAxisCall = d3.axisBottom(x)
             .tickValues(x.domain().filter(year => year % 10 === 0))
             .tickSizeOuter(0);
@@ -156,7 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
             })
             .text('1753 - 2015: base temperature 8.66°C');
 
-        // legend
+        // Legend
         const legendSize = {
             height: 55,
             width: 275
@@ -172,6 +183,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const xAxisGroupLegend = svg.append('g')
             .attr('class', 'x-axis')
+            .attr('id', 'legend')
             .attr('transform', `translate(${_parent.clientWidth - legendSize.width - 10}, ${legendSize.height / 1.15})`);
 
         const xLegend = d3.scaleLinear()
@@ -191,23 +203,11 @@ window.addEventListener('DOMContentLoaded', () => {
             })(lowestTemp, highestTemp, colorArray.length))
             .range(colorTextArray);
 
-        // domain
-        // 0: 2.79
-        // 1: 3.9
-        // 2: 5.01
-        // 3: 6.12
-        // 4: 7.23
-        // 5: 8.34
-        // 6: 9.45
-        // 7: 10.56
-        // 8: 11.67
-        // 9: 12.78
-
         xAxisGroupLegend.call(
             d3.axisBottom(xLegend)
-                .tickValues(legendThreshold.domain())
-                .tickFormat(d3.format(".1f"))
-                .tickSizeOuter(0)
+            .tickValues(legendThreshold.domain())
+            .tickFormat(d3.format(".1f"))
+            .tickSizeOuter(0)
         );
 
         xAxisGroupLegend.selectAll('rect')
@@ -223,50 +223,67 @@ window.addEventListener('DOMContentLoaded', () => {
             .attr('width', function (d) {
                 return xLegend(d[1]) - xLegend(d[0]);
             })
-            .attr('x', function (d, i) {
-                return xLegend(d[0]);
-            })
-            .attr('y', function (d) {
+            .attr('x', (d => xLegend(d[0])))
+            .attr('y', (d) => {
                 return -(legendSize.height / 2);
             })
-            .style('fill', function (d, i) {
+            .style('fill', (d, i) => {
                 return color(i);
             });
 
-        const earliestYear = d3.min(data.monthlyVariance, (d) => {
-            return d.year;
-        });
-
-        const latestYear = d3.max(data.monthlyVariance, (d) => {
-            return d.year;
-        });
-
-        const yearAverage = (latestYear - earliestYear) / data.monthlyVariance.length;
-        console.log(data.monthlyVariance.length);
-
-        // heat map
+        // Heat Map Cells
         svg.selectAll('rect')
             .data(data.monthlyVariance)
             .enter()
             .append('rect')
-            .attr('x', (d) => {
-                return x(d.year);
-            })
+            .attr('class', 'cell')
+            .attr('id', (d => `id-${d.year}-${d.month}`))
+            .attr('x', (d => x(d.year)))
             .attr('y', (d) => {
                 const month = convertNumberToMonth(d.month);
                 return y(month);
             })
-            .attr('width', (d) => {
-                return x.bandwidth();
-            })
-            .attr('height', (d) => {
-                return y.bandwidth();
-            })
+            .attr('data-month', (d => d.month))
+            .attr('data-year', (d => d.year))
+            .attr('data-temp', (d => d.variance))
+            .attr('width', x.bandwidth())
+            .attr('height', y.bandwidth())
             .attr('transform', `translate(${margin.left}, ${margin.top})`)
-            .style('fill', function (d) {
-                return legendThreshold(d.variance + data.baseTemperature);
+            .style('fill', (d => legendThreshold(d.variance + data.baseTemperature)))
+            .on('mouseover', (d) => {
+                d3.select(`#id-${d.year}-${d.month}`)
+                    .style('stroke-width', 1)
+                    .style('stroke', '#000');
+
+                d3.select(`#${tooltipInfo.id}`)
+                    .style('display', 'block')
+                    .style('left', ()=> {
+                        const x = d3.event.pageX;
+                        if((x + tooltipInfo.margin + tooltipInfo.width) > (window.innerWidth / 2)){
+                            return `${(d3.event.pageX - tooltipInfo.margin - tooltipInfo.width)}px`;
+                        }
+                        return `${(d3.event.pageX + tooltipInfo.margin)}px`
+                    })
+                    .style('top', `${(d3.event.pageY - tooltipInfo.margin - tooltipInfo.height)}px`)
+                    .attr('data-year', () => { return d.year})
+                    .html(() => {
+                        let newTemp = data.baseTemperature + d.variance;
+                        newTemp = newTemp.toFixed(2);
+
+                        const string =
+                        `${d.year} - ${convertNumberToMonth(d.month)}<br>
+                        ${newTemp}°C<br>
+                        ${d.variance.toFixed(2)}°C`;
+
+                        return string;
+                    });
+            })
+            .on('mouseout', (d) => {
+                d3.select(`#${tooltipInfo.id}`)
+                    .style('display', 'none');
+
+                d3.select(`#id-${d.year}-${d.month}`)
+                    .style('stroke-width', 0)  
             });
-
     }
-
-}); //end of doc ready
+});

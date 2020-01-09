@@ -66,12 +66,13 @@ main {
     font-weight: 650;
 }
 
-.tooltip {
+#tooltip {
     position: absolute;
     padding: 10px;
     border-radius: 5px;
     background-color: #0A9045;
     color: #fff;
+    text-align: center;
 }
 
 ul {
