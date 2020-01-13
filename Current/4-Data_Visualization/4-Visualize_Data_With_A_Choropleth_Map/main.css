@@ -40,7 +40,7 @@ h1 {
     font-weight: 500;
 }
 
-#heatMap {
+#choroplethMap {
     width: 1000px;
     height: 600px;
     border: 1px solid #333;
