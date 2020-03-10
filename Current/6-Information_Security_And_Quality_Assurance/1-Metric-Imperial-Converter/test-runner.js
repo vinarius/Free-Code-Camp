@@ -33,8 +33,7 @@ var Mocha = require('mocha'),
     path = require('path');
 
 var mocha = new Mocha();
-var testDir = './tests'
-
+const testDir = __dirname + '/tests';
 
 // Add each .js file to the mocha instance
 fs.readdirSync(testDir).filter(function(file){
