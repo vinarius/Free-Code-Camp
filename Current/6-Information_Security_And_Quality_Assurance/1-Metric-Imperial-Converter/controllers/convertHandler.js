@@ -157,14 +157,13 @@ function ConvertHandler() {
       default:
         throw new Error('invalid unit');
     }
-
-    return result;
   };
 
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
-    var result;
-
-    return result;
+    const spelledInitUnit = this.spellOutUnit(initUnit);
+    const spelledReturnUnit = this.spellOutUnit(returnUnit);
+    return `${initNum} ${spelledInitUnit} converts to ${returnNum} ${spelledReturnUnit}`;
+    // '3.1 miles converts to 5.00002 kilometers'}
   };
 
 }
