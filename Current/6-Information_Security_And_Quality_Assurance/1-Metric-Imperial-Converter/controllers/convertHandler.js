@@ -1,11 +1,3 @@
-/*
- *
- *
- *       Complete the handler logic below
- *       
- *       
- */
-
 // ?input=4gal
 // ?input=1/2km
 // ?input=5.4/3lbs
@@ -88,7 +80,7 @@ function ConvertHandler() {
       case 'km':
         return 'mi';
       default:
-        throw new Error('invalid unit');
+        return 'invalid unit';
     }
   };
 
@@ -119,43 +111,41 @@ function ConvertHandler() {
     const miToKm = 1.60934;
 
     initNum = parseFloat(initNum);
-    let myNumber = 0;
+    let output;
     
     switch(initUnit) {
       case 'gal':
-
-        myNumber = (initNum * galToL).toFixed(6);
-
-        // check if string has a decimal
-        if(myNumber.includes('.')) {
-          myNumber = myNumber.split('.');
-          if(myNumber[1].length > 5) {
-            // "3.785412"
-            let sixthDigit = `.${myNumber[1].slice(-1)}`;
-            sixthDigit = Math.round(+sixthDigit);
-            sixthDigit = `0.0000${sixthDigit}`;
-            myNumber[1] = +`.${myNumber[1]}`;
-            myNumber[1] = myNumber[1].toFixed(5)
-            myNumber[1] = +myNumber[1];
-            myNumber[1] += +sixthDigit;
-            myNumber[1] = String(myNumber[1]).slice(-5);
-          }
-          myNumber = myNumber.join('.');
-        }
-
-        return myNumber;
+        output = initNum * galToL;
+        output = output.toFixed(5);
+        output = parseFloat(output);
+        return output;
       case 'l':
-        return Math.round((initNum / galToL).toFixed(6));
+        output = initNum / galToL;
+        output = output.toFixed(5);
+        output = parseFloat(output);
+        return output;
       case 'lbs':
-        return Math.round((initNum * lbsToKg).toFixed(6));
+        output = initNum * lbsToKg;
+        output = output.toFixed(5);
+        output = parseFloat(output);
+        return output;
       case 'kg':
-        return Math.round((initNum / lbsToKg).toFixed(6));
+        output = initNum / lbsToKg;
+        output = output.toFixed(5);
+        output = parseFloat(output);
+        return output;
       case 'mi':
-        return Math.round((initNum * miToKm).toFixed(6));
+        output = initNum * miToKm;
+        output = output.toFixed(5);
+        output = parseFloat(output);
+        return output;
       case 'km':
-        return Math.round((initNum / miToKm).toFixed(6));
+        output = initNum / miToKm;
+        output = output.toFixed(5);
+        output = parseFloat(output);
+        return output;
       default:
-        throw new Error('invalid unit');
+        return 'invalid unit';
     }
   };
 
