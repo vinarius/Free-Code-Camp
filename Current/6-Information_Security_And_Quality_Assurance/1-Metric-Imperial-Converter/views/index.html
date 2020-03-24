@@ -67,6 +67,10 @@
             success: function(data) {
               $('#result').text(data.string || data);
               $('#jsonResult').text(JSON.stringify(data));
+            }, 
+            error: function(err) {
+              $('#result').text('');
+              $('#jsonResult').text(JSON.stringify(err.responseText));
             }
           });
         });
