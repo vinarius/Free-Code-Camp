@@ -7,29 +7,17 @@ module.exports = (app, db) => {
   app.route('/api/issues/:project')
     .get(async (req, res) => {
       try {
-        const queryOptions = {};
-        const entries = Object.entries(req.body);
-        for(let [key, value] of entries) {
-          key = key.toLocaleLowerCase();
-
-          switch(key) {
-            case 'issue_title':
-            case 'issue_text':
-            case 'created_by':
-            case 'assigned_to':
-            case 'status_text':
-            case 'created_on':
-            case 'updated_on':
-            case 'open':
-              queryOptions[key] = value;
-            default:
-              break;
-          }
-        }
-
-        const dbResult = await db.collection(process.env.collection).find({
+        let queryOptions = {
           project: req.params.project
-        }).toArray();
+        };
+
+        const reqBody = Object.entries(req.body);
+        const reqQuery = Object.entries(req.query);
+        
+        queryOptions = constructQuery(reqBody, queryOptions);
+        queryOptions = constructQuery(reqQuery, queryOptions);
+
+        const dbResult = await db.collection(process.env.collection).find(queryOptions).toArray();
 
         res.send(dbResult);
       } catch (error) {
@@ -50,6 +38,8 @@ module.exports = (app, db) => {
           open: true
         };
 
+        if(!req.body.issue_text || !req.body.issue_title || !req.body.created_by) return res.send('Missing required fields. Required fields: issue_title, issue_text, created_by');
+
         const insertResult = await db.collection(process.env.collection).insertOne(newProject);
 
         return res.status(200).json(`Issue ${insertResult.ops[0]._id} has been created`);
@@ -61,7 +51,8 @@ module.exports = (app, db) => {
     .put(async (req, res) => {
       try {
         const timestamp = new Date();
-
+        
+        if(Object.keys(req.body).length === 0) throw new Error(`No request body supplied`);
         if (!req.body._id || !ObjectId.isValid(req.body._id)) throw new Error(`invalid id ${req.body._id}`);
 
         let updatedFieldSent = false;
@@ -72,7 +63,7 @@ module.exports = (app, db) => {
         for (let [key, value] of entries) {
           key = key.toLocaleLowerCase();
 
-          if (!value) continue;
+          if (value === null || value === undefined) continue;
 
           switch (key) {
             case '_id':
@@ -85,7 +76,8 @@ module.exports = (app, db) => {
               update[key] = value;
               updatedFieldSent = true;
             case 'open':
-              value = value === 'false' ? false : true;
+              if(value == 'false') value = false;
+              if(value == 'true') value = true;
               update[key] = value;
               updatedFieldSent = true;
             default:
@@ -106,7 +98,6 @@ module.exports = (app, db) => {
         const returnMessage = updatedFieldSent ? 'successfully updated' : 'no updated field sent';
         return res.status(200).send(returnMessage);
       } catch (error) {
-        console.error(error);
         return res.status(400).send(`could not update ${req.body._id}`);
       }
     })
@@ -124,8 +115,29 @@ module.exports = (app, db) => {
         if (dbResult.lastErrorObject.n === 1 && dbResult.ok === 1) return res.send(`deleted ${req.body._id}`);
         return res.send('Unexpected dbResult.');
       } catch (error) {
-        return res.send(error.message);
+        return res.status(400).send(error.message);
       }
     });
 
 };
+
+function constructQuery(entries, query) {
+  for(let [key, value] of entries) {
+    key = key.toLocaleLowerCase();
+
+    switch(key) {
+      case 'issue_title':
+      case 'issue_text':
+      case 'created_by':
+      case 'assigned_to':
+      case 'status_text':
+      case 'created_on':
+      case 'open':
+        query[key] = value;
+      default:
+        break;
+    }
+  }
+
+  return query;
+}
