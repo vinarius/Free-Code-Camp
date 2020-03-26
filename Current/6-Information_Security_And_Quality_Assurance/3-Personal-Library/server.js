@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-// process.env['NODE_ENV'] = 'test';
+process.env['NODE_ENV'] = 'test';
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -19,14 +19,20 @@ var runner = require('./test-runner');
 var app = express();
 
 app.use(helmet());
-app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
+app.use(helmet.hidePoweredBy({
+  setTo: 'PHP 4.2.0'
+}));
 app.use(noCache());
 app.use('/public', express.static(process.cwd() + '/public'));
 
-app.use(cors({ origin: '*' })); //USED FOR FCC TESTING PURPOSES ONLY!
+app.use(cors({
+  origin: '*'
+})); //USED FOR FCC TESTING PURPOSES ONLY!
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 //Index page (static HTML)
 app.route('/')
@@ -39,7 +45,9 @@ fccTestingRoutes(app);
 
 (async function () {
   try {
-    const client = await MongoClient.connect(process.env.MONGO_URL, { useUnifiedTopology: true});
+    const client = await MongoClient.connect(process.env.MONGO_URL, {
+      useUnifiedTopology: true
+    });
     const db = client.db(process.env.database);
 
     //Routing for API 

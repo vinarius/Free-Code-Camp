@@ -77,7 +77,14 @@ $( document ).ready(function() {
       dataType: 'json',
       data: $('#newBookForm').serialize(),
       success: function(data) {
-        //update list
+        $('.listWrapper').html('');
+        $('#detailTitle').html("Select a book to see it's details and comments");
+        $('#detailComments').html('');
+        $('#deleteMessage').text(data.text);
+      },
+      error: function(err) {
+        console.log('error in ajax front end');
+        console.error(err);
       }
     });
   }); 

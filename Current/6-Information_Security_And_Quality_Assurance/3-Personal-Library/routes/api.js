@@ -36,8 +36,15 @@ module.exports = function (app, db) {
       //response will contain new book object including atleast _id and title
     })
 
-    .delete(function (req, res) {
+    .delete(async function (req, res) {
       //if successful response will be 'complete delete successful'
+      try {
+        await db.collection(process.env.collection).deleteMany({});
+        return res.status(200).json({text:'complete delete successful'});
+      } catch (error) {
+        console.log('error in delete all books: ', error);
+        return res.status(400).send('Error in delete books collection: ' + error);
+      }
     });
 
 
@@ -47,6 +54,8 @@ module.exports = function (app, db) {
       try {
         if (!req.params.hasOwnProperty('id') || !req.params.id) return res.status(400).send(`please send a unique id in the path: /api/books/{bookId}`);
         const queryResult = await db.collection(process.env.collection).find({ _id: new ObjectId(req.params.id)}).toArray();
+
+        if(queryResult.length === 0) return res.status(404).send('no book exists');
         return res.status(200).json(queryResult[0]);
       } catch (error) {
         return res.status(400).send('Error in get book by id: ' + error);
@@ -54,15 +63,36 @@ module.exports = function (app, db) {
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
     })
 
-    .post(function (req, res) {
-      var bookid = req.params.id;
-      var comment = req.body.comment;
+    .post(async function (req, res) {
+      try {
+        if (!req.params.hasOwnProperty('id') || !req.params.id) return res.status(400).send(`please send a unique id in the path: /api/books/{bookId}`);
+        if (!req.body.hasOwnProperty('comment') || !req.body.comment) return res.status(400).send(`please post a comment in the path: /api/books/{bookId}`);
+
+        const updateOperation = await db.collection(process.env.collection).findOneAndUpdate(
+          { _id: new ObjectId(req.params.id)},
+          {
+            $push: { comments: req.body.comment },
+            $inc: { commentCount: 1 }
+          },
+          { returnOriginal: false }
+        );
+
+        return res.status(200).json(updateOperation.value);
+      } catch (error) {
+        return res.status(400).send('Error in post book by id: ' + error);
+      }
       //json res format same as .get
     })
 
-    .delete(function (req, res) {
-      var bookid = req.params.id;
+    .delete(async function (req, res) {
       //if successful response will be 'delete successful'
+      try {
+        if (!req.params.hasOwnProperty('id') || !req.params.id) return res.status(400).send(`please send a unique id in the path: /api/books/{bookId}`);
+        await db.collection(process.env.collection).deleteOne({_id: new ObjectId(req.params.id)});
+        res.status(200).send('delete successful');
+      } catch (error) {
+        res.status(400).send('Error in delete book by id: ' + error);
+      }
     });
 
 };
