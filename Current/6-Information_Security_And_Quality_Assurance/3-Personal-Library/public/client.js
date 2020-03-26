@@ -6,7 +6,7 @@ $( document ).ready(function() {
     //var items = [];
     itemsRaw = data;
     $.each(data, function(i, val) {
-      items.push('<li class="bookItem" id="' + i + '">' + val.title + ' - ' + val.commentcount + ' comments</li>');
+      items.push('<li class="bookItem" id="' + i + '">' + val.title + ' - ' + val.commentCount + ' comments</li>');
       return ( i !== 14 );
     });
     if (items.length >= 15) {

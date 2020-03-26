@@ -23,3 +23,12 @@
 form {
   padding: 5px;
 }
+
+.bookItem {
+  border: none;
+}
+
+.bookItem:hover {
+  cursor: pointer;
+  border: 1px solid #333;
+}
