@@ -10,7 +10,9 @@ module.exports = function (app, db) {
       //response will be array of book objects
       //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
       try {
-        const queryResult = await db.collection(process.env.collection).find({}).toArray();
+        const query = {};
+        if(req.query.testing) query['testing'] = true;
+        const queryResult = await db.collection(process.env.collection).find(query).toArray();
         return res.status(200).json(queryResult);
       } catch (error) {
         return res.send('error in get all books: ' + error);
@@ -19,7 +21,7 @@ module.exports = function (app, db) {
 
     .post(async function (req, res) {
       try {
-        if (!req.body.hasOwnProperty('title') || req.body.title === '') return res.send('Title is required');
+        if (!req.body.hasOwnProperty('title') || req.body.title === '') return res.status(400).send('Title is required');
 
         const newBook = {
           title: req.body.title,
