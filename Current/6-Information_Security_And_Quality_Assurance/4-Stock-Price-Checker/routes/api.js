@@ -111,7 +111,8 @@ module.exports = function (app, collection) {
               stock: fetchData[i]['Meta Data']['2. Symbol'],
               price: fetchData[i]['Time Series (5min)'][Object.keys(fetchData[i]['Time Series (5min)'])[0]]['4. close'],
               likes: 0,
-              priceLastUpdated: fetchData[i]['Meta Data']['3. Last Refreshed']
+              priceLastUpdated: fetchData[i]['Meta Data']['3. Last Refreshed'],
+              ipsLiked: []
             });
           }
         }
@@ -194,7 +195,7 @@ module.exports = function (app, collection) {
           returnResult.stockData = postOperationsQuery[0];
         }
 
-        return res.status(200).json(returnResult);
+        return res.status(200).send(returnResult);
       } catch (error) {
         return res.status(400).send('Error in get all stock prices: ' + error);
       }
