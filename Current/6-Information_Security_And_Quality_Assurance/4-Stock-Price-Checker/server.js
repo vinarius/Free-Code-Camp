@@ -2,6 +2,12 @@
 
 require('dotenv').config();
 
+process.env['NODE_ENV'] = "test";
+process.env['collection'] = `stocks`;
+process.env['database'] = `stock-price-checker`;
+process.env['MONGO_URL'] = `mongodb+srv://vinarius:Romans623@vincluster-q5s8p.mongodb.net/test?retryWrites=true&w=majority`;
+process.env['apiKey'] = `4YADI16RR927YZ7T`;
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -22,7 +28,7 @@ app.use(helmet.contentSecurityPolicy({
     "script-src": ["'self'", 'code.jquery.com/jquery-2.2.1.min.js']
   }
 }));
-app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 app.use(cors({
   origin: '*'
@@ -36,7 +42,7 @@ app.use(bodyParser.urlencoded({
 //Index page (static HTML)
 app.route('/')
   .get(function (req, res) {
-    res.sendFile(process.cwd() + '/views/index.html');
+    res.sendFile(__dirname + '/views/index.html');
   });
 
 //For FCC testing purposes
@@ -45,8 +51,7 @@ fccTestingRoutes(app);
 (async function () {
   try {
     const client = await MongoClient.connect(process.env.MONGO_URL, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true
+      useUnifiedTopology: true
     });
     const collection = client.db(process.env.database).collection(process.env.collection);
 

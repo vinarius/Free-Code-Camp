@@ -7,21 +7,7 @@ module.exports = function (app, collection) {
   app.route('/api/stock-prices')
     .get(async function (req, res) {
       try {
-        let stockApiUrl = `https://www.alphavantage.co/query?`;
-        stockApiUrl += `function=TIME_SERIES_INTRADAY`;
-        stockApiUrl += `&interval=5min`;
-        stockApiUrl += `&apikey=${process.env.apiKey}`;
-
-        // get user ip address to validate one 'like' per stock per person
-        const userIp = req.ip;
-
-        console.log('userIp:', userIp);
-
-        // This public api can only be queried one stock symbol at a time.
-        // There is no batch read option, so a loop must be used when the user
-        // queries against multiple stock symbols.
-        const queries = []; // url strings
-        const fetchData = []; // result from public api
+        let postOperationsQuery;
 
         /* 
           _id: ObjectId - unique mongoDB identifier
@@ -34,7 +20,9 @@ module.exports = function (app, collection) {
             '5. volume': '21585'
           }
           likes: number - one like per ip address
-          priceLastUpdated: string
+          priceLastUpdated: string, - last time api was updated
+          ipsLiked: string[],
+          lastApiCheck: string - last attempt to update from api. They stop updating at 4pm eastern Friday for the weekend.
         */
 
         // http://localhost:3000/api/stock-prices?stock=goog&stock=msft&like=true
@@ -44,6 +32,91 @@ module.exports = function (app, collection) {
         // req.query: { stock: 'msft', like: 'true' }
 
         if (!req.query.hasOwnProperty('stock') || req.query.stock === '' || req.query.stock === ['']) throw new Error(`'stock' property required in request query`);
+
+        const inputIsArray = Array.isArray(req.query.stock);
+        const checkQuery = inputIsArray ? {
+          stock: {
+            $in: req.query.stock
+          }
+        } : {
+          stock: req.query.stock
+        };
+
+
+        // Don't query public api if data is in db already. Throttling reasons.
+        const checkForExistingDocuments = await collection.find(checkQuery).toArray();
+
+        if (inputIsArray) {
+          // if one document is found and one is not update db
+          if (checkForExistingDocuments.length !== req.query.stock.length) {
+            postOperationsQuery = updateDatabase();
+          } else {
+            // check if at least 1 hour has passed on all documents before hitting api
+            const currentTime = new Date().toISOString();
+            let dbUpdated = false;
+            for(let i=0; i<checkForExistingDocuments.length; i++) {
+              let documentLastUpdated = new Date(checkForExistingDocuments[i]['priceLastUpdated']).toISOString();
+              if(currentTime > documentLastUpdated) {
+                postOperationsQuery = updateDatabase();
+                dbUpdated = true;
+                break;
+              }
+            }
+
+            if(!dbUpdated) postOperationsQuery = checkForExistingDocuments;
+          }
+        } else {
+          // If no document was found, update the db
+          if (checkForExistingDocuments.length === 0) {
+            postOperationsQuery = updateDatabase();
+          } else {
+            // check if at least 1 hour has passed on the document before hitting api
+            const currentTime = getCurrentTimeToHour();
+            const documentLastUpdated = getDocumentApiCheckToHour(checkForExistingDocuments[0]);
+
+            console.log('currentTime:', currentTime);
+            console.log('documentLastUpdated:', documentLastUpdated);
+
+            postOperationsQuery = currentTime > documentLastUpdated ? updateDatabase() : checkForExistingDocuments;
+          }
+        }
+
+        const returnResult = {};
+
+        if (postOperationsQuery.length > 1) {
+          returnResult.stockData = [];
+
+          const likesOne = postOperationsQuery[0].likes;
+          const likesTwo = postOperationsQuery[1].likes;
+
+          delete postOperationsQuery[0].likes;
+          delete postOperationsQuery[1].likes;
+
+          postOperationsQuery[0].rel_likes = likesOne - likesTwo;
+          postOperationsQuery[1].rel_likes = likesTwo - likesOne;
+
+          returnResult.stockData.push(postOperationsQuery[0]);
+          returnResult.stockData.push(postOperationsQuery[1]);
+        } else {
+          returnResult.stockData = postOperationsQuery[0];
+        }
+
+        return res.status(200).send(returnResult);
+      } catch (error) {
+        return res.status(400).send('Error in get all stock prices: ' + error);
+      }
+
+      async function updateDatabase() {
+        // This public api can only be queried one stock symbol at a time.
+        // There is no batch read option, so a loop must be used when the user
+        // queries against multiple stock symbols.
+        const queries = []; // url strings
+        const fetchData = []; // result from public api
+
+        let stockApiUrl = `https://www.alphavantage.co/query?`;
+        stockApiUrl += `function=TIME_SERIES_INTRADAY`;
+        stockApiUrl += `&interval=60min`;
+        stockApiUrl += `&apikey=${process.env.apiKey}`;
 
         if (Array.isArray(req.query.stock)) {
           // req.query.stock is an array
@@ -91,6 +164,7 @@ module.exports = function (app, collection) {
         for (let i = 0; i < initialQuerySymbols.length; i++) {
           if (existingSymbols.includes(initialQuerySymbols[i])) {
             // { updateOne: { filter: {a:2}, update: {$set: {a:2}}, upsert:true } }
+
             const updateOperation = {
               updateOne: {
                 filter: {
@@ -98,24 +172,48 @@ module.exports = function (app, collection) {
                 },
                 update: {
                   $set: {
-                    price: fetchData[i]['Time Series (5min)'][Object.keys(fetchData[i]['Time Series (5min)'])[0]]['4. close'], // '1129.2400'
-                    priceLastUpdated: fetchData[i]['Meta Data']['3. Last Refreshed'] // '2020-03-27 14:45:00'
+                    price: fetchData[i]['Time Series (60min)'][Object.keys(fetchData[i]['Time Series (60min)'])[0]]['4. close'], // '1129.2400'
+                    priceLastUpdated: fetchData[i]['Meta Data']['3. Last Refreshed'], // '2020-03-27 14:45:00'
+                    lastApiCheck: getCurrentTimeToHour()
                   }
                 }
               }
             };
 
+            // If user 'likes' this existing stock
+            if (req.query.like === 'true') {
+              // If users IP address doesn't already 'like' this stock
+              if (!existingStockInDatabase[i]['ipsLiked'].includes(req.ip)) {
+                updateOperation['updateOne']['update']['$inc'] = {
+                  likes: 1
+                };
+                updateOperation['updateOne']['update']['$addToSet'] = {
+                  ipsLiked: req.ip
+                };
+              }
+            }
+
             existing.push(updateOperation);
           } else {
-            notExisting.push({
+            const newDocument = {
               stock: fetchData[i]['Meta Data']['2. Symbol'],
-              price: fetchData[i]['Time Series (5min)'][Object.keys(fetchData[i]['Time Series (5min)'])[0]]['4. close'],
+              price: fetchData[i]['Time Series (60min)'][Object.keys(fetchData[i]['Time Series (60min)'])[0]]['4. close'],
               likes: 0,
               priceLastUpdated: fetchData[i]['Meta Data']['3. Last Refreshed'],
-              ipsLiked: []
-            });
+              ipsLiked: [],
+              lastApiCheck: getCurrentTimeToHour()
+            };
+
+            // If user 'likes' this new stock
+            if (req.query.like === 'true') {
+              newDocument['likes']++;
+              newDocument['ipsLiked'].push(req.ip);
+            }
+
+            notExisting.push(newDocument);
           }
         }
+
 
         // InsertMany operation for notExisting documents
         if (notExisting.length > 0) await collection.insertMany(notExisting);
@@ -128,14 +226,16 @@ module.exports = function (app, collection) {
         //       price: '1136.4400',
         //       likes: 0,
         //       priceLastUpdated: '2020-03-27 15:00:00',
-        //       _id: 5e7e4e4f9aa5014a5863b229
+        //       _id: 5e7e4e4f9aa5014a5863b229,
+        //       ipsLiked: []
         //     },
         //     {
         //       stock: 'msft',
         //       price: '153.9700',
         //       likes: 0,
         //       priceLastUpdated: '2020-03-27 15:00:00',
-        //       _id: 5e7e4e4f9aa5014a5863b22a
+        //       _id: 5e7e4e4f9aa5014a5863b22a,
+        //       ipsLiked: []
         //     }
         //   ],
         //   insertedCount: 2,
@@ -169,36 +269,29 @@ module.exports = function (app, collection) {
         //   n: 0
         // }
 
-        const postOperationsQuery = await collection.find({
+        return await collection.find({
           stock: {
             $in: initialQuerySymbols
           }
         }).toArray();
-
-        const returnResult = {};
-
-        if (postOperationsQuery.length > 1) {
-          returnResult.stockData = [];
-
-          const likesOne = postOperationsQuery[0].likes;
-          const likesTwo = postOperationsQuery[1].likes;
-
-          delete postOperationsQuery[0].likes;
-          delete postOperationsQuery[1].likes;
-
-          postOperationsQuery[0].rel_likes = likesOne - likesTwo;
-          postOperationsQuery[1].rel_likes = likesTwo - likesOne;
-
-          returnResult.stockData.push(postOperationsQuery[0]);
-          returnResult.stockData.push(postOperationsQuery[1]);
-        } else {
-          returnResult.stockData = postOperationsQuery[0];
-        }
-
-        return res.status(200).send(returnResult);
-      } catch (error) {
-        return res.status(400).send('Error in get all stock prices: ' + error);
       }
     });
 
 };
+
+function getCurrentTimeToHour() {
+  const currentTime = new Date();
+  const currentYear = currentTime.getFullYear();
+  const currentMonth = currentTime.getMonth();
+  const currentDay = currentTime.getDate();
+  const currentHour = currentTime.getHours();
+  return new Date(currentYear, currentMonth, currentDay, currentHour).toISOString();
+}
+
+function getDocumentApiCheckToHour(document) {
+  const year = new Date(document['lastApiCheck']).getFullYear();
+  const month = new Date(document['lastApiCheck']).getMonth();
+  const day = new Date(document['lastApiCheck']).getDate();
+  const hours = new Date(document['lastApiCheck']).getHours();
+  return new Date(year, month, day, hours).toISOString();
+}

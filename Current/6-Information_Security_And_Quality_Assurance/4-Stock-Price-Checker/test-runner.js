@@ -33,6 +33,7 @@ var Mocha = require('mocha'),
   path = require('path');
 
 var mocha = new Mocha();
+mocha.timeout('15000');
 var testDir = __dirname + '/tests';
 
 
