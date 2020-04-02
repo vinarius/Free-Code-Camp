@@ -2,11 +2,12 @@
 
 const axios = require('axios');
 
-module.exports = function (app, collection) {
+module.exports = function (app) {
 
   app.route('/api/stock-prices')
     .get(async function (req, res) {
       try {
+        const collection = req.app.locals.collection;
         let postOperationsQuery;
 
         /* 
@@ -16,7 +17,7 @@ module.exports = function (app, collection) {
             '1. open': '1114.9800',
             '2. high': '1120.5400',
             '3. low': '1114.9800',
-            '4. close': '1119.9224',
+            '4. close': '1119.9224', ** I'm using this in each document
             '5. volume': '21585'
           }
           likes: number - one like per ip address
@@ -33,31 +34,25 @@ module.exports = function (app, collection) {
 
         if (!req.query.hasOwnProperty('stock') || req.query.stock === '' || req.query.stock === ['']) throw new Error(`'stock' property required in request query`);
 
-        const inputIsArray = Array.isArray(req.query.stock);
-        const checkQuery = inputIsArray ? {
-          stock: {
-            $in: req.query.stock
-          }
-        } : {
-          stock: req.query.stock
-        };
+        if(!Array.isArray(req.query.stock)) req.query.stock = [req.query.stock];
 
+        // Don't query public api if data is in db already. Throttling reasons. 5 requests / min, or 500 / day.
+        const checkForExistingDocuments = await collection.find({
+          stock: { $in: req.query.stock } // ['msft'] || ['msft', 'aapl']
+        }).toArray();
 
-        // Don't query public api if data is in db already. Throttling reasons.
-        const checkForExistingDocuments = await collection.find(checkQuery).toArray();
-
-        if (inputIsArray) {
-          // if one document is found and one is not update db
+         // if one document or no documents are found
           if (checkForExistingDocuments.length !== req.query.stock.length) {
-            postOperationsQuery = updateDatabase();
+            postOperationsQuery = updateDatabase(req.query.stock);
           } else {
-            // check if at least 1 hour has passed on all documents before hitting api
+            // If all documents are matched then
+            //  check if at least 1 hour has passed on all documents before hitting api
             const currentTime = new Date().toISOString();
             let dbUpdated = false;
             for(let i=0; i<checkForExistingDocuments.length; i++) {
               let documentLastUpdated = new Date(checkForExistingDocuments[i]['priceLastUpdated']).toISOString();
               if(currentTime > documentLastUpdated) {
-                postOperationsQuery = updateDatabase();
+                postOperationsQuery = updateDatabase(req.query.stock);
                 dbUpdated = true;
                 break;
               }
@@ -65,21 +60,8 @@ module.exports = function (app, collection) {
 
             if(!dbUpdated) postOperationsQuery = checkForExistingDocuments;
           }
-        } else {
-          // If no document was found, update the db
-          if (checkForExistingDocuments.length === 0) {
-            postOperationsQuery = updateDatabase();
-          } else {
-            // check if at least 1 hour has passed on the document before hitting api
-            const currentTime = getCurrentTimeToHour();
-            const documentLastUpdated = getDocumentApiCheckToHour(checkForExistingDocuments[0]);
 
-            console.log('currentTime:', currentTime);
-            console.log('documentLastUpdated:', documentLastUpdated);
 
-            postOperationsQuery = currentTime > documentLastUpdated ? updateDatabase() : checkForExistingDocuments;
-          }
-        }
 
         const returnResult = {};
 
@@ -106,8 +88,8 @@ module.exports = function (app, collection) {
         return res.status(400).send('Error in get all stock prices: ' + error);
       }
 
-      async function updateDatabase() {
-        // This public api can only be queried one stock symbol at a time.
+      async function updateDatabase(symbolsArr) {
+        // This public, free api can only be queried one stock symbol at a time.
         // There is no batch read option, so a loop must be used when the user
         // queries against multiple stock symbols.
         const queries = []; // url strings
@@ -118,19 +100,11 @@ module.exports = function (app, collection) {
         stockApiUrl += `&interval=60min`;
         stockApiUrl += `&apikey=${process.env.apiKey}`;
 
-        if (Array.isArray(req.query.stock)) {
-          // req.query.stock is an array
-          req.query.stock.forEach((stock) => {
-            let query = stockApiUrl;
-            query += `&symbol=${stock}`;
-            queries.push(query);
-          });
-        } else {
-          // req.query.stock is a string
+        symbolsArr.forEach((stock) => {
           let query = stockApiUrl;
-          query += `&symbol=${req.query.stock}`;
+          query += `&symbol=${stock}`;
           queries.push(query);
-        }
+        });
 
         // Hit alphavantage public api
         for (let i = 0; i < queries.length; i++) {
@@ -138,13 +112,13 @@ module.exports = function (app, collection) {
           fetchData.push(data.data);
         };
 
-        // query our database to check if the symbol is there already
+        // query database to check if the symbol is there already
         // if it exists, update the price and priceLastUpdated
         //  else, insert new document(s)
-        const initialQuerySymbols = fetchData.map(stockData => stockData['Meta Data']['2. Symbol']);
+        const querySymbols = fetchData.map(stockData => stockData['Meta Data']['2. Symbol']); // ['msft', 'aapl'] || ['msft']
         const existingStockInDatabase = await collection.find({
           stock: {
-            $in: initialQuerySymbols
+            $in: querySymbols
           }
         }).toArray();
 
@@ -152,7 +126,7 @@ module.exports = function (app, collection) {
 
         // Three scenarios
         // 1. None exist
-        // 2. Some exists, some does not exist
+        // 2. Some exist, some does not
         // 3. All exist
 
         // Push to one array for inserts on data not existing
@@ -160,19 +134,22 @@ module.exports = function (app, collection) {
         // Push to second array for updates on data already existing
         const existing = [];
 
-        // Identify what already exists in database using .includes
-        for (let i = 0; i < initialQuerySymbols.length; i++) {
-          if (existingSymbols.includes(initialQuerySymbols[i])) {
+        // Identify what already exists in database
+        for (let i = 0; i < querySymbols.length; i++) {
+          if (existingSymbols.includes(querySymbols[i])) {
+
             // { updateOne: { filter: {a:2}, update: {$set: {a:2}}, upsert:true } }
+            const timeSeries = Object.keys(fetchData[i])[1]; // "Time Series (30min)" || "Time Series (60min)"
+            const mostRecentDate = Object.keys(fetchData[i][timeSeries])[0]; // "2020-04-02 15:30:00" 
 
             const updateOperation = {
               updateOne: {
                 filter: {
-                  stock: fetchData[i]['Meta Data']['2. Symbol'] // 'goog'
+                  stock: fetchData[i]['Meta Data']['2. Symbol'] // 'msft'
                 },
                 update: {
                   $set: {
-                    price: fetchData[i]['Time Series (60min)'][Object.keys(fetchData[i]['Time Series (60min)'])[0]]['4. close'], // '1129.2400'
+                    price: fetchData[i][timeSeries][mostRecentDate]['4. close'], // '1129.2400'
                     priceLastUpdated: fetchData[i]['Meta Data']['3. Last Refreshed'], // '2020-03-27 14:45:00'
                     lastApiCheck: getCurrentTimeToHour()
                   }
@@ -271,7 +248,7 @@ module.exports = function (app, collection) {
 
         return await collection.find({
           stock: {
-            $in: initialQuerySymbols
+            $in: querySymbols
           }
         }).toArray();
       }

@@ -54,9 +54,10 @@ fccTestingRoutes(app);
       useUnifiedTopology: true
     });
     const collection = client.db(process.env.database).collection(process.env.collection);
+    app.locals.collection = collection;
 
     //Routing for API 
-    apiRoutes(app, collection);
+    apiRoutes(app);
 
     //404 Not Found Middleware
     app.use(function (req, res, next) {
