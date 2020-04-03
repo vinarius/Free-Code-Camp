@@ -37,6 +37,6 @@ Project Issue Tracker
         "open":true,
         "status_text":
         "In QA"
-        }
-    ]
+    }
+]
 ```
