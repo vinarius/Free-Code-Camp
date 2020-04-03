@@ -35,8 +35,7 @@ Project Issue Tracker
         "created_by":"Joe",
         "assigned_to":"Joe",
         "open":true,
-        "status_text":
-        "In QA"
+        "status_text":"In QA"
     }
 ]
 ```
