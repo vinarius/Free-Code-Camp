@@ -3,10 +3,6 @@
 require('dotenv').config();
 
 process.env['NODE_ENV'] = "test";
-process.env['collection'] = `stocks`;
-process.env['database'] = `stock-price-checker`;
-process.env['MONGO_URL'] = `mongodb+srv://vinarius:Romans623@vincluster-q5s8p.mongodb.net/test?retryWrites=true&w=majority`;
-process.env['apiKey'] = `4YADI16RR927YZ7T`;
 
 const express = require('express');
 const bodyParser = require('body-parser');
