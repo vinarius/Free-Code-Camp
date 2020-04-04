@@ -6,9 +6,7 @@
 *       (if additional are added, keep them at the very end!)
 */
 
-var chai = require('chai');
-var assert = chai.assert;
 
 suite('Unit Tests', function(){
-
+    // none required for this project
 });

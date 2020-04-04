@@ -26,7 +26,7 @@
         <li>I can <b>POST</b> a reply to a thread on a specific board by passing form data <code>text</code>, <code>delete_password</code>, &amp; <code>thread_id</code> to <i>/api/replies/{board}</i> and it will also update the bumped_on date to the comments date.(Recomend res.redirect to thread page /b/{board}/{thread_id})
         In the thread's 'replies' array will be saved <code>_id</code>, <code>text</code>, <code>created_on</code>, <code>delete_password</code>, &amp; <code>reported</code>.</li>
         <li>I can <b>GET</b> an array of the most recent 10 bumped threads on the board with only the most recent 3 replies from <i>/api/threads/{board}</i>. The <code>reported</code> and <code>delete_passwords</code> fields will not be sent.</li>
-        <li>I can <b>GET</b> an entire thread with all it's replies from <i>/api/replies/{board}?thread_id={thread_id}</i>. Also hiding the same fields.</li>
+        <li>I can <b>GET</b> an entire thread with all it's replies from <i>/api/replies/{board}/{thread_id}</i>. Also hiding the same fields.</li>
         <li>I can delete a thread completely if I send a <b>DELETE</b> request to <i>/api/threads/{board}</i> and pass along the <code>thread_id</code> &amp; <code>delete_password</code>. (Text response will be 'incorrect password' or 'success')</li>
         <li>I can delete a post(just changing the text to '[deleted]') if I send a <b>DELETE</b> request to <i>/api/replies/{board}</i> and pass along the <code>thread_id</code>, <code>reply_id</code>, &amp; <code>delete_password</code>. (Text response will be 'incorrect password' or 'success')</li>
         <li>I can report a thread and change it's reported value to true by sending a <b>PUT</b> request to <i>/api/threads/{board}</i> and pass along the <code>thread_id</code>. (Text response will be 'success')</li>
@@ -118,6 +118,20 @@
             }
           });
           e.preventDefault();
+        });
+        $('#newReply').submit(function(e) {
+          const url = "/api/threads/"+$('#board4').val();
+          $.ajax({
+            type: 'Post',
+            url: url,
+            data: $(this).serialize(),
+            success: function(data) {
+              
+            },
+            error: function(error) {
+              alert(error);
+            }
+          })
         });
         $('#deleteThread').submit(function(e){
           var url = "/api/threads/"+$('#board3').val();

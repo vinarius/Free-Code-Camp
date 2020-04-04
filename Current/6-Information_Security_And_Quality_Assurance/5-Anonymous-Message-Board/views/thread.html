@@ -26,30 +26,28 @@
       $(function() {
         var currentURL = window.location.pathname.slice(3);
         currentURL = currentURL.split('/');
-        
-        var url = "/api/replies/"+currentURL[0];
+
+        const url = `/api/replies/${currentURL[0]}/${currentURL[1]}`;
         $('#threadTitle').text(window.location.pathname);
         $.ajax({
           type: "GET",
           url: url,
-          data:{thread_id: currentURL[1]},
-          success: function(ele)
-          {
+          success: function(ele) {
             var boardThreads= [];
             //
             // THIS ARRAY SET UP IS FOR CODE READABILITIES AND TESTING!
             // THIS IS NOT WHAT IT WOULD LOOK LIKE TO GO LIVE
             //
-              console.log(ele);//can I use typeScript please?!
+              ele = ele[0];
               var thread = ['<div class="thread">'];
               thread.push('<div class="main">')
               thread.push('<p class="id">id: '+ele._id+' ('+ele.created_on+')</p>');
-              thread.push('<form id="reportThread"><input type="hidden" name="report_id" value="'+ele._id+'"><input type="submit" value="Report"></form>');
+              thread.push('<form id="reportThread"><input type="hidden" name="thread_id" value="'+ele._id+'"><input type="submit" value="Report"></form>');
               thread.push('<form id="deleteThread"><input type="hidden" value="'+ele._id+'" name="thread_id" required=""><input type="text" placeholder="password" name="delete_password" required=""><input type="submit" value="Delete"></form>');
               thread.push('<h3>'+ele.text+'</h3>');
               thread.push('</div><div class="replies">');
               ele.replies.forEach(function(rep) {
-                thread.push('<div class="reply">')
+                thread.push('<div class="reply" id="'+rep._id+'">')
                 thread.push('<p class="id">id: '+rep._id+' ('+rep.created_on+')</p>');
                 thread.push('<form id="reportReply"><input type="hidden" name="thread_id" value="'+ele._id+'"><input type="hidden" name="reply_id" value="'+rep._id+'"><input type="submit" value="Report"></form>');
                 thread.push('<form id="deleteReply"><input type="hidden" value="'+ele._id+'" name="thread_id" required=""><input type="hidden" value="'+rep._id+'" name="reply_id" required=""><input type="text" placeholder="password" name="delete_password" required=""><input type="submit" value="Delete"></form>');
@@ -78,7 +76,8 @@
             type: "PUT",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) }
+            success: function(data) { alert(data) },
+            error: (data) => { alert(data.responseText) }
           });
           e.preventDefault();
         });
@@ -88,7 +87,8 @@
             type: "PUT",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) }
+            success: function(data) { alert(data) },
+            error: (data) => { alert(data.responseText) }
           });
           e.preventDefault();
         });
@@ -98,7 +98,8 @@
             type: "DELETE",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) }
+            success: function(data) { alert(data) },
+            error: (data) => { alert(data.responseText) }
           });
           e.preventDefault();
         });        
@@ -108,7 +109,11 @@
             type: "DELETE",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) }
+            success: function(data) { 
+              const replyId = e.originalEvent.target.parentNode.id;
+              $(`#${replyId}`).html('[deleted]');
+            },
+            error: (data) => { alert(data.responseText) }
           });
           e.preventDefault();
         });              

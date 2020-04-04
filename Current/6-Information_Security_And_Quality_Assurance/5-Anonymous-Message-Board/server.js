@@ -1,8 +1,13 @@
 'use strict';
 
-// process.env['NODE_ENV'] = 'test';
-
 require('dotenv').config();
+
+process.env['NODE_ENV'] = 'test';
+
+process.env.collection = 'threads';
+process.env.database = 'message-board';
+process.env.MONGO_URL = 'mongodb+srv://vinarius:Romans623@vincluster-q5s8p.mongodb.net/test?retryWrites=true&w=majority';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
