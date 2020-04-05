@@ -77,8 +77,20 @@
           }
         });
         
-        $('#newThread').submit(function(){
+        $('#newThread').submit(function(event){
           $(this).attr('action', "/api/threads/" + currentBoard);
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: `/api/threads/${currentBoard}`,
+            data: $(this).serialize(),
+            success: (data) => {
+              location.replace(`/b/${currentBoard}`);
+            },
+            error: (err) => {
+              console.error(err);
+            }
+          })
         });
         
         $('#boardDisplay').on('submit','#reportThread', function(e) {

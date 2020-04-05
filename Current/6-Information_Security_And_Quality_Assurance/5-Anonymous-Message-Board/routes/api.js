@@ -58,9 +58,13 @@ module.exports = function (app) {
           replyCount: 0
         };
 
+        if(req.body.hasOwnProperty('testing') && req.body.testing === true) newThread.testing = true;
+
         await collection.insertOne(newThread);
 
-        return res.redirect(301, `/b/${req.params.board}`);
+        return res.status(200).send('success');
+        // Express.js - res.redirect uses a deprecated method [DEP0066] DeprecationWarning: OutgoingMessage.prototype._headers is deprecated
+        // return res.redirect(301, `/b/${req.params.board}`);
       } catch (error) {
         console.error('error in create new thread:', error);
         return res.status(400).end();
@@ -155,7 +159,13 @@ module.exports = function (app) {
           }
         });
 
-        return res.redirect(301, `/b/${req.params.board}/${req.body.thread_id}`);
+        return res.status(200).json({
+          response: 'success',
+          thread_id: req.body.thread_id,
+          board: req.params.board
+        });
+        // Express.js - res.redirect uses a deprecated method [DEP0066] DeprecationWarning: OutgoingMessage.prototype._headers is deprecated
+        // return res.redirect(301, `/b/${req.params.board}/${req.body.thread_id}`);
       } catch (error) {
         console.error('Error in post reply to board:', error);
         return res.status(400).end();

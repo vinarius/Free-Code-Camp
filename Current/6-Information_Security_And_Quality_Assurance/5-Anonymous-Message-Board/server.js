@@ -39,17 +39,17 @@ app.use(bodyParser.urlencoded({
 //Sample front-end
 app.route('/b/:board/')
   .get((req, res) => {
-    res.sendFile(process.cwd() + '/views/board.html');
+    return res.sendFile(process.cwd() + '/views/board.html');
   });
 app.route('/b/:board/:threadid')
   .get((req, res) => {
-    res.sendFile(process.cwd() + '/views/thread.html');
+    return res.sendFile(process.cwd() + '/views/thread.html');
   });
 
 //Index page (static HTML)
 app.route('/')
   .get((req, res) => {
-    res.sendFile(process.cwd() + '/views/index.html');
+    return res.sendFile(process.cwd() + '/views/index.html');
   });
 
 //For FCC testing purposes

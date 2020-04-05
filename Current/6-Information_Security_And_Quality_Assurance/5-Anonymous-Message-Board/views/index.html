@@ -98,13 +98,35 @@
             crossorigin="anonymous"></script>
     <script>
       $(function() {
-        $('#newThread').submit(function(){
+        $('#newThread').submit(function(event){
           var board = $('#board1').val();
+          event.preventDefault();
           $(this).attr('action', "/api/threads/" + board);
+          $.ajax({
+            type: "POST",
+            url: `/api/threads/${board}`,
+            data: $(this).serialize(),
+            success: (data) => {
+              location.replace(`/b/${board}`);
+            },
+            error: (err) => {
+              console.error(err);
+            }
+          })
         });
-        $('#newReply').submit(function(){
+        $('#newReply').submit(function(event){
           var board = $('#board4').val();
           $(this).attr('action', "/api/replies/" + board);
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: `/api/replies/${board}/`,
+            data: $(this).serialize(),
+            success: (data) => { 
+              location = `/b/${data.board}/${data.thread_id};
+            },
+            error: (err) => { console.error(err); }
+          });
         });
         $('#reportThread').submit(function(e){
           var url = "/api/threads/"+$('#board2').val();
@@ -118,20 +140,6 @@
             }
           });
           e.preventDefault();
-        });
-        $('#newReply').submit(function(e) {
-          const url = "/api/threads/"+$('#board4').val();
-          $.ajax({
-            type: 'Post',
-            url: url,
-            data: $(this).serialize(),
-            success: function(data) {
-              
-            },
-            error: function(error) {
-              alert(error);
-            }
-          })
         });
         $('#deleteThread').submit(function(e){
           var url = "/api/threads/"+$('#board3').val();

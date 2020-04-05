@@ -98,7 +98,9 @@
             type: "DELETE",
             url: url,
             data: $(this).serialize(),
-            success: function(data) { alert(data) },
+            success: function(data) { 
+              location.replace('/');
+            },
             error: (data) => { alert(data.responseText) }
           });
           e.preventDefault();
