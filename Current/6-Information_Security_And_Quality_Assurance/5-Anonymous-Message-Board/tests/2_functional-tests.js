@@ -195,8 +195,16 @@ suite('Functional Tests', function () {
         "bumped_on": timestamp,
         "reported": false,
         "delete_password": "asdf",
-        "replies": [],
-        "replyCount": 0,
+        "replies": [
+          {
+            _id: new ObjectId('5e89fd2ed5ca4c58e4152e4b'),
+            text: 'comment for fake data',
+            delete_password: 'asdf',
+            created_on: timestamp,
+            reported: false
+          }
+        ],
+        "replyCount": 1,
         "testing": true
       };
       const insert = await collection.insertOne(fakeData);
@@ -212,26 +220,21 @@ suite('Functional Tests', function () {
             delete_password: tempDocument.delete_password,
             thread_id: new ObjectId(tempDocument._id)
           }).end(async function (err, res) {
-            try {
-              const threadOfNewReply = await collection.find({
-                _id: new ObjectId(tempDocument._id)
-              }).toArray();
+            const threadOfNewReply = await collection.find({
+              _id: new ObjectId(tempDocument._id)
+            }).toArray();
 
-              assert.isArray(threadOfNewReply[0].replies);
-              assert.equal(threadOfNewReply[0].replies.length, 1);
-              assert.property(threadOfNewReply[0].replies[0], '_id');
-              assert.property(threadOfNewReply[0].replies[0], 'text');
-              assert.property(threadOfNewReply[0].replies[0], 'delete_password');
-              assert.property(threadOfNewReply[0].replies[0], 'created_on');
-              assert.property(threadOfNewReply[0].replies[0], 'reported');
-              assert.equal(threadOfNewReply[0].replies[0].text, 'testing replies one');
-              assert.equal(threadOfNewReply[0].replies[0].delete_password, 'asdf');
-              assert.equal(threadOfNewReply[0].replies[0].reported, false);
-            } catch (error) {
-              console.error('error:', error);
-            } finally {
-              done();
-            }
+            assert.isArray(threadOfNewReply[0].replies);
+            assert.equal(threadOfNewReply[0].replies.length, 2);
+            assert.property(threadOfNewReply[0].replies[1], '_id');
+            assert.property(threadOfNewReply[0].replies[1], 'text');
+            assert.property(threadOfNewReply[0].replies[1], 'delete_password');
+            assert.property(threadOfNewReply[0].replies[1], 'created_on');
+            assert.property(threadOfNewReply[0].replies[1], 'reported');
+            assert.equal(threadOfNewReply[0].replies[1].text, 'testing replies one');
+            assert.equal(threadOfNewReply[0].replies[1].delete_password, 'asdf');
+            assert.equal(threadOfNewReply[0].replies[1].reported, false);
+            done();
           });
       });
     });
@@ -241,17 +244,68 @@ suite('Functional Tests', function () {
     // });
 
     suite('PUT', function () {
-      test(`should report a reply and change it's reported value to true by sending a PUT request to /api/replies/{board} and pass along the thread_id & reply_id`);
+      test(`should report a reply and change it's reported value to true by sending a PUT request to /api/replies/{board} and pass along the thread_id & reply_id`, function(done) {
+        chai.request(server)
+          .put('/api/replies/unit-testing')
+          .send({
+            thread_id: '5e89f92c6d7b2041140e4cd5',
+            reply_id: '5e89fd2ed5ca4c58e4152e4b'
+          }).end(async function (err, res) {
+            const updatedDocument = await collection.find({
+              _id: new ObjectId('5e89f92c6d7b2041140e4cd5')
+            }).toArray();
+
+            assert.equal(updatedDocument[0].replies[0].reported, true);
+            done();
+          });
+      });
     });
 
     suite('DELETE', function () {
-      test(`should delete a post if I send a DELETE request to /api/replies/{board} and pass along the thread_id, reply_id, & delete_password`);
+      test(`should delete a post if I send a DELETE request to /api/replies/{board} and pass along the thread_id, reply_id, & delete_password`, function(done) {
+        chai.request(server)
+          .delete('/api/replies/unit-testing')
+          .send({
+            thread_id: '5e89f92c6d7b2041140e4cd5',
+            reply_id: '5e89fd2ed5ca4c58e4152e4b',
+            delete_password: 'asdf'
+          }).end(async function(err, res) {
+            const parsedData = JSON.parse(res.text);
+            assert.equal(parsedData.response, 'success');
+            assert.equal(parsedData.data.ok, 1);
+            done();
+          });
+      });
     });
 
   });
 
   suite('API ROUTING FOR /api/replies/{board}/{thread_id}', function () {
-    test(`should get an entire thread with all it's replies from /api/replies/{board}/{thread_id}`);
+    test(`should get an entire thread with all it's replies from /api/replies/{board}/{thread_id}`, function(done) {
+      chai.request(server)
+        .get('/api/replies/unit-testing/5e89f92c6d7b2041140e4cd5')
+        .end(function (err, res) {
+          const parsedData = JSON.parse(res.text);
+
+          assert.property(parsedData[0], '_id');
+          assert.property(parsedData[0], 'board');
+          assert.property(parsedData[0], 'text');
+          assert.property(parsedData[0], 'created_on');
+          assert.property(parsedData[0], 'bumped_on');
+          assert.property(parsedData[0], 'replies');
+          assert.property(parsedData[0], 'replyCount');
+          assert.property(parsedData[0], 'testing');
+          assert.equal(String(parsedData[0]._id), '5e89f92c6d7b2041140e4cd5');
+          assert.equal(parsedData[0].board, 'unit-testing');
+          assert.equal(parsedData[0].text, 'a thread for replies');
+          assert.equal(parsedData[0].replyCount, 1);
+          assert.equal(parsedData[0].testing, true);
+          assert.isArray(parsedData[0].replies);
+          assert.equal(parsedData[0].replies.length, 1);
+
+          done();
+        });
+    });
   });
 
   after(async function () {
