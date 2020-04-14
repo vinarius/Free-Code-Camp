@@ -1,0 +1,93 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* @mixin for-size($range) {
+
+  $phone-upper-boundary: 600px;
+  $tablet-portrait-upper-boundary: 900px;
+  $tablet-landscape-upper-boundary: 1200px;
+  $desktop-upper-boundary: 1800px;
+
+  @if $range == phone-only {
+
+    @media (max-width: #{$phone-upper-boundary - 1}) { @content; }
+
+  } @else if $range == tablet-portrait-up {
+
+    @media (min-width: $phone-upper-boundary) { @content; }
+
+  } @else if $range == tablet-landscape-up {
+
+    @media (min-width: $tablet-portrait-upper-boundary) { @content; }
+
+  } @else if $range == desktop-up {
+
+    @media (min-width: $tablet-landscape-upper-boundary) { @content; }
+
+  } @else if $range == big-desktop-up {
+
+    @media (min-width: $desktop-upper-boundary) { @content; }
+
+  }
+
+
+} */
+
+/* @mixin for-size($size) {
+  @if $size == phone-only {
+    @media (max-width: 599px) { @content; }
+  } @else if $size == tablet-portrait-up {
+    @media (min-width: 600px) { @content; }
+  } @else if $size == tablet-landscape-up {
+    @media (min-width: 900px) { @content; }
+  } @else if $size == desktop-up {
+    @media (min-width: 1200px) { @content; }
+  } @else if $size == big-desktop-up {
+    @media (min-width: 1800px) { @content; }
+  }
+}
+
+.my-box {
+  padding: 10px;
+  
+  @include for-size(desktop-up) {
+    padding: 20px;
+  }
+} */

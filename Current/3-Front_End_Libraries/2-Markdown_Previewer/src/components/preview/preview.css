@@ -1,0 +1,18 @@
+.my-preview {
+    border: 2px solid #999;
+    min-width: 75vw;
+    min-height: 50vh;
+    border-radius: 15px;
+}
+
+.preview-container {
+    margin-top: 3rem;
+}
+
+#preview {
+    max-width: 75vw;
+}
+
+#preview img {
+    max-width: 200px;
+}
