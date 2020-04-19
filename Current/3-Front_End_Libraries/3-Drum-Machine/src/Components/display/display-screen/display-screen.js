@@ -1,9 +1,9 @@
 import React from 'react';
 import './display-screen.css';
 
-function DisplayScreen() {
+function DisplayScreen(props) {
     return (
-        <div>Display screen is working</div>
+    <div id="display-screen">Volume: {props.state.volume}</div>
     );
 }
 

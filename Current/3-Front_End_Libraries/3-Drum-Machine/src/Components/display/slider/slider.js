@@ -1,10 +1,12 @@
 import React from 'react';
 import './slider.css';
+// import { Slider } from 'primereact/slider';
 
-function Slider() {
+function volumeSlider({handleStateChange, ...props}) {
     return (
-        <div>Slider is working</div>
+        <input type="range" defaultValue="75" onChange={(event) => { handleStateChange('volume', event.target.value) }}></input>
+        // <div></div>
     );
 }
 
-export default Slider;
+export default volumeSlider;

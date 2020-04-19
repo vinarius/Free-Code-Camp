@@ -14,8 +14,10 @@
 
 .my-heading-row {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
 }
 
 .App-header {
@@ -56,4 +58,8 @@ a:hover {
   overflow: hidden;
   padding: 0;
   position: absolute;
+}
+
+p {
+  margin: 0.5rem;
 }
