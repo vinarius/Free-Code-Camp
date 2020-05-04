@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './toggle-button.css';
+import { DrumMachineContext } from '../../ContextProvider/provider';
 
 function ToggleButton({handleStateChange, ...props}) {
 
-    const togglePower = () => {
-        handleStateChange('isPowerOn', !props.state.isPowerOn);
-    };
-
-    const toggleAudioBank = () => {
-        handleStateChange('usingBankOne', !props.state.usingBankOne);
-    };
+    const { isPowerOn, usingBankOne, togglePower, toggleAudioBank } = useContext(DrumMachineContext);
 
     const identifyButtonAndHandleClick = () => {
         switch(props.text) {
@@ -27,13 +22,13 @@ function ToggleButton({handleStateChange, ...props}) {
     const setButtonClass = (buttonPlacement) => {
         switch(props.text) {
             case 'Power':
-                if(props.state.isPowerOn) {
+                if(isPowerOn) {
                     return buttonPlacement === 1 ? 'inactive' : 'active';
                 } else {
                     return buttonPlacement === 1 ? 'active' : 'inactive';
                 }
             case 'Bank':
-                if(props.state.usingBankOne) {
+                if(usingBankOne) {
                     return buttonPlacement === 1 ? 'inactive' : 'active';
                 } else {
                     return buttonPlacement === 1 ? 'active' : 'inactive';

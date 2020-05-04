@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './drum-pad.css';
 
 function convertStringToVolumeNumber (string) {
@@ -15,17 +15,17 @@ const DrumPad = (props) => {
       
 
     const handleClick = () => {
-        if(props.state.isPowerOn) {
-            console.log('props.state.volume:', props.state.volume);
-            // bankOneAudio.volume = convertStringToVolumeNumber(props.state.volume);
-            // bankTwoAudio.volume = convertStringToVolumeNumber(props.state.volume);
-            props.state.usingBankOne ? bankOneAudio.play() : bankTwoAudio.play();
-        }
+        // if(props.state.isPowerOn) {
+        //     console.log('props.state.volume:', props.state.volume);
+        //     // bankOneAudio.volume = convertStringToVolumeNumber(props.state.volume);
+        //     // bankTwoAudio.volume = convertStringToVolumeNumber(props.state.volume);
+        //     props.state.usingBankOne ? bankOneAudio.play() : bankTwoAudio.play();
+        // }
     };
 
     return (
         <div>
-            <button onClick={() => { handleClick() }} className={isKeyDown ? "drum-pad good-vibes-bro" : "drum-pad"}>{props.id}</button>
+            <button onClick={() => { handleClick() }} className={"drum-pad good-vibes-bro"}>{props.id}</button>
             <audio className="clip" id={props.id} src={props.bankOneAudioUrl}></audio>
         </div>
     );

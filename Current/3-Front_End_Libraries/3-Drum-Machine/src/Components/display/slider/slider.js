@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './slider.css';
-// import { Slider } from 'primereact/slider';
+import { DrumMachineContext } from '../../ContextProvider/provider';
 
-function volumeSlider({handleStateChange, ...props}) {
+const Slider = () => {
+
+    const { setVolume } = useContext(DrumMachineContext);
+
     return (
-        <input type="range" defaultValue="75" onChange={(event) => { handleStateChange('volume', event.target.value) }}></input>
-        // <div></div>
+        <input type="range" defaultValue="75" onChange={(event) => { setVolume(event.target.value) }}></input>
     );
 }
 
-export default volumeSlider;
+export default Slider;
