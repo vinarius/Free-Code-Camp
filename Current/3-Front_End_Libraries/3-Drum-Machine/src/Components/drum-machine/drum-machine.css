@@ -19,7 +19,7 @@
     transition: all 0.25s ease-in;
 }
 
-.drum-pad {
+.drum-pad, .good-vibes-bro {
     border: 1px solid #111;
     background-color: #808080;
     border-radius: 7.5px;
@@ -42,7 +42,7 @@
 }
 
 /* good vibes bro */
-.drum-pad.good-vibes-bro {
+.good-vibes-bro {
     transform: translate(.25px, -.25px);
     -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);

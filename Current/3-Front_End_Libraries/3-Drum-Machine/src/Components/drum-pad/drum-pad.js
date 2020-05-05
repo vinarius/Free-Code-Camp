@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './drum-pad.css';
+import { DrumMachineContext } from '../ContextProvider/provider';
 
 function convertStringToVolumeNumber (string) {
     let result = string;
@@ -12,21 +13,19 @@ function convertStringToVolumeNumber (string) {
 }
 
 const DrumPad = (props) => {
-      
 
-    const handleClick = () => {
-        // if(props.state.isPowerOn) {
-        //     console.log('props.state.volume:', props.state.volume);
-        //     // bankOneAudio.volume = convertStringToVolumeNumber(props.state.volume);
-        //     // bankTwoAudio.volume = convertStringToVolumeNumber(props.state.volume);
-        //     props.state.usingBankOne ? bankOneAudio.play() : bankTwoAudio.play();
-        // }
+    const { usingBankOne, isPowerOn } = useContext(DrumMachineContext);
+      
+    const handleDrumPadClick = () => {
+    //    console.log('drum pad clicked');
     };
+
+    const testing = props.handleClick;
 
     return (
         <div>
-            <button onClick={() => { handleClick() }} className={"drum-pad good-vibes-bro"}>{props.id}</button>
-            <audio className="clip" id={props.id} src={props.bankOneAudioUrl}></audio>
+            <button onClick={handleDrumPadClick} className="drum-pad">{props.id}</button>
+            <audio className="clip" id={props.id} src={usingBankOne ? props.bankOneAudioUrl : props.bankTwoAudioUrl}></audio>
         </div>
     );
 };

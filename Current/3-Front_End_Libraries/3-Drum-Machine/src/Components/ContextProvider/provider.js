@@ -19,7 +19,7 @@ export const Provider = (props) => {
     } = state;
 
     const togglePower = () => {
-        dispatch({ type: stateActions.TOGGLE_POWER })
+        dispatch({ type: stateActions.TOGGLE_POWER });
     };
 
     const toggleAudioBank = () => {
