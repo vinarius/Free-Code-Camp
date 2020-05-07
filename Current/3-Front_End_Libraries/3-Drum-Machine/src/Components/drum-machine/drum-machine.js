@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import './drum-machine.css';
 
 // Components
@@ -6,22 +6,99 @@ import Display from '../display/display';
 import DrumPad from '../drum-pad/drum-pad';
 import { DrumMachineContext } from '../ContextProvider/provider';
 
-// function convertStringToVolumeNumber (string) {
-//     let result = string;
-//     if(result === '100') {
-//         result = 1;
-//     } else {
-//         result = parseInt(`0.${result}`);
-//     }
-//     return result;
-// }
+function convertStringToVolumeNumber (volume) {
+    let localString = volume;
+    if((+localString) < 10 && (+localString) > 0) return parseFloat(`0.0${localString}`);
+    return localString === '100' ? 1 : parseFloat(`0.${localString}`);
+}
 
 const DrumMachine = () => {
 
-    const { isPowerOn, usingBankOne, volume } = useContext(DrumMachineContext);
+    const { isPowerOn, usingBankOne, volume, isKeyDown, setIsKeyDown, setKeyPressed, setDisplayMessage } = useContext(DrumMachineContext);
 
-    // const bankOneAudio = new Audio(props.bankOneAudioUrl);
-    // const bankTwoAudio = new Audio(props.bankTwoAudioUrl);
+    const drumPads = [
+        {
+            keyCode: 81,
+            id: 'Q',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_1.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Heater 1',
+            bankTwoDescription: 'Chord 1'
+        },
+        {
+            keyCode: 65,
+            id: 'A',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Give_us_a_light.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Heater 4',
+            bankTwoDescription: 'Shaker'
+        },
+        {
+            keyCode: 90,
+            id: 'Z',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/punchy_kick_1.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Kick n\' Hat',
+            bankTwoDescription: 'Punchy Kick'
+        },
+        {
+            keyCode: 87,
+            id: 'W',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_2.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Heater 2',
+            bankTwoDescription: 'Chord 2'
+        },
+        {
+            keyCode: 83,
+            id: 'S',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Dry_Ohh.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Clap',
+            bankTwoDescription: 'Open HH'
+        },
+        {
+            keyCode: 88,
+            id: 'X',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/side_stick_1.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Kick',
+            bankTwoDescription: 'Side Stick'
+        },
+        {
+            keyCode: 69,
+            id: 'E',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_3.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Heater 3',
+            bankTwoDescription: 'Chord 3'
+        },
+        {
+            keyCode: 68,
+            id: 'D',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Bld_H1.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Open HH',
+            bankTwoDescription: 'Closed HH'
+        },
+        {
+            keyCode: 67,
+            id: 'C',
+            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3',
+            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Brk_Snr.mp3',
+            audio: new Audio(),
+            bankOneDescription: 'Closed HH',
+            bankTwoDescription: 'Snare'
+        }
+    ];
 
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown);
@@ -31,9 +108,23 @@ const DrumMachine = () => {
             document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('keyup', handleKeyUp);
         };
+    // eslint-disable-next-line
     }, [isPowerOn, usingBankOne, volume]);
 
-    const [isKeyDown, setIsKeyDown] = useState(false);
+    const playAudio = (keyCode) => {
+        keyCode = keyCode.toLowerCase();
+        const selectedPad = drumPads.find(pad => pad.id.toLowerCase() === keyCode);
+        selectedPad.audio.src = usingBankOne ? selectedPad.bankOneAudioUrl : selectedPad.bankTwoAudioUrl;
+        selectedPad.audio.volume = convertStringToVolumeNumber(volume);
+        selectedPad.audio.play().catch(()=>{});
+    };
+
+    const changeDisplayMessage = (keyCode) => {
+        keyCode = keyCode.toLowerCase();
+        const selectedPad = drumPads.find(pad => pad.id.toLowerCase() === keyCode);
+        const newMessage = usingBankOne ? selectedPad.bankOneDescription : selectedPad.bankTwoDescription;
+        setDisplayMessage(newMessage);
+    };
 
     const handleKeyDown = (event) => {
         if(isPowerOn && !isKeyDown) {
@@ -49,92 +140,38 @@ const DrumMachine = () => {
                 case 'd':
                 case 'c':
                     setIsKeyDown(true);
-                    handleClick(key);
+                    setKeyPressed(event.key);
+                    changeDisplayMessage(event.key);
+                    playAudio(event.key);
                     break;
 
                 default:
                     break;
             }
         }
-
-
-        // if(event.keyCode === props.keyCode && !isKeyDown && isPowerOn) {
-        //     setIsKeyDown(true);
-        //     // bankOneAudio.volume = convertStringToVolumeNumber(volume);
-        //     // bankTwoAudio.volume = convertStringToVolumeNumber(volume);
-        //     usingBankOne ? bankOneAudio.play() : bankTwoAudio.play();
-        // }
     };
 
     const handleKeyUp = () => {
         setIsKeyDown(false);
+        setKeyPressed(null);
     };
 
-    const drumPads = [
-        {
-            keyCode: 81,
-            id: 'Q',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_1.mp3'
-        },
-        {
-            keyCode: 65,
-            id: 'A',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Give_us_a_light.mp3'
-        },
-        {
-            keyCode: 90,
-            id: 'Z',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/punchy_kick_1.mp3'
-        },
-        {
-            keyCode: 87,
-            id: 'W',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_2.mp3'
-        },
-        {
-            keyCode: 83,
-            id: 'S',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Dry_Ohh.mp3'
-        },
-        {
-            keyCode: 88,
-            id: 'X',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/side_stick_1.mp3'
-        },
-        {
-            keyCode: 69,
-            id: 'E',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_3.mp3'
-        },
-        {
-            keyCode: 68,
-            id: 'D',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Bld_H1.mp3'
-        },
-        {
-            keyCode: 67,
-            id: 'C',
-            bankOneAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3',
-            bankTwoAudioUrl: 'https://s3.amazonaws.com/freecodecamp/drums/Brk_Snr.mp3'
-        }
-    ];
-
-    const handleClick = (key) => {
-        console.log('key:', key);
+    const handleClick = (keyCode) => {
+        changeDisplayMessage(keyCode);
+        playAudio(keyCode);
     };
 
     const rows = [];
     let row = [];
     for(let i=0; i<drumPads.length; i++) {
-        const drumPad = <DrumPad handleClick={handleClick} key={i} keyCode={drumPads[i].keyCode} id={drumPads[i].id} bankOneAudioUrl={drumPads[i].bankOneAudioUrl} bankTwoAudioUrl={drumPads[i].bankTwoAudioUrl}></DrumPad>;
+        const drumPad = <DrumPad
+            handleClick={handleClick}
+            key={i}
+            keyCode={drumPads[i].keyCode}
+            id={drumPads[i].id}
+            bankOneAudioUrl={drumPads[i].bankOneAudioUrl}
+            bankTwoAudioUrl={drumPads[i].bankTwoAudioUrl}
+        ></DrumPad>;
 
         row.push(drumPad);
 

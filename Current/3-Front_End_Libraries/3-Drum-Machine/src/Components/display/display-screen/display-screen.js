@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import './display-screen.css';
 import { DrumMachineContext } from '../../ContextProvider/provider';
 
-function DisplayScreen(props) {
+function DisplayScreen() {
 
-    const { volume } = useContext(DrumMachineContext);
+    const { isPowerOn, displayMessage } = useContext(DrumMachineContext);
 
     return (
-    <div id="display-screen">Volume: {volume}</div>
+        <div id="display-screen">{isPowerOn ? displayMessage : ''}</div>
     );
 }
 

@@ -8,6 +8,12 @@ export default function(state, action) {
             return toggleAudioBank(state);
         case stateActions.SET_VOLUME:
             return setVolume(state, action.newVolume);
+        case stateActions.SET_IS_KEY_DOWN:
+            return setIsKeyDown(state, action.value);
+        case stateActions.SET_KEY_PRESSED:
+            return setKeyPressed(state, action.newKey);
+        case stateActions.SET_DISPLAY_MESSAGE:
+            return setDisplayMessage(state, action.newMessage);
         default:
             return state;
     }
@@ -26,4 +32,19 @@ const toggleAudioBank = (state) => ({
 const setVolume = (state, newVolume) => ({
     ...state,
     volume: newVolume
+});
+
+const setIsKeyDown = (state, value) => ({
+    ...state,
+    isKeyDown: value
+});
+
+const setKeyPressed = (state, newKey) => ({
+    ...state,
+    keyPressed: newKey
+});
+
+const setDisplayMessage = (state, newMessage) => ({
+    ...state,
+    displayMessage: newMessage
 });
