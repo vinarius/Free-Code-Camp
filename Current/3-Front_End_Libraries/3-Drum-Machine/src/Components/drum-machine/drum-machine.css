@@ -1,0 +1,66 @@
+.my-row {
+    display: flex;
+    flex-direction: column;
+}
+
+#buttons-wrapper {
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 5px;
+    border: 1rem outset #777;
+}
+
+.backlight {
+    -webkit-box-shadow: 0px 0px 30px 12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 0px 0px 30px 12px rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 30px 12px rgba(255, 255, 255, 1);
+    transition: all 0.25s ease-in;
+}
+
+#drum-machine {
+    margin-bottom: 3rem;
+}
+
+.drum-pad, .good-vibes-bro {
+    border: 1px solid #111;
+    background-color: #808080;
+    border-radius: 7.5px;
+    min-width: 5rem;
+    min-height: 5rem;
+    -webkit-box-shadow: 3px 3px 5px 1px rgba(17,17,17,1);
+    -moz-box-shadow: 3px 3px 5px 1px rgba(17,17,17,1);
+    box-shadow: 3px 3px 5px 1px rgba(17,17,17,1);
+    margin: 0.15rem;
+    outline: none;
+    font-size: 1rem;
+}
+
+.drum-pad:active {
+    transform: translate(.25px, -.25px);
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    background-color: #979797;
+}
+
+/* good vibes bro */
+.good-vibes-bro {
+    transform: translate(.25px, -.25px);
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    background-color: #979797;
+}
+
+.drum-pad:hover {
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    #drum-machine {
+        display: flex;
+        flex-direction: column;
+    }
+}

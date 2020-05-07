@@ -1,0 +1,66 @@
+:root {
+  /* --phone-upper-boundary: 600px;
+  --tablet-portrait-upper-boundary: 900px;
+  --tablet-landscape-upper-boundary: 1200px;
+  --desktop-upper-boundary: 1800px; */
+  min-width: 320px;
+  font-family: 'Baloo Bhaina 2', cursive;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.my-heading-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+a {
+  color: #fff;
+  margin: 0.25rem;
+}
+
+a:hover {
+  color: rgb(100, 100, 170);
+}
+
+.screen-reader-voodoo {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  /* 
+  GOOD VIBES BRO - sigma
+  GOOD VIBES BRO - sigma
+  GOOD VIBES BRO - sigma 
+  */
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+p {
+  margin: 0.5rem;
+}
