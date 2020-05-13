@@ -20,18 +20,12 @@ function getFinalOpenedDoors() {
     
     for(let i=1; i<101; i++) {
       for(let j=i; j<101; j++) {
-        if(j % i === 0) {
-          doors[(j-1)].isOpen = !doors[(j-1)].isOpen;
-        }
+        if(j % i === 0) doors[(j-1)].isOpen = !doors[(j-1)].isOpen;
       }
     }
     
     return doors.filter(door => door.isOpen)
-                .map(door => { 
-                    if(door.isOpen) {
-                    return door.index;
-                    }
-                });
+                .map(door => door.index);
     }
     
     getFinalOpenedDoors();
