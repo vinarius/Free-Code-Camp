@@ -10,7 +10,7 @@ function getFinalOpenedDoors() {
     }
     
     for(let i=1; i<101; i++) {
-      for(let j=1; j<101; j++) {
+      for(let j=i; j<101; j++) {
         if(j % i === 0) {
           doors[(j-1)].isOpen = !doors[(j-1)].isOpen;
         }
