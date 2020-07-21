@@ -1,4 +1,4 @@
-[Deprecated]
+[Deprecated - For archival purposes only]
 
 My live portfolio may be viewed at:
 
