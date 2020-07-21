@@ -1,3 +1,5 @@
+[Deprecated - for archival purposes only]
+
 My live portfolio may be viewed at:
 
 www.krausdesign.net
