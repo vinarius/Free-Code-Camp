@@ -1,16 +1,22 @@
 def add_time(start, duration, dayOfWeek=None):
     # example input = "11:06 PM", "2:02"
-    # getWeekDayInt('TuEsDay') # returns 2
 
-    splitStartTime = start.split()
-    currentTime = splitStartTime[0]
-    amOrPm = splitStartTime[1]
-    currentSplitTime = currentTime.split(':')
-    currentHours = int(currentSplitTime[0])
-    currentMinutes = int(currentSplitTime[1])
-    additionSplit = duration.split(':')
-    additionHours = int(additionSplit[0])
-    additionMinutes = int(additionSplit[1])
+    splitStartTime = start.split() # ['11:06', 'PM']
+    currentTime = splitStartTime[0] # '11:06'
+    currentSplitTime = currentTime.split(':') # ['11', '06']
+    additionSplit = duration.split(':') # ['2', '02']
+    amOrPm = splitStartTime[1] # 'PM'
+    currentHours = int(currentSplitTime[0]) # 11
+    currentMinutes = int(currentSplitTime[1]) # 06
+    additionHours = int(additionSplit[0]) # 2
+    additionMinutes = int(additionSplit[1]) # 2
+
+    time = {
+        'daysAdvanced': 0,
+        'hours': currentHours,
+        'minutes': currentMinutes,
+        'amOrPm': amOrPm
+    }
 
     print()
     print('Input:', start, duration, dayOfWeek)
@@ -18,68 +24,29 @@ def add_time(start, duration, dayOfWeek=None):
     print('amOrPm:', amOrPm)
     print()
 
-    print('Minutes:')
-    minutesHandler = handleMinutes(currentMinutes, additionMinutes)
-    print('minutesHandler:', minutesHandler)
+    if dayOfWeek:
+        print('dayOfWeek:', dayOfWeek)
+        print()
+
+    # add minutes
+    # if > 59 then divide by 60 and get integer as well as remainder
+
+    if(additionMinutes > 59):
+        newHours = additionMinutes / 60
+        newMinutes = additionMinutes % 60
+        print('newHours:', newHours)
+        print('newMinutes:', newMinutes)
+
+
+
+    
+
     print()
+    return 'end of function'
 
-    if(minutesHandler['hoursAdvanced'] is not None and minutesHandler['hoursAdvanced'] > 0):
-        additionHours = additionHours + minutesHandler['hoursAdvanced']
-
-    print('Hours:')
-    handleHour(currentHours, additionHours, amOrPm)
-
-    print()
-    return 0
+    
 
 def getWeekDayInt(day):
     day = day.lower()
     weekdays = ('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')
     return weekdays.index(day)
-
-def handleMinutes(currentMinutes, addition):
-    print('currentMinutes:', currentMinutes)
-    print('addition:', addition)
-    result = {
-        'hoursAdvanced': None,
-        'currentMinutes': None
-    }
-
-    sum = currentMinutes + addition
-    result['currentMinutes'] = sum
-
-    if(sum >= 60):
-        hoursCounter = 0
-        while (sum >= 60):
-            hoursCounter = hoursCounter + 1
-            sum = sum - 60
-        result['hoursAdvanced'] = hoursCounter
-        result['currentMinutes'] = sum
-
-    return result
-
-def handleHour(currentHour, addition, amOrPm):
-    print('currentHour:', currentHour)
-    print('addition:', addition)
-    result = {
-        'daysAdvanced': None,
-        'currentHour': None
-    }
-    hoursInADay = 24
-
-    if (amOrPm is 'PM'):
-        currentHour = currentHour + 12
-        if(currentHour >)
-
-    sum = currentHour + addition
-    if (sum > hoursInADay):
-        print('sum:', sum)
-        print('sum % hoursInADay:', sum % hoursInADay) # 1
-        print('int(sum / hoursInADay):', int(sum / hoursInADay))
-    # elif (sum > 12)
-
-
-    print((currentHour + addition) / hoursInADay)
-    print((currentHour + addition) % hoursInADay)
-
-    return 0
