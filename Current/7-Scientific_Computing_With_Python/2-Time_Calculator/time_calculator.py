@@ -90,9 +90,6 @@ def add_time(start, duration, dayOfWeek=None):
 
     print()
     print('Result:', result)
-
-    
-
     print()
     return result
 
