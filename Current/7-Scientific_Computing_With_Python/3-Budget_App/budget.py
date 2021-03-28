@@ -11,6 +11,7 @@ class Category:
       width = 30 - len(description)
       formatted_amount = f'{x["amount"]:.2f}'.rjust(width)
       result = f'{result}{description}{formatted_amount}\n'
+    result = f'{result}Total: {self.funds}'
     return result
 
   def deposit(self, amount, description=''):
@@ -50,7 +51,7 @@ class Category:
       return True
 
 def create_spend_chart(categories):
-  chart = 'Percentage spent by category\n'
+  chart = "Percentage spent by category\n"
   totals = []
   for cat in categories:
     total = 0
@@ -70,30 +71,36 @@ def create_spend_chart(categories):
     all_spent.append(x['total'])
 
   all_spent = sum(all_spent)
+  print('all_spent:', all_spent)
 
   for x in totals:
     percentage_spent = x['total'] / all_spent
-    int_percent = int(f'{percentage_spent:.2f}'[2:])
-    int_percent = round(int_percent, -1)
+    print('x:', x)
+    int_percent = None
+    if percentage_spent == 1.0:
+      int_percent = 100.00
+    else:
+      int_percent = int(f'{percentage_spent:.2f}'[2:])
+    int_percent = round_down(int_percent, -1)
     x['percent_spent'] = int_percent
 
   # draw y axis and bars
   y_axis = 100
   while y_axis >= 0:
     y_axis_padding = str(y_axis).rjust(3)
-    chart = f'{chart}{y_axis_padding}| '
+    chart = f"{chart}{y_axis_padding}| "
     for x in totals:
       if x['percent_spent'] >= y_axis:
-        chart = f'{chart}o  '
+        chart = f"{chart}o  "
       else:
-        chart = f'{chart}   '
-    chart = f'{chart}\n'
+        chart = f"{chart}   "
+    chart = f"{chart}\n"
     y_axis = y_axis - 10
 
   # draw x axis
   cat_length = len(categories)
   x_axis = '    ' + ''.rjust(cat_length * 3, '-') + '-'
-  chart = f'{chart}{x_axis}\n'
+  chart = f"{chart}{x_axis}\n"
 
   # draw category names
   letter_index = 0
@@ -103,14 +110,17 @@ def create_spend_chart(categories):
       max_cat_name_length = len(x['category'])
 
   while letter_index < max_cat_name_length:
-    chart = f'{chart}     '
+    chart = f"{chart}     "
     for x in totals:
       if len(x['category']) >= letter_index + 1:
         letter = x['category'][letter_index]
       else:
         letter = ' '
-      chart = f'{chart}{letter}  '
-    chart = f'{chart}\n'
+      chart = f"{chart}{letter}  "
     letter_index = letter_index + 1
-
+    if letter_index < max_cat_name_length:
+      chart = f"{chart}\n"
   return chart
+
+def round_down(num, divisor):
+  return num - (num % divisor)
