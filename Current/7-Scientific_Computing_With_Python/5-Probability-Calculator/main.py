@@ -13,3 +13,5 @@ print("Probability:", probability)
 
 # Run unit tests automatically
 main(module='test_module', exit=False)
+
+hat = prob_calculator.Hat(red=5, orange=4, black=1, blue=0, pink=2, striped=9)
